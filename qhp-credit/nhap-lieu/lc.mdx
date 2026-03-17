@@ -1,0 +1,51 @@
+---
+title: LC — Thư tín dụng
+description: 1 dòng = 1 LC cụ thể
+icon: file-invoice
+---
+
+## Quy trình nhập
+
+<Steps>
+  <Step title="Liên kết HM">
+    **B** Mã HM con (▼) → **C** Mã HM (▼) → **D** Công ty (▼) → **E** NH (▼)
+  </Step>
+  <Step title="Thông tin LC">
+    **F** Sản phẩm → **G** Số LC → **H** Lô hàng → **I** Chiều LC → **J** Phương thức TT
+  </Step>
+  <Step title="Ngày + Giá trị">
+    **N** Tiền tệ → **O** Ngày PH → **P** Ngày HH → **Q** Ngày đáo hạn → **S** Giá trị LC → **V** Ký quỹ
+  </Step>
+</Steps>
+
+## Cột cần nhập
+
+| Cột | Tên | Loại | Ví dụ |
+|:----|:----|:-----|:------|
+| B | Mã HM con | ▼ Dropdown | `SUB-00003` |
+| C | Mã HM | ▼ Dropdown | `LIM-00001` |
+| D | Mã công ty | ▼ Dropdown | `QHP` |
+| E | Mã NH | ▼ Dropdown | `TCB` |
+| F | Sản phẩm | Gõ tay | `Thư tín dụng (L/C)` |
+| G | Số LC | Gõ tay | `LC-2025-001234` |
+| H | Lô hàng / Ref | Gõ tay | `Thép cuộn HRC 20FT` |
+| I | Chiều LC | Gõ tay | `Nhập khẩu` / `Xuất khẩu` |
+| J | Phương thức TT | Gõ tay | `UPAS`, `Trả chậm`, `Trả ngay` |
+| K | Lãi suất UPAS | Nhập số (nếu UPAS) | `4.5` |
+| L | Người thụ hưởng | Gõ tay | `ABC Co., Ltd` |
+| N | Tiền tệ | ▼ Dropdown | `USD` |
+| O | Ngày phát hành | 📅 | `15/01/2026` |
+| P | Ngày hết hạn | 📅 | `15/07/2026` |
+| Q | Ngày đáo hạn TT | 📅 | `15/09/2026` |
+| S | Giá trị LC | **Đồng, đủ số 0** | `15711137199` |
+| U | Dư nợ | **Đồng, đủ số 0** | `15711137199` |
+| V | Ký quỹ LC | **Đồng, đủ số 0** | `0` |
+
+## Cột tự động
+
+| Cột | Tên |
+|:----|:----|
+| A | Mã LC (`LC-00001`…) |
+| R | Số ngày còn HH |
+| T | Kỳ hạn |
+| W | Trạng thái |

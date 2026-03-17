@@ -1,0 +1,33 @@
+---
+title: REPORT_USAGE — Hạn mức & Sử dụng
+description: So sánh hạn mức được cấp vs đã sử dụng
+icon: chart-pie
+---
+
+## Mục đích
+
+So sánh **hạn mức được cấp** vs **đã sử dụng** — tỷ lệ sử dụng (%) theo NH và nhóm sản phẩm.
+
+<Note>
+  Tab này **tự động tính toán** — chỉ cần thay đổi **bộ lọc**.
+</Note>
+
+## Bộ lọc
+
+| Ô | Filter | Ví dụ |
+|:--|:-------|:------|
+| **B1** | Công ty | `QHP`, `Tất cả` |
+| **E1** | Ngân hàng | `BIDV`, `Tất cả` |
+
+## Kết quả hiển thị
+
+| NH | Loại SP | HM phê duyệt | Đã sử dụng | Tỷ lệ (%) | Còn trống |
+|:---|:--------|:-------------|:-----------|:-----------|:----------|
+| BIDV | Vay | 300.000 | 180.000 | 60% | 120.000 |
+| TCB | LC | 500.000 | 420.000 | 84% | 80.000 |
+
+Đơn vị: **triệu đồng**
+
+<Warning>
+  Tỷ lệ sử dụng > **80%** cần lưu ý — có thể cần đề xuất tăng HM qua tab **PLAN**.
+</Warning>

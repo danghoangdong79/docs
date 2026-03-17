@@ -1,0 +1,50 @@
+---
+title: LOAN — Khoản vay
+description: 1 dòng = 1 khế ước vay (giải ngân cụ thể)
+icon: money-bill-trend-up
+---
+
+## Quy trình nhập
+
+<Steps>
+  <Step title="Nhập KU + liên kết HM">
+    **B** Số khế ước → **C** Mã HM con (▼) → **D** Mã HM (▼) → **E** Công ty (▼) → **F** NH (▼)
+  </Step>
+  <Step title="Thông tin khoản vay">
+    **G** Tiền tệ (▼) → **H** Loại vay → **I** Lãi suất → **J** Loại lãi suất
+  </Step>
+  <Step title="Ngày + Số tiền">
+    **K** Ngày nhận nợ → **L** Ngày đến hạn → **N** Giải ngân → **O** Dư nợ hiện tại
+  </Step>
+</Steps>
+
+## Cột cần nhập
+
+| Cột | Tên | Loại | Ví dụ |
+|:----|:----|:-----|:------|
+| B | Số khế ước | Gõ tay | `LD2529703709` |
+| C | Mã HM con | ▼ Dropdown | `SUB-00001` |
+| D | Mã HM | ▼ Dropdown | `LIM-00001` |
+| E | Mã công ty | ▼ Dropdown | `QHP` |
+| F | Mã NH | ▼ Dropdown | `TCB` |
+| G | Tiền tệ | ▼ Dropdown | `VND` |
+| H | Loại khoản vay | Gõ tay | `Vay ngắn hạn`, `Vay dài hạn` |
+| I | Lãi suất (%/năm) | Nhập số | `5.5` |
+| J | Loại lãi suất | Gõ tay | `Cố định`, `Thả nổi` |
+| K | Ngày nhận nợ | 📅 | `15/01/2026` |
+| L | Ngày đến hạn | 📅 | `15/07/2026` |
+| N | Số tiền giải ngân | **Đồng, đủ số 0** | `3955895058` |
+| O | Dư nợ hiện tại | **Đồng, đủ số 0** | `1505895058` |
+
+## Cột tự động
+
+| Cột | Tên |
+|:----|:----|
+| A | Mã khoản vay (`LOAN-00001`…) |
+| M | Kỳ hạn (tháng) |
+| Q | Trạng thái |
+| R | Số ngày còn HH |
+
+<Accordion title="Cột tùy chọn">
+  **P** Ngày cập nhật DN · **S** Mã dự án · **T** Nguồn dữ liệu · **U** Ghi chú
+</Accordion>
