@@ -1,0 +1,55 @@
+---
+title: Bắt đầu nhanh
+description: Quy tắc chung và thứ tự nhập liệu
+---
+
+## Thứ tự nhập bắt buộc
+
+<Steps>
+  <Step title="LIMIT">
+    Nhập hạn mức tổng cho mỗi cặp Công ty + Ngân hàng
+  </Step>
+  <Step title="SUBLIMIT">
+    Phân bổ hạn mức theo sản phẩm (Vay, LC, Bảo lãnh…)
+  </Step>
+  <Step title="LOAN / LC">
+    Nhập chi tiết từng khoản vay hoặc LC
+  </Step>
+  <Step title="EVENT">
+    Ghi nhận biến động: trả nợ, thanh toán, đổi lãi suất…
+  </Step>
+</Steps>
+
+## Quy tắc chung
+
+<AccordionGroup>
+  <Accordion title="Dòng header">
+    Dòng 1-2 là tiêu đề — **KHÔNG SỬA**. Nhập dữ liệu từ **dòng 3** trở đi.
+  </Accordion>
+  <Accordion title="Dropdown (▼)">
+    Click ô → chọn từ danh sách. **KHÔNG gõ tay** để tránh sai chính tả.
+  </Accordion>
+  <Accordion title="Cột tự động (⚙️)">
+    Cột có formula tự tính — **KHÔNG nhập**.
+  </Accordion>
+  <Accordion title="Ngày tháng">
+    Định dạng `dd/mm/yyyy`. Ví dụ: `15/03/2026`
+  </Accordion>
+</AccordionGroup>
+
+## Cách nhập số tiền
+
+<Warning>
+  Tất cả giá trị tiền tệ nhập bằng **đơn vị đồng (VND)**, đầy đủ số 0.  
+  Sheet có format hiển thị tự động nhưng giá trị thực phải đầy đủ.
+</Warning>
+
+| Giá trị thực | Nhập vào ô | Hiển thị |
+|:-------------|:-----------|:---------|
+| 300 tỷ | `300000000000` | 300.000.000.000 |
+| 1.750 tỷ | `1750000000000` | 1.750.000.000.000 |
+| 3,96 tỷ (lẻ) | `3955895058` | 3.955.895.058 |
+
+<Tip>
+  **Mẹo:** Nhập số chính rồi thêm 9 số 0. VD: `300` + `000000000` = `300000000000`
+</Tip>

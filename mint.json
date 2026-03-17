@@ -1,0 +1,74 @@
+{
+  "$schema": "https://mintlify.com/schema.json",
+  "name": "QHP Credit Management",
+  "logo": {
+    "light": "/logo/light.svg",
+    "dark": "/logo/dark.svg"
+  },
+  "favicon": "/favicon.svg",
+  "colors": {
+    "primary": "#0D9373",
+    "light": "#16B088",
+    "dark": "#0A7B5F",
+    "anchors": {
+      "from": "#0D9373",
+      "to": "#07C983"
+    }
+  },
+  "topbarLinks": [
+    {
+      "name": "Production Sheet",
+      "url": "https://docs.google.com/spreadsheets/d/1ng8kK4TxSru7unJTl1RUmy2saISPeQ93WEI446vhHXs/edit"
+    }
+  ],
+  "topbarCtaButton": {
+    "name": "Dashboard",
+    "url": "https://docs.google.com/spreadsheets/d/1ng8kK4TxSru7unJTl1RUmy2saISPeQ93WEI446vhHXs/edit"
+  },
+  "tabs": [
+    {
+      "name": "Nhập liệu",
+      "url": "nhap-lieu"
+    },
+    {
+      "name": "Báo cáo",
+      "url": "bao-cao"
+    }
+  ],
+  "navigation": [
+    {
+      "group": "Bắt đầu",
+      "pages": ["introduction", "quickstart"]
+    },
+    {
+      "group": "Hạn mức",
+      "pages": ["nhap-lieu/limit", "nhap-lieu/sublimit"]
+    },
+    {
+      "group": "Sản phẩm",
+      "pages": ["nhap-lieu/loan", "nhap-lieu/lc"]
+    },
+    {
+      "group": "Sự kiện",
+      "pages": ["nhap-lieu/loan-event", "nhap-lieu/lc-event", "nhap-lieu/change-log"]
+    },
+    {
+      "group": "Kế hoạch",
+      "pages": ["nhap-lieu/plan"]
+    },
+    {
+      "group": "Báo cáo",
+      "pages": ["bao-cao/report-daily", "bao-cao/report-maturity", "bao-cao/report-usage"]
+    }
+  ],
+  "footerSocials": {
+    "website": "https://dahodo.com"
+  },
+  "backgroundImage": "/background.png",
+  "feedback": {
+    "thumbsRating": true
+  },
+  "search": {
+    "prompt": "Tìm kiếm..."
+  }
+}

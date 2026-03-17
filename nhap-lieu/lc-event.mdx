@@ -1,0 +1,52 @@
+---
+title: LC_EVENT — Sự kiện LC
+description: Ghi nhận mọi biến động trên thư tín dụng
+icon: arrows-rotate
+---
+
+## Khi nào nhập?
+
+| Tình huống | Nhóm SK (I) | Loại sự kiện (J) |
+|:-----------|:------------|:------------------|
+| Thanh toán 1 phần | `FINANCIAL` | `Thanh toán` |
+| Tất toán LC | `FINANCIAL` | `Tất toán` |
+| Tu chỉnh tăng/giảm | `ADJUSTMENT` | `Tu chỉnh tăng giá trị` |
+| Gia hạn LC | `ADJUSTMENT` | `Gia hạn` |
+| Đóng LC | `STATUS` | `Đóng LC` |
+
+## Cột cần nhập
+
+| Cột | Tên | Loại | Ví dụ |
+|:----|:----|:-----|:------|
+| B | Mã LC | ▼ Dropdown | `LC-00001` |
+| C | Số LC | Gõ tay | `LC-TAM-001` |
+| D | Mã công ty | ▼ Dropdown | `QHP` |
+| E | Mã ngân hàng | ▼ Dropdown | `TCB` |
+| F | Loại LC | Gõ tay | `UPAS`, `Sight`, `Usance` |
+| G | Giá trị LC | **Đồng** — giá trị **TRƯỚC** sự kiện | `15711137199` |
+| H | Ngày sự kiện | 📅 | `20/03/2026` |
+| I | Nhóm SK | ▼ Dropdown | `FINANCIAL`, `ADJUSTMENT`, `STATUS` |
+| J | Loại sự kiện | Gõ tay | `Thanh toán`, `Tu chỉnh` |
+| K | Trường thay đổi | Gõ tay | `outstanding_amount`, `lc_amount` |
+| L | Giá trị cũ | Gõ tay | `15.711.137.199` |
+| M | Giá trị mới | Gõ tay | *(trống nếu thanh toán)* |
+| N | Số tiền GD | **Đồng, đủ số 0** | `785556860` |
+| O | Dư nợ sau GD | **Đồng, đủ số 0** | `14925580339` |
+| P | Người chỉnh sửa | Gõ tay | `H. Đồng` |
+| Q | Ngày hiệu lực | 📅 | `20/03/2026` |
+
+<Note>
+  Cột **A** (Mã sự kiện `LCE-00001`…) tự động tạo.
+</Note>
+
+## Ví dụ: Thanh toán LC 1 phần
+
+LC trị giá **15,71 tỷ** → thanh toán **785,6 triệu** → dư nợ còn **14,93 tỷ**
+
+| B | G | H | I | J | K | N | O | P |
+|:--|:--|:--|:--|:--|:--|:--|:--|:--|
+| LC-00001 | 15711137199 | 20/03/2026 | FINANCIAL | Thanh toán | outstanding_amount | 785556860 | 14925580339 | H. Đồng |
+
+<Warning>
+  Sau khi nhập event, **nhớ cập nhật** cột Dư nợ (U) trên tab **LC** tương ứng.
+</Warning>

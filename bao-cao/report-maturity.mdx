@@ -1,0 +1,31 @@
+---
+title: REPORT_MATURITY — Đáo hạn theo NH/tháng
+description: Ma trận tổng hợp giá trị đáo hạn theo ngân hàng và tháng
+icon: table-cells
+---
+
+## Mục đích
+
+Ma trận **Ngân hàng × Tháng 1-12** — giúp nhìn nhanh tháng nào tập trung nhiều đáo hạn.
+
+<Note>
+  Tab này **tự động tính toán** — chỉ cần thay đổi **bộ lọc**.
+</Note>
+
+## Bộ lọc
+
+| Ô | Filter | Ví dụ |
+|:--|:-------|:------|
+| **C3** | Công ty | `QHPS`, `Tất cả` |
+| **E3** | Năm | `2026` |
+| **G3** | Ngân hàng | `TCB`, `Tất cả` |
+
+## Kết quả hiển thị
+
+| | T1 | T2 | T3 | … | T12 |
+|:--|:--|:--|:--|:--|:----|
+| **BIDV** | 0 | 5.000 | 12.500 | … | 0 |
+| **TCB** | 3.200 | 0 | 8.100 | … | 15.000 |
+| **Tổng** | 3.200 | 5.000 | 20.600 | … | 15.000 |
+
+Đơn vị: **triệu đồng**
