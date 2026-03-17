@@ -1,74 +1,17 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Dahodo Docs",
+  "name": "QHP Credit",
   "colors": {
-    "primary": "#16A34A",
+    "primary": "#0D9373",
     "light": "#07C983",
-    "dark": "#15803D"
+    "dark": "#0D9373"
   },
   "favicon": "/favicon.svg",
   "navigation": {
     "tabs": [
       {
-        "tab": "Guides",
-        "groups": [
-          {
-            "group": "Getting started",
-            "pages": [
-              "index",
-              "quickstart",
-              "development"
-            ]
-          },
-          {
-            "group": "Customization",
-            "pages": [
-              "essentials/settings",
-              "essentials/navigation"
-            ]
-          },
-          {
-            "group": "Writing content",
-            "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/reusable-snippets"
-            ]
-          },
-          {
-            "group": "AI tools",
-            "pages": [
-              "ai-tools/cursor",
-              "ai-tools/claude-code",
-              "ai-tools/windsurf"
-            ]
-          }
-        ]
-      },
-      {
-        "tab": "API reference",
-        "groups": [
-          {
-            "group": "API documentation",
-            "pages": [
-              "api-reference/introduction"
-            ]
-          },
-          {
-            "group": "Endpoint examples",
-            "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
-            ]
-          }
-        ]
-      },
-      {
-        "tab": "QHP Credit",
+        "tab": "Nhập liệu",
         "groups": [
           {
             "group": "Tổng quan",
@@ -78,21 +21,21 @@
             ]
           },
           {
-            "group": "Nhập liệu — Hạn mức",
+            "group": "Hạn mức",
             "pages": [
               "qhp-credit/nhap-lieu/limit",
               "qhp-credit/nhap-lieu/sublimit"
             ]
           },
           {
-            "group": "Nhập liệu — Sản phẩm",
+            "group": "Sản phẩm tín dụng",
             "pages": [
               "qhp-credit/nhap-lieu/loan",
               "qhp-credit/nhap-lieu/lc"
             ]
           },
           {
-            "group": "Nhập liệu — Sự kiện",
+            "group": "Sự kiện",
             "pages": [
               "qhp-credit/nhap-lieu/loan-event",
               "qhp-credit/nhap-lieu/lc-event",
@@ -100,11 +43,16 @@
             ]
           },
           {
-            "group": "Nhập liệu — Kế hoạch",
+            "group": "Kế hoạch",
             "pages": [
               "qhp-credit/nhap-lieu/plan"
             ]
-          },
+          }
+        ]
+      },
+      {
+        "tab": "Báo cáo",
+        "groups": [
           {
             "group": "Báo cáo",
             "pages": [
@@ -115,21 +63,7 @@
           }
         ]
       }
-    ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
-        },
-        {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
-        }
-      ]
-    }
+    ]
   },
   "logo": {
     "light": "/logo/light.svg",
@@ -144,21 +78,9 @@
     ],
     "primary": {
       "type": "button",
-      "label": "Dashboard",
-      "href": "https://dashboard.mintlify.com"
+      "label": "Mở Sheet",
+      "href": "https://docs.google.com/spreadsheets/d/1ng8kK4TxSru7unJTl1RUmy2saISPeQ93WEI446vhHXs/edit"
     }
-  },
-  "contextual": {
-    "options": [
-     "copy",
-     "view",
-     "chatgpt",
-     "claude",
-     "perplexity",
-     "mcp",
-     "cursor",
-     "vscode"
-   ]
   },
   "footer": {
     "socials": {
