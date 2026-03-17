@@ -1,77 +1,48 @@
 ---
 title: Biến động khoản vay
 sidebarTitle: Biến động khoản vay
-description: Ghi nhận mọi biến động trên khoản vay — trả nợ, giải ngân, đổi lãi suất, gia hạn.
-icon: rotate
+description: Ghi lại mỗi khi khoản vay có thay đổi — trả nợ, giải ngân thêm, đổi lãi suất.
+icon: arrow-right-arrow-left
 ---
 
 <Info>
-  Tab **LOAN_EVENT** trong Google Sheet — mỗi dòng = 1 sự kiện biến động trên khoản vay.
+  Đây là tab **LOAN_EVENT** trên Google Sheet. Mỗi dòng = **một sự kiện** xảy ra trên một khoản vay.
 </Info>
 
-## Khi nào nhập?
+## Khi nào cần nhập?
 
-| Tình huống | Nhóm sự kiện (I) | Loại sự kiện (J) |
-|:-----------|:-----------------|:-----------------|
-| Trả nợ gốc 1 phần | Tài chính | Trả gốc |
-| Tất toán | Tài chính | Tất toán |
-| Giải ngân thêm | Tài chính | Giải ngân |
-| Đổi lãi suất | Điều chỉnh | Đổi lãi suất |
-| Gia hạn | Điều chỉnh | Gia hạn |
-| Chuyển nợ | Điều chỉnh | Chuyển nợ |
+| Có gì xảy ra? | Nhóm sự kiện (I) | Loại sự kiện (J) |
+|:---------------|:-----------------|:-----------------|
+| Công ty trả một phần nợ gốc | Tài chính | Trả nợ gốc |
+| Trả hết nợ, đóng khoản vay | Tài chính | Tất toán |
+| Ngân hàng giải ngân thêm | Tài chính | Giải ngân thêm |
+| Điều chỉnh lãi suất | Điều chỉnh | Đổi lãi suất |
+| Gia hạn khoản vay | Điều chỉnh | Gia hạn |
+| Cơ cấu lại nợ | Điều chỉnh | Cơ cấu nợ |
 
-## Cột cần nhập
+## Chi tiết các cột cần nhập
 
-| Cột | Tên | Loại | Ví dụ |
-|:----|:----|:-----|:------|
-| B | Mã khoản vay | ▼ Dropdown | `LOAN-00001` |
-| C | Số khế ước | Gõ tay | `LD2529703709` |
-| D | Mã công ty | ▼ Dropdown | `QHP` |
-| E | Mã ngân hàng | ▼ Dropdown | `TCB` |
+| Cột | Nội dung | Cách nhập | Ví dụ |
+|:----|:---------|:----------|:------|
+| B | Mã khoản vay | Chọn từ danh sách ▼ | `LOAN-00001` |
+| C | Số khế ước | Gõ tay | `KU-2025-00123` |
+| D | Mã công ty | Chọn từ danh sách ▼ | `QHP` |
+| E | Mã ngân hàng | Chọn từ danh sách ▼ | `BIDV` |
 | F | Loại vay | Gõ tay | `Vay ngắn hạn` |
-| G | Dư nợ gốc | **Đồng** — dư nợ **trước** sự kiện | `3955895058` |
-| H | Ngày sự kiện | 📅 | `15/03/2026` |
-| I | Nhóm sự kiện | ▼ Dropdown | `Tài chính`, `Điều chỉnh` |
-| J | Loại sự kiện | Gõ tay | `Trả gốc` |
-| K | Trường thay đổi | Gõ tay | `current_balance`, `interest_rate` |
-| L | Giá trị cũ | Gõ tay | `3.955.895.058` hoặc `5.5` |
-| M | Giá trị mới | Gõ tay | `6.0` (để trống nếu trả nợ) |
-| N | Số tiền giao dịch | **Đồng, đủ số 0** | `1450000000` |
-| O | Dư nợ sau giao dịch | **Đồng, đủ số 0** | `2505895058` |
-| P | Người chỉnh sửa | Gõ tay | `H. Đồng` |
-| Q | Ngày hiệu lực | 📅 | `15/03/2026` |
-| R | Ghi chú | Gõ tay | `Trả gốc đợt 1/2026` |
+| G | Dư nợ **trước** khi thay đổi | Nhập bằng đồng | `50000000000` |
+| H | Ngày xảy ra sự kiện | Chọn ngày | `20/03/2026` |
+| I | Nhóm sự kiện | Chọn từ danh sách ▼ | `Tài chính`, `Điều chỉnh` |
+| J | Loại sự kiện | Gõ tay | `Trả nợ gốc` |
+| K | Thông tin thay đổi | Gõ tay | `current_balance` hoặc `interest_rate` |
+| N | Số tiền giao dịch | Nhập bằng đồng, **đầy đủ số 0** | `10000000000` (= 10 tỷ) |
+| O | Dư nợ **sau** khi thay đổi | Nhập bằng đồng, **đầy đủ số 0** | `40000000000` (= 40 tỷ) |
+| P | Người nhập | Gõ tay | `H. Đồng` |
+| R | Ghi chú | Gõ tay | `Trả nợ gốc định kỳ T3` |
 
 <Note>
-  Cột **A** (Mã sự kiện `LE-00001`…) được tạo tự động.
+  Cột **A** (Mã sự kiện `LE-00001`…) được **tạo tự động**.
 </Note>
 
-## Ví dụ
-
-<AccordionGroup>
-  <Accordion title="Trả nợ gốc 1 phần">
-    Dư nợ gốc **3,96 tỷ** → trả **1,45 tỷ** → còn **2,51 tỷ**
-
-    | B | G | H | I | J | K | N | O | P |
-    |:--|:--|:--|:--|:--|:--|:--|:--|:--|
-    | LOAN-00001 | 3955895058 | 15/03/2026 | Tài chính | Trả gốc | current_balance | 1450000000 | 2505895058 | H. Đồng |
-  </Accordion>
-  <Accordion title="Đổi lãi suất">
-    Lãi suất **5.5%** → **6.2%**. Không ảnh hưởng dư nợ → N, O để trống.
-
-    | B | G | H | I | J | K | L | M | P |
-    |:--|:--|:--|:--|:--|:--|:--|:--|:--|
-    | LOAN-00005 | 50000000000 | 01/04/2026 | Điều chỉnh | Đổi lãi suất | interest_rate | 5.5 | 6.2 | A. Minh |
-  </Accordion>
-  <Accordion title="Gia hạn khoản vay">
-    Đến hạn **15/03** → gia hạn đến **15/09**
-
-    | B | G | H | I | J | K | L | M | P |
-    |:--|:--|:--|:--|:--|:--|:--|:--|:--|
-    | LOAN-00010 | 20000000000 | 10/03/2026 | Điều chỉnh | Gia hạn | maturity_date | 15/03/2026 | 15/09/2026 | H. Đồng |
-  </Accordion>
-</AccordionGroup>
-
-<Warning>
-  Sau khi nhập sự kiện, **nhớ cập nhật** cột Dư nợ hiện tại trên tab **Khoản vay** tương ứng.
-</Warning>
+<Tip>
+  Sau khi nhập sự kiện, nhớ cập nhật lại **dư nợ hiện tại** trên tab Khoản vay cho khớp.
+</Tip>

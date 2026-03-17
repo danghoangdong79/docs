@@ -1,44 +1,48 @@
 ---
 title: Hạn mức con
 sidebarTitle: Hạn mức con
-description: Phân bổ hạn mức tổng thành nhiều hạn mức con theo từng sản phẩm tín dụng.
+description: Chia hạn mức tổng thành nhiều phần nhỏ theo từng loại sản phẩm.
 icon: sitemap
 ---
 
 <Info>
-  Tab **SUBLIMIT** trong Google Sheet — 1 dòng = 1 phân bổ hạn mức con cho 1 sản phẩm cụ thể.
+  Đây là tab **SUBLIMIT** trên Google Sheet. Mỗi dòng là **một phần** của hạn mức tổng được phân bổ cho một sản phẩm cụ thể (Vay ngắn hạn, LC…).
 </Info>
 
-## Quy trình nhập
+## Quy trình nhập — 3 bước
 
 <Steps>
-  <Step title="Chọn hạn mức cha">
-    Cột **B** — chọn Mã HM từ dropdown (danh sách liên kết từ tab Hạn mức tổng)
+  <Step title="Bước 1: Chọn hạn mức tổng">
+    Nhấn vào ô cột **B** để chọn mã hạn mức từ danh sách (ví dụ: `LIM-00001`). Đây chính là hạn mức mà bạn đã nhập ở tab Hạn mức tổng.
   </Step>
-  <Step title="Nhập sản phẩm + số tiền">
-    **F** Loại sản phẩm (▼) → **G** HM con phê duyệt (đồng, đủ số 0)
+  <Step title="Bước 2: Chọn loại sản phẩm">
+    Cột **F** — chọn sản phẩm muốn phân bổ (ví dụ: Vay ngắn hạn, LC nhập khẩu…).
   </Step>
-  <Step title="Kiểm tra phân bổ">
-    Cột **H** (Phần trăm) tự tính = G / HM tổng. Tổng các dòng cùng 1 mã HM nên ≤ 100%.
+  <Step title="Bước 3: Nhập số tiền phân bổ">
+    Cột **G** — nhập số tiền hạn mức con (đồng, đầy đủ số 0). Tổng các hạn mức con nên bằng hoặc nhỏ hơn hạn mức tổng.
   </Step>
 </Steps>
 
-## Cột cần nhập
+## Chi tiết các cột cần nhập
 
-| Cột | Tên | Loại | Ví dụ |
-|:----|:----|:-----|:------|
-| B | Mã HM (cha) | ▼ Dropdown | `LIM-00001` |
-| F | Loại sản phẩm | ▼ Dropdown | `Vay ngắn hạn`, `LC` |
-| G | HM con phê duyệt | **Đồng, đủ số 0** | `150000000000` |
+| Cột | Nội dung | Cách nhập | Ví dụ |
+|:----|:---------|:----------|:------|
+| B | Mã hạn mức tổng | Chọn từ danh sách ▼ | `LIM-00001` |
+| F | Loại sản phẩm | Chọn từ danh sách ▼ | `Vay ngắn hạn`, `LC` |
+| G | Hạn mức con được duyệt | Nhập bằng đồng, **đầy đủ số 0** | `150000000000` (= 150 tỷ) |
 
-## Cột tự động — không nhập
+## Các cột tự động — không cần nhập
 
-| Cột | Tên | Công thức |
-|:----|:----|:----------|
-| A | Mã HM con | `SUB-00001`… (ARRAYFORMULA) |
-| C | Mã công ty | Tra từ Hạn mức tổng |
-| D | Mã ngân hàng | Tra từ Hạn mức tổng |
-| E | Tên hạn mức | Tra từ Hạn mức tổng |
-| H | Phần trăm phân bổ | = G / HM tổng |
-| I | Đã sử dụng | SUMIFS từ LOAN + LC |
-| J | Còn trống | = G − I |
+| Cột | Nội dung | Cách tính |
+|:----|:---------|:----------|
+| A | Mã hạn mức con | Tự tạo: `SUB-00001`… |
+| C | Công ty | Tự lấy từ hạn mức tổng |
+| D | Ngân hàng | Tự lấy từ hạn mức tổng |
+| E | Tên hạn mức | Tự lấy từ hạn mức tổng |
+| H | % phân bổ | = Hạn mức con / Hạn mức tổng |
+| I | Đã sử dụng | Tự cộng từ Khoản vay + LC |
+| J | Còn trống | = Hạn mức con − Đã sử dụng |
+
+<Tip>
+  Kiểm tra cột **H** (% phân bổ) — tổng tất cả hạn mức con trên cùng một hạn mức tổng nên ≤ 100%.
+</Tip>

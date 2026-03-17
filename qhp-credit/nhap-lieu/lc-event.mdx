@@ -1,43 +1,43 @@
 ---
 title: Biến động thư tín dụng
-sidebarTitle: Biến động thư tín dụng
-description: Ghi nhận biến động L/C — tu chỉnh, thanh toán, gia hạn.
+sidebarTitle: Biến động LC
+description: Ghi lại mỗi khi LC có thay đổi — thanh toán, tu chỉnh, gia hạn.
 icon: arrows-rotate
 ---
 
 <Info>
-  Tab **LC_EVENT** trong Google Sheet — mỗi dòng = 1 sự kiện biến động trên thư tín dụng.
+  Đây là tab **LC_EVENT** trên Google Sheet. Mỗi dòng = **một sự kiện** xảy ra trên một thư tín dụng.
 </Info>
 
-## Khi nào nhập?
+## Khi nào cần nhập?
 
-| Tình huống | Nhóm sự kiện (I) | Loại sự kiện (J) |
-|:-----------|:-----------------|:-----------------|
+| Có gì xảy ra? | Nhóm sự kiện (I) | Loại sự kiện (J) |
+|:---------------|:-----------------|:-----------------|
 | Thanh toán bộ chứng từ | Tài chính | Thanh toán |
-| Tất toán LC | Tài chính | Tất toán |
-| Tu chỉnh tăng trị giá | Điều chỉnh | Tu chỉnh tăng |
-| Tu chỉnh giảm trị giá | Điều chỉnh | Tu chỉnh giảm |
-| Gia hạn | Điều chỉnh | Gia hạn |
+| Tất toán toàn bộ LC | Tài chính | Tất toán |
+| Tăng trị giá LC (tu chỉnh) | Điều chỉnh | Tu chỉnh tăng |
+| Giảm trị giá LC (tu chỉnh) | Điều chỉnh | Tu chỉnh giảm |
+| Gia hạn thêm thời gian | Điều chỉnh | Gia hạn |
 
-## Cột cần nhập
+## Chi tiết các cột cần nhập
 
-| Cột | Tên | Loại | Ví dụ |
-|:----|:----|:-----|:------|
-| B | Mã LC | ▼ Dropdown | `LC-00001` |
+| Cột | Nội dung | Cách nhập | Ví dụ |
+|:----|:---------|:----------|:------|
+| B | Mã LC | Chọn từ danh sách ▼ | `LC-00001` |
 | C | Số LC | Gõ tay | `LC2025-0001` |
-| D | Mã công ty | ▼ Dropdown | `QHP` |
-| E | Mã ngân hàng | ▼ Dropdown | `BIDV` |
+| D | Mã công ty | Chọn từ danh sách ▼ | `QHP` |
+| E | Mã ngân hàng | Chọn từ danh sách ▼ | `BIDV` |
 | F | Loại LC | Gõ tay | `LC nhập khẩu` |
-| G | Dư nợ LC | **Đồng** — dư nợ **trước** sự kiện | `100000000000` |
-| H | Ngày sự kiện | 📅 | `20/03/2026` |
-| I | Nhóm sự kiện | ▼ Dropdown | `Tài chính`, `Điều chỉnh` |
+| G | Dư nợ LC **trước** sự kiện | Nhập bằng đồng | `100000000000` |
+| H | Ngày xảy ra sự kiện | Chọn ngày | `20/03/2026` |
+| I | Nhóm sự kiện | Chọn từ danh sách ▼ | `Tài chính`, `Điều chỉnh` |
 | J | Loại sự kiện | Gõ tay | `Thanh toán` |
-| K | Trường thay đổi | Gõ tay | `current_balance` |
-| N | Số tiền giao dịch | **Đồng, đủ số 0** | `50000000000` |
-| O | Dư nợ sau giao dịch | **Đồng, đủ số 0** | `50000000000` |
-| P | Người chỉnh sửa | Gõ tay | `H. Đồng` |
+| K | Thông tin thay đổi | Gõ tay | `current_balance` |
+| N | Số tiền giao dịch | Nhập bằng đồng, **đầy đủ số 0** | `50000000000` (= 50 tỷ) |
+| O | Dư nợ LC **sau** giao dịch | Nhập bằng đồng, **đầy đủ số 0** | `50000000000` |
+| P | Người nhập | Gõ tay | `H. Đồng` |
 | R | Ghi chú | Gõ tay | `Thanh toán BCT lô hàng T3` |
 
 <Note>
-  Cột **A** (Mã sự kiện `CE-00001`…) được tạo tự động.
+  Cột **A** (Mã sự kiện `CE-00001`…) được **tạo tự động**.
 </Note>

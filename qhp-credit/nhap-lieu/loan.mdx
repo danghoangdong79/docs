@@ -1,50 +1,43 @@
 ---
 title: Khoản vay
 sidebarTitle: Khoản vay
-description: Theo dõi chi tiết từng khoản vay — số tiền, lãi suất, ngày giải ngân và đáo hạn.
-icon: money-bill-trend-up
+description: Nhập chi tiết từng khoản vay — số tiền, lãi suất, ngày giải ngân, ngày đáo hạn.
+icon: money-bill-transfer
 ---
 
 <Info>
-  Tab **LOAN** trong Google Sheet — 1 dòng = 1 khoản vay cụ thể gắn với 1 hạn mức con.
+  Đây là tab **LOAN** trên Google Sheet. Mỗi dòng là **một khoản vay** cụ thể dưới một hạn mức con.
 </Info>
 
-## Quy trình nhập
+## Khi nào cần nhập?
 
-<Steps>
-  <Step title="Liên kết hạn mức">
-    Cột **B** — chọn Mã HM con (▼ Dropdown) để gắn khoản vay với hạn mức.
-  </Step>
-  <Step title="Nhập thông tin khoản vay">
-    **F** Số khế ước → **G** Loại vay (▼) → **H** Tiền tệ (▼)
-  </Step>
-  <Step title="Nhập số tiền + ngày">
-    **I** Số tiền giải ngân (đồng) → **K** Ngày giải ngân → **L** Ngày đáo hạn → **M** Lãi suất
-  </Step>
-</Steps>
+Mỗi khi công ty **giải ngân một khoản vay mới** tại ngân hàng — bạn thêm một dòng mới vào đây.
 
-## Cột cần nhập
+## Chi tiết các cột cần nhập
 
-| Cột | Tên | Loại | Ví dụ |
-|:----|:----|:-----|:------|
-| B | Mã HM con | ▼ Dropdown | `SUB-00001` |
-| F | Số khế ước | Gõ tay | `LD2529703709` |
-| G | Loại vay | ▼ Dropdown | `Vay ngắn hạn`, `Vay trung hạn` |
-| H | Tiền tệ | ▼ Dropdown | `VND`, `USD` |
-| I | Số tiền giải ngân | **Đồng, đủ số 0** | `50000000000` |
-| K | Ngày giải ngân | 📅 | `15/01/2026` |
-| L | Ngày đáo hạn | 📅 | `15/07/2026` |
-| M | Lãi suất (%/năm) | Số | `5.5` |
-| O | Dư nợ hiện tại | **Đồng, đủ số 0** | `50000000000` |
+| Cột | Nội dung | Cách nhập | Ví dụ |
+|:----|:---------|:----------|:------|
+| B | Mã hạn mức con | Chọn từ danh sách ▼ | `SUB-00001` |
+| C | Mã công ty | Chọn từ danh sách ▼ | `QHP` |
+| D | Mã ngân hàng | Chọn từ danh sách ▼ | `BIDV` |
+| E | Số khế ước | Gõ tay — số trên hợp đồng vay | `KU-2025-00123` |
+| F | Loại vay | Chọn từ danh sách ▼ | `Vay ngắn hạn`, `Vay trung hạn` |
+| G | Mục đích vay | Gõ tay | `Bổ sung vốn lưu động` |
+| H | Số tiền giải ngân | Nhập bằng đồng, **đầy đủ số 0** | `50000000000` (= 50 tỷ) |
+| I | Dư nợ hiện tại | Nhập bằng đồng, **đầy đủ số 0** | `50000000000` |
+| J | Tiền tệ | Chọn từ danh sách ▼ | `VND` |
+| K | Lãi suất (%/năm) | Nhập số thập phân | `6.5` |
+| L | Loại lãi suất | Chọn từ danh sách ▼ | `Thả nổi`, `Cố định` |
+| M | Ngày giải ngân | Chọn ngày | `15/03/2026` |
+| N | Ngày đáo hạn | Chọn ngày | `15/06/2026` |
+| O | Trạng thái | Chọn từ danh sách ▼ | `Đang vay`, `Tất toán` |
+| P | Người phụ trách | Gõ tay | `H. Đồng` |
+| Q | Ghi chú | Gõ tay | `Khoản vay bổ sung Q1/2026` |
 
-## Cột tự động — không nhập
+<Note>
+  Cột **A** (Mã khoản vay `LOAN-00001`…) được **tạo tự động**, bạn không cần nhập.
+</Note>
 
-| Cột | Tên | Công thức |
-|:----|:----|:----------|
-| A | Mã khoản vay | `LOAN-00001`… (ARRAYFORMULA) |
-| C | Mã công ty | Tra từ Hạn mức con |
-| D | Mã ngân hàng | Tra từ Hạn mức con |
-| E | Loại sản phẩm | Tra từ Hạn mức con |
-| N | Tiền lãi dự tính | = I × M × Số ngày / 360 |
-| Q | Số ngày còn | = L − TODAY() |
-| R | Trạng thái | IF(O=0, "Tất toán", IF(L<TODAY(), "Quá hạn", "Đang vay")) |
+<Warning>
+  **Nhớ**: Số tiền nhập đầy đủ số 0. Ví dụ 50 tỷ = `50000000000` (50 + 9 số 0). Sheet sẽ tự hiển thị dấu chấm phân cách.
+</Warning>

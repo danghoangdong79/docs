@@ -1,41 +1,41 @@
 ---
 title: Kế hoạch tín dụng
 sidebarTitle: Kế hoạch tín dụng
-description: Lập kế hoạch giải ngân, trả nợ và sử dụng hạn mức trong tương lai.
+description: Lên kế hoạch vay, trả nợ, mở LC trong tương lai.
 icon: calendar-check
 ---
 
 <Info>
-  Tab **PLAN** trong Google Sheet — mỗi dòng = 1 kế hoạch tín dụng trong tương lai.
+  Đây là tab **PLAN** trên Google Sheet. Mỗi dòng = **một kế hoạch** dự kiến trong tương lai.
 </Info>
 
-## Tình huống nhập
+## Khi nào cần nhập?
 
-| Tình huống | Loại KH (F) | Trạng thái (G) |
-|:-----------|:------------|:----------------|
-| Dự kiến giải ngân khoản vay mới | Giải ngân mới | Dự kiến |
-| Lên kế hoạch trả nợ gốc | Trả nợ gốc | Dự kiến |
-| Kế hoạch mở LC nhập hàng | Mở LC | Dự kiến |
-| Kế hoạch gia hạn hạn mức | Gia hạn HM | Dự kiến |
+| Dự kiến làm gì? | Loại kế hoạch (F) | Trạng thái ban đầu |
+|:-----------------|:-------------------|:--------------------|
+| Sắp giải ngân khoản vay mới | Giải ngân mới | Dự kiến |
+| Cần trả nợ gốc sắp tới | Trả nợ gốc | Dự kiến |
+| Dự kiến mở LC nhập hàng | Mở LC | Dự kiến |
+| Cần gia hạn hạn mức sắp hết | Gia hạn HM | Dự kiến |
 
-## Cột cần nhập
+## Chi tiết các cột cần nhập
 
-| Cột | Tên | Loại | Ví dụ |
-|:----|:----|:-----|:------|
-| B | Mã HM | ▼ Dropdown | `LIM-00001` |
-| C | Mã công ty | ▼ Dropdown | `QHP` |
-| D | Mã ngân hàng | ▼ Dropdown | `BIDV` |
-| E | Loại sản phẩm | ▼ Dropdown | `Vay`, `LC` |
-| F | Loại kế hoạch | ▼ Dropdown | `Giải ngân mới`, `Trả nợ gốc` |
-| G | Trạng thái | ▼ Dropdown | `Dự kiến`, `Đã duyệt`, `Hoàn thành`, `Huỷ` |
-| H | Ngày dự kiến | 📅 | `15/06/2026` |
-| I | Số tiền dự kiến | **Đồng, đủ số 0** | `100000000000` |
-| J | Tiền tệ | ▼ Dropdown | `VND`, `USD` |
+| Cột | Nội dung | Cách nhập | Ví dụ |
+|:----|:---------|:----------|:------|
+| B | Mã hạn mức | Chọn từ danh sách ▼ | `LIM-00001` |
+| C | Mã công ty | Chọn từ danh sách ▼ | `QHP` |
+| D | Mã ngân hàng | Chọn từ danh sách ▼ | `BIDV` |
+| E | Loại sản phẩm | Chọn từ danh sách ▼ | `Vay`, `LC` |
+| F | Loại kế hoạch | Chọn từ danh sách ▼ | `Giải ngân mới`, `Trả nợ gốc` |
+| G | Trạng thái | Chọn từ danh sách ▼ | `Dự kiến`, `Đã duyệt`, `Hoàn thành`, `Huỷ` |
+| H | Ngày dự kiến | Chọn ngày | `15/06/2026` |
+| I | Số tiền dự kiến | Nhập bằng đồng, **đầy đủ số 0** | `100000000000` (= 100 tỷ) |
+| J | Tiền tệ | Chọn từ danh sách ▼ | `VND`, `USD` |
 | K | Người lập | Gõ tay | `H. Đồng` |
 | L | Ghi chú | Gõ tay | `Giải ngân bổ sung vốn lưu động Q3` |
 
 <Note>
-  Cột **A** (Mã kế hoạch `PL-00001`…) được tạo tự động.
+  Cột **A** (Mã kế hoạch `PL-00001`…) được **tạo tự động**.
 </Note>
 
 ## Vòng đời kế hoạch
@@ -43,5 +43,5 @@ icon: calendar-check
 **Dự kiến** → **Đã duyệt** → **Hoàn thành** hoặc **Huỷ**
 
 <Tip>
-  Khi kế hoạch **Hoàn thành**, hãy nhập dữ liệu thực tế vào tab Khoản vay hoặc Thư tín dụng tương ứng.
+  Khi kế hoạch **Hoàn thành** — nhớ nhập dữ liệu thực tế vào tab Khoản vay hoặc LC tương ứng.
 </Tip>

@@ -1,36 +1,36 @@
 ---
 title: Đáo hạn theo ngày
 sidebarTitle: Đáo hạn theo ngày
-description: Xem danh sách khoản vay và LC sắp đáo hạn, lọc theo ngày.
+description: Xem danh sách các khoản vay và LC sắp đến hạn, sắp xếp theo ngày.
 icon: calendar-day
 ---
 
 <Info>
-  Tab **REPORT_DAILY** trong Google Sheet — tự động tổng hợp, không cần nhập liệu.
+  Đây là tab **REPORT_DAILY** trên Google Sheet — dữ liệu **tự động tổng hợp**, bạn không cần nhập gì.
 </Info>
 
 ## Cách sử dụng
 
 <Steps>
   <Step title="Mở tab báo cáo">
-    Chuyển sang tab **REPORT_DAILY** trên Google Sheet.
+    Trên Google Sheet, chuyển sang tab **REPORT_DAILY**.
   </Step>
-  <Step title="Sử dụng bộ lọc">
-    Bộ lọc có sẵn ở dòng header — lọc theo **Ngày đáo hạn**, **Ngân hàng**, **Công ty**, **Loại sản phẩm**.
+  <Step title="Lọc theo điều kiện">
+    Dùng bộ lọc ở dòng header để thu hẹp: **Ngày đáo hạn**, **Ngân hàng**, **Công ty**, hoặc **Loại sản phẩm**.
   </Step>
   <Step title="Đọc kết quả">
-    Các cột hiển thị: Mã, Tên ngân hàng, Số tiền, Ngày đáo hạn, Số ngày còn lại, Trạng thái.
+    Xem danh sách các khoản sắp đến hạn, kèm số ngày còn lại và trạng thái cảnh báo.
   </Step>
 </Steps>
 
 ## Ý nghĩa các cột
 
-| Cột | Nội dung | Ghi chú |
-|:----|:---------|:--------|
-| Số ngày còn lại | Ngày đáo hạn − Hôm nay | Âm = đã quá hạn |
-| Trạng thái | Đang vay / Quá hạn / Tất toán | Tự động cập nhật |
-| Cảnh báo | 🔴 🟡 🟢 | Theo mức ngày còn lại |
+| Cột | Nội dung | Cách đọc |
+|:----|:---------|:---------|
+| Số ngày còn lại | = Ngày đáo hạn − Hôm nay | Số âm = đã quá hạn |
+| Trạng thái | Đang vay / Quá hạn / Tất toán | Tự cập nhật |
+| Cảnh báo | 🔴 🟡 🟢 | Đỏ = nguy cấp, Vàng = sắp hạn, Xanh = an toàn |
 
 <Tip>
-  Lọc **Số ngày còn lại ≤ 30** để xem các khoản sắp đáo hạn trong tháng tới.
+  Lọc **Số ngày còn lại ≤ 30** để xem tất cả khoản sẽ đáo hạn trong tháng tới.
 </Tip>

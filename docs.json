@@ -3,9 +3,9 @@
   "theme": "mint",
   "name": "QHP Credit",
   "colors": {
-    "primary": "#0D9373",
-    "light": "#07C983",
-    "dark": "#0D9373"
+    "primary": "#6B2D4E",
+    "light": "#8B4D6E",
+    "dark": "#4B1D3E"
   },
   "favicon": "/favicon.svg",
   "navigation": {
@@ -56,6 +56,7 @@
           {
             "group": "Báo cáo",
             "pages": [
+              "qhp-credit/bao-cao/dashboard",
               "qhp-credit/bao-cao/report-daily",
               "qhp-credit/bao-cao/report-maturity",
               "qhp-credit/bao-cao/report-usage"
@@ -78,8 +79,8 @@
     ],
     "primary": {
       "type": "button",
-      "label": "Mở Sheet",
-      "href": "https://docs.google.com/spreadsheets/d/1ng8kK4TxSru7unJTl1RUmy2saISPeQ93WEI446vhHXs/edit"
+      "label": "Dashboard",
+      "href": "https://script.google.com/macros/s/AKfycbyM4qRfONDbB6XpqYWS3ijYvzuw3fOZoppUUIa6EYFCGj9GQS_9Ow4xPIMIAkRKsv5gsQ/exec"
     }
   },
   "footer": {

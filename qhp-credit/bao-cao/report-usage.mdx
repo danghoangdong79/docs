@@ -1,37 +1,37 @@
 ---
 title: Sử dụng hạn mức
 sidebarTitle: Sử dụng hạn mức
-description: Xem mức độ sử dụng hạn mức theo ngân hàng — đã dùng, còn trống, tỷ lệ phần trăm.
+description: Xem mỗi ngân hàng đã dùng bao nhiêu phần trăm hạn mức — dùng để đánh giá room còn trống.
 icon: chart-pie
 ---
 
 <Info>
-  Tab **REPORT_USAGE** trong Google Sheet — tự động tổng hợp, không cần nhập liệu.
+  Đây là tab **REPORT_USAGE** trên Google Sheet — dữ liệu **tự động tổng hợp**, bạn không cần nhập gì.
 </Info>
 
 ## Cách sử dụng
 
 <Steps>
   <Step title="Mở tab báo cáo">
-    Chuyển sang tab **REPORT_USAGE** trên Google Sheet.
+    Trên Google Sheet, chuyển sang tab **REPORT_USAGE**.
   </Step>
   <Step title="Chọn bộ lọc">
     Lọc theo **Ngân hàng**, **Công ty**, hoặc **Loại sản phẩm** để xem chi tiết.
   </Step>
   <Step title="Đọc tỷ lệ sử dụng">
-    Cột **% sử dụng** cho biết mức độ khai thác hạn mức. Giá trị > 90% cần lưu ý.
+    Cột **% sử dụng** cho biết đã dùng bao nhiêu phần trăm hạn mức. Trên 90% cần chú ý.
   </Step>
 </Steps>
 
-## Ý nghĩa chỉ số
+## Ý nghĩa các chỉ số
 
-| Chỉ số | Ý nghĩa | Lưu ý |
-|:-------|:---------|:------|
-| HM phê duyệt | Tổng hạn mức được NH cấp | Lấy từ tab Hạn mức tổng |
-| Đã sử dụng | Tổng dư nợ Vay + LC | Tự động cộng từ các tab |
-| Còn trống | HM phê duyệt − Đã sử dụng | Room còn lại |
-| % Sử dụng | Đã sử dụng / HM phê duyệt | > 90% cần cảnh báo |
+| Chỉ số | Nghĩa là gì | Lấy từ đâu |
+|:-------|:------------|:-----------|
+| Hạn mức được duyệt | Tổng tiền ngân hàng cho phép sử dụng | Tab Hạn mức tổng |
+| Đã sử dụng | Tổng dư nợ khoản vay + LC hiện tại | Tự cộng từ tab Khoản vay + LC |
+| Còn trống | = Hạn mức duyệt − Đã sử dụng | Phần room còn lại |
+| % Sử dụng | = Đã sử dụng / Hạn mức duyệt × 100% | Mức độ khai thác hạn mức |
 
 <Warning>
-  Khi **% Sử dụng > 90%**, hãy cân nhắc xin tăng hạn mức hoặc trả bớt dư nợ trước khi giải ngân mới.
+  Khi **% Sử dụng vượt 90%** — hãy xin tăng hạn mức hoặc trả bớt dư nợ trước khi giải ngân thêm.
 </Warning>

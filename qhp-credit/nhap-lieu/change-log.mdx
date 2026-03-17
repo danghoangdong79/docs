@@ -1,45 +1,45 @@
 ---
 title: Nhật ký thay đổi hạn mức
 sidebarTitle: Nhật ký thay đổi
-description: Ghi lại mọi biến động trên hạn mức — tăng, giảm, đóng, tái cấp.
+description: Ghi lại mỗi khi hạn mức tổng có thay đổi — tăng, giảm, đóng, tái cấp.
 icon: list-timeline
 ---
 
 <Info>
-  Tab **CHANGE_LOG** trong Google Sheet — mỗi dòng = 1 lần thay đổi trạng thái hoặc giá trị hạn mức.
+  Đây là tab **CHANGE_LOG** trên Google Sheet. Mỗi dòng = **một lần thay đổi** trạng thái hoặc giá trị hạn mức.
 </Info>
 
 <Warning>
-  Khi hạn mức tổng thay đổi (tăng/giảm/đóng), bạn **phải** ghi ở đây. Cột Trạng thái trên tab Hạn mức tổng tra tự động từ bảng này.
+  Tab này rất quan trọng! Khi hạn mức tổng thay đổi (tăng, giảm, đóng…), bạn **phải ghi lại ở đây**. Trạng thái trên tab Hạn mức tổng được tra tự động từ bảng này.
 </Warning>
 
-## Tình huống nhập
+## Khi nào cần nhập?
 
-| Tình huống | Loại thay đổi (F) | Trạng thái mới (G) |
-|:-----------|:-------------------|:--------------------|
-| Duyệt hạn mức mới | Phê duyệt | Hiệu lực |
+| Có gì xảy ra? | Loại thay đổi (F) | Trạng thái mới (G) |
+|:---------------|:-------------------|:--------------------|
+| Ngân hàng duyệt hạn mức mới | Phê duyệt | Hiệu lực |
 | Tăng hạn mức | Tăng HM | Hiệu lực |
 | Giảm hạn mức | Giảm HM | Hiệu lực |
-| Đóng hạn mức | Đóng | Đã đóng |
-| Tái cấp hạn mức | Tái cấp | Hiệu lực |
+| Ngân hàng đóng hạn mức | Đóng | Đã đóng |
+| Mở lại hạn mức đã đóng | Tái cấp | Hiệu lực |
 
-## Cột cần nhập
+## Chi tiết các cột cần nhập
 
-| Cột | Tên | Loại | Ví dụ |
-|:----|:----|:-----|:------|
-| B | Mã HM | ▼ Dropdown | `LIM-00001` |
-| C | Mã công ty | ▼ Dropdown | `QHP` |
-| D | Mã ngân hàng | ▼ Dropdown | `BIDV` |
-| E | Ngày thay đổi | 📅 | `01/03/2026` |
-| F | Loại thay đổi | ▼ Dropdown | `Tăng HM`, `Giảm HM`, `Đóng` |
-| G | Trạng thái mới | ▼ Dropdown | `Hiệu lực`, `Đã đóng`, `Tạm dừng` |
-| H | HM cũ | **Đồng, đủ số 0** | `300000000000` |
-| I | HM mới | **Đồng, đủ số 0** | `500000000000` |
+| Cột | Nội dung | Cách nhập | Ví dụ |
+|:----|:---------|:----------|:------|
+| B | Mã hạn mức | Chọn từ danh sách ▼ | `LIM-00001` |
+| C | Mã công ty | Chọn từ danh sách ▼ | `QHP` |
+| D | Mã ngân hàng | Chọn từ danh sách ▼ | `BIDV` |
+| E | Ngày thay đổi | Chọn ngày | `01/03/2026` |
+| F | Loại thay đổi | Chọn từ danh sách ▼ | `Tăng HM`, `Giảm HM`, `Đóng` |
+| G | Trạng thái mới | Chọn từ danh sách ▼ | `Hiệu lực`, `Đã đóng`, `Tạm dừng` |
+| H | Hạn mức cũ | Nhập bằng đồng, **đầy đủ số 0** | `300000000000` (= 300 tỷ) |
+| I | Hạn mức mới | Nhập bằng đồng, **đầy đủ số 0** | `500000000000` (= 500 tỷ) |
 | J | Người duyệt | Gõ tay | `P. TGĐ Nguyễn Văn A` |
-| K | Số HĐTD / PL | Gõ tay | `PL-01/2026` |
-| L | Lý do | Gõ tay | `Tăng HM theo nhu cầu mùa vụ` |
+| K | Số HĐTD / Phụ lục | Gõ tay | `PL-01/2026` |
+| L | Lý do | Gõ tay | `Tăng HM theo nhu cầu vốn mùa vụ` |
 | M | Ghi chú | Gõ tay | `Có hiệu lực từ 01/03/2026` |
 
 <Note>
-  Cột **A** (Mã thay đổi `CL-00001`…) được tạo tự động.
+  Cột **A** (Mã thay đổi `CL-00001`…) được **tạo tự động**.
 </Note>

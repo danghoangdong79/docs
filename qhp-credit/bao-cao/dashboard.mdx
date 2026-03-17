@@ -1,0 +1,94 @@
+---
+title: Dashboard cảnh báo đáo hạn
+sidebarTitle: Dashboard
+description: Theo dõi cảnh báo đáo hạn khoản vay và thư tín dụng trực tuyến.
+icon: gauge-high
+---
+
+<Info>
+  Dashboard tự động lấy dữ liệu từ Google Sheet và hiển thị trực quan — bạn **không cần nhập gì** trên Dashboard.
+</Info>
+
+## Mở Dashboard
+
+Nhấn nút **Dashboard** ở góc phải trên cùng của trang này, hoặc truy cập trực tiếp:
+
+<Card title="Mở Dashboard" icon="arrow-up-right-from-square" href="https://script.google.com/macros/s/AKfycbyM4qRfONDbB6XpqYWS3ijYvzuw3fOZoppUUIa6EYFCGj9GQS_9Ow4xPIMIAkRKsv5gsQ/exec">
+  Cảnh báo đáo hạn — cập nhật theo thời gian thực
+</Card>
+
+## Bố cục Dashboard
+
+### Thẻ tổng quan
+
+Bốn thẻ lớn ở trên cùng cho bạn thấy ngay tình hình:
+
+| Thẻ | Ý nghĩa | Khi nào cần chú ý |
+|:----|:---------|:-------------------|
+| **Quá hạn + Hôm nay** | Tổng số tiền đã trễ hạn hoặc đến hạn trong ngày | Luôn kiểm tra đầu ngày |
+| **Trong 7 ngày tới** | Số tiền sẽ đến hạn trong tuần | Lên kế hoạch trả nợ |
+| **Tổng dư nợ theo dõi** | Toàn bộ dư nợ trong vòng 60 ngày tới | Nhìn tổng quan |
+| **Ngân hàng** | Danh sách NH có khoản đáo hạn | Biết nhanh NH nào liên quan |
+
+### Nút lọc nhanh
+
+Dãy nút phía dưới thẻ tổng quan giúp bạn chỉ xem những khoản cần quan tâm:
+
+- 🔴 **Quá hạn** — Đã trễ hạn, cần xử lý ngay
+- 🟠 **Hôm nay** — Đến hạn trong ngày
+- **≤ 7 ngày** — Sắp đến hạn trong tuần
+- **≤ 30 ngày** — Đến hạn trong tháng
+- **≤ 60 ngày** — Đến hạn trong 2 tháng
+
+<Tip>
+  Nhấn vào bất kỳ nút nào để lọc ngay. Nhấn **Xóa lọc** để quay lại hiển thị tất cả.
+</Tip>
+
+### Bộ lọc chi tiết
+
+Bốn ô lọc giúp thu hẹp dữ liệu:
+
+| Bộ lọc | Tác dụng | Ví dụ |
+|:-------|:---------|:------|
+| **NH** | Lọc theo ngân hàng | Chỉ xem BIDV |
+| **Loại** | Lọc theo loại sản phẩm | Chỉ xem Khoản vay hoặc LC |
+| **Mức** | Lọc theo mức cảnh báo | Chỉ xem cảnh báo nghiêm trọng |
+| **Site** | Lọc theo pháp nhân | Chỉ xem QHP hoặc QHPS |
+
+## Biểu đồ
+
+Dashboard có 4 biểu đồ trực quan:
+
+<AccordionGroup>
+  <Accordion title="Dư nợ theo Ngân hàng (biểu đồ cột)">
+    Cột cao = dư nợ lớn. Màu sắc cho biết mức cảnh báo (đỏ = quá hạn, vàng = sắp hạn).
+  </Accordion>
+  <Accordion title="Phân bổ theo mức cảnh báo (biểu đồ tròn)">
+    Cho thấy tỷ lệ khoản quá hạn, sắp hạn, và an toàn trong tổng danh mục.
+  </Accordion>
+  <Accordion title="Lịch đáo hạn 30 ngày tới (biểu đồ dòng thời gian)">
+    Cho biết ngày nào có nhiều khoản đến hạn — giúp lên kế hoạch trả nợ.
+  </Accordion>
+  <Accordion title="Phân bổ theo sản phẩm (biểu đồ tròn)">
+    Cho thấy tỷ lệ giữa Khoản vay và Thư tín dụng.
+  </Accordion>
+</AccordionGroup>
+
+## Bảng chi tiết
+
+Bảng ở cuối trang liệt kê **từng khoản đáo hạn** với đầy đủ thông tin:
+
+| Cột | Nội dung |
+|:----|:---------|
+| Trạng thái | 🔴 Quá hạn / 🟠 Hôm nay / 🟢 Đến hạn |
+| Site | Pháp nhân (QHP, QHPS...) |
+| NH | Ngân hàng |
+| Số hợp đồng | Số khế ước hoặc số LC |
+| Dư nợ | Số tiền hiện tại |
+| Ngày đáo hạn | Ngày đến hạn thanh toán |
+| Còn lại | Số ngày còn lại (âm = đã trễ) |
+| Tra cứu | Nút tìm kiếm khoản chi tiết |
+
+<Warning>
+  Dashboard chỉ **hiển thị dữ liệu** — mọi chỉnh sửa phải thực hiện trực tiếp trên Google Sheet.
+</Warning>
