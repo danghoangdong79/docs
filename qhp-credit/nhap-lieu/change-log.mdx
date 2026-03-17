@@ -1,76 +1,45 @@
 ---
-title: CHANGE_LOG — Nhật ký thay đổi hạn mức
-description: Ghi nhận mọi thay đổi trạng thái/giá trị của LIMIT và SUBLIMIT
-icon: timeline
+title: Nhật ký thay đổi hạn mức
+sidebarTitle: Nhật ký thay đổi
+description: Ghi lại mọi biến động trên hạn mức — tăng, giảm, đóng, tái cấp.
+icon: list-timeline
 ---
 
+<Info>
+  Tab **CHANGE_LOG** trong Google Sheet — mỗi dòng = 1 lần thay đổi trạng thái hoặc giá trị hạn mức.
+</Info>
+
 <Warning>
-  Tab này ảnh hưởng trực tiếp đến cột **Trạng thái (Q)** trên LIMIT và cột **N** trên SUBLIMIT.  
-  Formula tự tìm dòng **mới nhất** trong CHANGE_LOG để hiển thị trạng thái.
+  Khi hạn mức tổng thay đổi (tăng/giảm/đóng), bạn **phải** ghi ở đây. Cột Trạng thái trên tab Hạn mức tổng tra tự động từ bảng này.
 </Warning>
 
-## Khi nào nhập?
+## Tình huống nhập
 
-| Tình huống | Loại thay đổi (G) | Trạng thái mới (I) |
+| Tình huống | Loại thay đổi (F) | Trạng thái mới (G) |
 |:-----------|:-------------------|:--------------------|
-| Gia hạn HĐTD | `Gia hạn` | `Đang hoạt động` |
-| Tăng/giảm hạn mức | `Điều chỉnh HM` | — |
-| Tạm ngưng HM | `Đổi trạng thái` | `Tạm ngưng` |
-| Đóng HM | `Đổi trạng thái` | `Đã đóng` |
-| Kích hoạt lại | `Đổi trạng thái` | `Đang hoạt động` |
+| Duyệt hạn mức mới | Phê duyệt | Hiệu lực |
+| Tăng hạn mức | Tăng HM | Hiệu lực |
+| Giảm hạn mức | Giảm HM | Hiệu lực |
+| Đóng hạn mức | Đóng | Đã đóng |
+| Tái cấp hạn mức | Tái cấp | Hiệu lực |
 
 ## Cột cần nhập
 
 | Cột | Tên | Loại | Ví dụ |
 |:----|:----|:-----|:------|
-| B | Ngày thay đổi | 📅 | `15/03/2026` |
-| C | Mã hạn mức | ▼ Dropdown | `LIM-00001` |
-| D | Mã HM con | ▼ (nếu đổi sublimit) | `SUB-00003` hoặc *trống* |
-| G | Loại thay đổi | ▼ Dropdown | `Đổi trạng thái`, `Điều chỉnh HM`, `Gia hạn` |
-| I | Trạng thái mới | Gõ tay | `Đang hoạt động`, `Tạm ngưng`, `Đã đóng` |
-| J | Giá trị cũ | Gõ tay | `300000000000` hoặc `09/06/2026` |
-| K | Giá trị mới | Gõ tay | `500000000000` hoặc `09/06/2027` |
-| L | Người thay đổi | Gõ tay | `Nguyễn Văn A` |
-| M | Ghi chú | Gõ tay | `Gia hạn HĐTD thêm 1 năm` |
+| B | Mã HM | ▼ Dropdown | `LIM-00001` |
+| C | Mã công ty | ▼ Dropdown | `QHP` |
+| D | Mã ngân hàng | ▼ Dropdown | `BIDV` |
+| E | Ngày thay đổi | 📅 | `01/03/2026` |
+| F | Loại thay đổi | ▼ Dropdown | `Tăng HM`, `Giảm HM`, `Đóng` |
+| G | Trạng thái mới | ▼ Dropdown | `Hiệu lực`, `Đã đóng`, `Tạm dừng` |
+| H | HM cũ | **Đồng, đủ số 0** | `300000000000` |
+| I | HM mới | **Đồng, đủ số 0** | `500000000000` |
+| J | Người duyệt | Gõ tay | `P. TGĐ Nguyễn Văn A` |
+| K | Số HĐTD / PL | Gõ tay | `PL-01/2026` |
+| L | Lý do | Gõ tay | `Tăng HM theo nhu cầu mùa vụ` |
+| M | Ghi chú | Gõ tay | `Có hiệu lực từ 01/03/2026` |
 
-## Cột tự động
-
-| Cột | Tên | Nguồn |
-|:----|:----|:------|
-| A | Mã thay đổi | `CHG-00001`… |
-| E | Mã công ty | Lookup từ LIMIT |
-| F | Mã ngân hàng | Lookup từ LIMIT |
-| H | Trường thay đổi | Tự suy từ loại |
-
-## Cơ chế hoạt động
-
-<Info>
-  - **Cột D trống** → thay đổi ảnh hưởng **LIMIT** (hạn mức cha)
-  - **Cột D có giá trị** → thay đổi ảnh hưởng **SUBLIMIT** (hạn mức con)
-</Info>
-
-## Ví dụ
-
-<AccordionGroup>
-  <Accordion title="Gia hạn HĐTD (đổi ngày hết hạn)">
-    HĐTD cũ hết hạn **09/06/2026** → gia hạn đến **09/06/2027**
-
-    | B | C | D | G | I | J | K | M |
-    |:--|:--|:--|:--|:--|:--|:--|:--|
-    | 15/03/2026 | LIM-00001 | *(trống)* | Gia hạn | Đang hoạt động | 09/06/2026 | 09/06/2027 | Gia hạn thêm 1 năm |
-  </Accordion>
-  <Accordion title="Tăng hạn mức">
-    HM cũ **280 tỷ** → tăng lên **400 tỷ**
-
-    | B | C | D | G | I | J | K | M |
-    |:--|:--|:--|:--|:--|:--|:--|:--|
-    | 01/04/2026 | LIM-00005 | *(trống)* | Điều chỉnh HM | Đang hoạt động | 280000000000 | 400000000000 | Tăng HM từ 280 tỷ lên 400 tỷ |
-  </Accordion>
-  <Accordion title="Đóng sublimit">
-    Đóng HM con LC vì hết nhu cầu
-
-    | B | C | D | G | I | J | K | M |
-    |:--|:--|:--|:--|:--|:--|:--|:--|
-    | 20/03/2026 | LIM-00001 | SUB-00003 | Đổi trạng thái | Đã đóng | Đang hoạt động | Đã đóng | Đóng HM con LC |
-  </Accordion>
-</AccordionGroup>
+<Note>
+  Cột **A** (Mã thay đổi `CL-00001`…) được tạo tự động.
+</Note>

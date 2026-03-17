@@ -1,52 +1,43 @@
 ---
-title: LC_EVENT — Sự kiện LC
-description: Ghi nhận mọi biến động trên thư tín dụng
+title: Biến động thư tín dụng
+sidebarTitle: Biến động thư tín dụng
+description: Ghi nhận biến động L/C — tu chỉnh, thanh toán, gia hạn.
 icon: arrows-rotate
 ---
 
+<Info>
+  Tab **LC_EVENT** trong Google Sheet — mỗi dòng = 1 sự kiện biến động trên thư tín dụng.
+</Info>
+
 ## Khi nào nhập?
 
-| Tình huống | Nhóm SK (I) | Loại sự kiện (J) |
-|:-----------|:------------|:------------------|
-| Thanh toán 1 phần | `FINANCIAL` | `Thanh toán` |
-| Tất toán LC | `FINANCIAL` | `Tất toán` |
-| Tu chỉnh tăng/giảm | `ADJUSTMENT` | `Tu chỉnh tăng giá trị` |
-| Gia hạn LC | `ADJUSTMENT` | `Gia hạn` |
-| Đóng LC | `STATUS` | `Đóng LC` |
+| Tình huống | Nhóm sự kiện (I) | Loại sự kiện (J) |
+|:-----------|:-----------------|:-----------------|
+| Thanh toán bộ chứng từ | Tài chính | Thanh toán |
+| Tất toán LC | Tài chính | Tất toán |
+| Tu chỉnh tăng trị giá | Điều chỉnh | Tu chỉnh tăng |
+| Tu chỉnh giảm trị giá | Điều chỉnh | Tu chỉnh giảm |
+| Gia hạn | Điều chỉnh | Gia hạn |
 
 ## Cột cần nhập
 
 | Cột | Tên | Loại | Ví dụ |
 |:----|:----|:-----|:------|
 | B | Mã LC | ▼ Dropdown | `LC-00001` |
-| C | Số LC | Gõ tay | `LC-TAM-001` |
+| C | Số LC | Gõ tay | `LC2025-0001` |
 | D | Mã công ty | ▼ Dropdown | `QHP` |
-| E | Mã ngân hàng | ▼ Dropdown | `TCB` |
-| F | Loại LC | Gõ tay | `UPAS`, `Sight`, `Usance` |
-| G | Giá trị LC | **Đồng** — giá trị **TRƯỚC** sự kiện | `15711137199` |
+| E | Mã ngân hàng | ▼ Dropdown | `BIDV` |
+| F | Loại LC | Gõ tay | `LC nhập khẩu` |
+| G | Dư nợ LC | **Đồng** — dư nợ **trước** sự kiện | `100000000000` |
 | H | Ngày sự kiện | 📅 | `20/03/2026` |
-| I | Nhóm SK | ▼ Dropdown | `FINANCIAL`, `ADJUSTMENT`, `STATUS` |
-| J | Loại sự kiện | Gõ tay | `Thanh toán`, `Tu chỉnh` |
-| K | Trường thay đổi | Gõ tay | `outstanding_amount`, `lc_amount` |
-| L | Giá trị cũ | Gõ tay | `15.711.137.199` |
-| M | Giá trị mới | Gõ tay | *(trống nếu thanh toán)* |
-| N | Số tiền GD | **Đồng, đủ số 0** | `785556860` |
-| O | Dư nợ sau GD | **Đồng, đủ số 0** | `14925580339` |
+| I | Nhóm sự kiện | ▼ Dropdown | `Tài chính`, `Điều chỉnh` |
+| J | Loại sự kiện | Gõ tay | `Thanh toán` |
+| K | Trường thay đổi | Gõ tay | `current_balance` |
+| N | Số tiền giao dịch | **Đồng, đủ số 0** | `50000000000` |
+| O | Dư nợ sau giao dịch | **Đồng, đủ số 0** | `50000000000` |
 | P | Người chỉnh sửa | Gõ tay | `H. Đồng` |
-| Q | Ngày hiệu lực | 📅 | `20/03/2026` |
+| R | Ghi chú | Gõ tay | `Thanh toán BCT lô hàng T3` |
 
 <Note>
-  Cột **A** (Mã sự kiện `LCE-00001`…) tự động tạo.
+  Cột **A** (Mã sự kiện `CE-00001`…) được tạo tự động.
 </Note>
-
-## Ví dụ: Thanh toán LC 1 phần
-
-LC trị giá **15,71 tỷ** → thanh toán **785,6 triệu** → dư nợ còn **14,93 tỷ**
-
-| B | G | H | I | J | K | N | O | P |
-|:--|:--|:--|:--|:--|:--|:--|:--|:--|
-| LC-00001 | 15711137199 | 20/03/2026 | FINANCIAL | Thanh toán | outstanding_amount | 785556860 | 14925580339 | H. Đồng |
-
-<Warning>
-  Sau khi nhập event, **nhớ cập nhật** cột Dư nợ (U) trên tab **LC** tương ứng.
-</Warning>

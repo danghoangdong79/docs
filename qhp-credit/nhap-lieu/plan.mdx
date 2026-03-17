@@ -1,81 +1,53 @@
 ---
-title: PLAN — Kế hoạch tín dụng
-description: Lập kế hoạch mở mới, gia hạn, điều chỉnh hạn mức
+title: Kế hoạch tín dụng
+sidebarTitle: Kế hoạch tín dụng
+description: Lập kế hoạch giải ngân, trả nợ và sử dụng hạn mức trong tương lai.
 icon: calendar-check
 ---
 
-## Khi nào nhập?
+<Info>
+  Tab **PLAN** trong Google Sheet — mỗi dòng = 1 kế hoạch tín dụng trong tương lai.
+</Info>
 
-| Tình huống | Loại kế hoạch (C) |
-|:-----------|:------------------|
-| Mở HM mới tại NH chưa có | `Mở mới` |
-| Gia hạn HĐTD sắp hết hạn | `Gia hạn` |
-| Đề xuất tăng hạn mức | `Tăng HM` |
-| Giảm/thu hẹp HM | `Giảm HM` |
-| Đóng quan hệ tín dụng | `Đóng` |
+## Tình huống nhập
+
+| Tình huống | Loại KH (F) | Trạng thái (G) |
+|:-----------|:------------|:----------------|
+| Dự kiến giải ngân khoản vay mới | Giải ngân mới | Dự kiến |
+| Lên kế hoạch trả nợ gốc | Trả nợ gốc | Dự kiến |
+| Kế hoạch mở LC nhập hàng | Mở LC | Dự kiến |
+| Kế hoạch gia hạn hạn mức | Gia hạn HM | Dự kiến |
 
 ## Cột cần nhập
 
 | Cột | Tên | Loại | Ví dụ |
 |:----|:----|:-----|:------|
-| B | Ngày dự kiến | 📅 | `01/06/2026` |
-| C | Loại kế hoạch | ▼ Dropdown | `Mở mới`, `Gia hạn`, `Tăng HM` |
-| D | Mã hạn mức | ▼ (nếu HM hiện có) | `LIM-00005` hoặc *trống* |
-| E | Mã công ty | ▼ Dropdown | `QHPS` |
-| F | Mã ngân hàng | ▼ Dropdown | `VCB` |
-| I | HM dự kiến | **Đồng, đủ số 0** | `500000000000` |
-| K | Hạn mới | 📅 (nếu gia hạn) | `01/06/2027` |
-| L | Trạng thái | Gõ tay | `Dự kiến`, `Đang thương lượng`, `Đã phê duyệt` |
-| M | Ghi chú | Gõ tay | `Mở HM mới VCB cho QHPS` |
+| B | Mã HM | ▼ Dropdown | `LIM-00001` |
+| C | Mã công ty | ▼ Dropdown | `QHP` |
+| D | Mã ngân hàng | ▼ Dropdown | `BIDV` |
+| E | Loại sản phẩm | ▼ Dropdown | `Vay`, `LC` |
+| F | Loại kế hoạch | ▼ Dropdown | `Giải ngân mới`, `Trả nợ gốc` |
+| G | Trạng thái | ▼ Dropdown | `Dự kiến`, `Đã duyệt`, `Hoàn thành`, `Huỷ` |
+| H | Ngày dự kiến | 📅 | `15/06/2026` |
+| I | Số tiền dự kiến | **Đồng, đủ số 0** | `100000000000` |
+| J | Tiền tệ | ▼ Dropdown | `VND`, `USD` |
+| K | Người lập | Gõ tay | `H. Đồng` |
+| L | Ghi chú | Gõ tay | `Giải ngân bổ sung vốn lưu động Q3` |
 
-## Cột tự động
-
-| Cột | Tên | Nguồn |
-|:----|:----|:------|
-| A | Mã kế hoạch | `PLAN-00001`… |
-| G | Tên hạn mức | Lookup từ LIMIT |
-| H | HM hiện tại | Lookup từ LIMIT (col I) |
-| J | Chênh lệch | = I − H |
+<Note>
+  Cột **A** (Mã kế hoạch `PL-00001`…) được tạo tự động.
+</Note>
 
 ## Vòng đời kế hoạch
 
-<Steps>
-  <Step title="Dự kiến">
-    Ghi nhận nhu cầu — chưa liên hệ NH
-  </Step>
-  <Step title="Đang thương lượng">
-    Đã gửi đề xuất cho NH — đang chờ phản hồi
-  </Step>
-  <Step title="Đã phê duyệt">
-    NH đã phê duyệt — đang chờ ký HĐTD
-  </Step>
-  <Step title="Hoàn thành">
-    Đã ký HĐTD → chuyển sang nhập CHANGE_LOG + cập nhật LIMIT
-  </Step>
-</Steps>
-
-## Ví dụ
-
-<AccordionGroup>
-  <Accordion title="Mở HM mới">
-    Mở HM mới tại VCB cho QHPS, dự kiến 500 tỷ
-
-    | B | C | D | E | F | I | L | M |
-    |:--|:--|:--|:--|:--|:--|:--|:--|
-    | 01/06/2026 | Mở mới | *(trống)* | QHPS | VCB | 500000000000 | Dự kiến | Mở HM mới VCB cho QHPS |
-  </Accordion>
-  <Accordion title="Gia hạn HM sắp hết">
-    TCB HĐTD hết hạn 17/03, đề xuất gia hạn đến 17/03/2027
-
-    | B | C | D | E | F | I | K | L | M |
-    |:--|:--|:--|:--|:--|:--|:--|:--|:--|
-    | 15/03/2026 | Gia hạn | LIM-00004 | QHP | TCB | 1000000000000 | 17/03/2027 | Đang thương lượng | HĐTD sắp hết hạn |
-  </Accordion>
-</AccordionGroup>
+```mermaid
+graph LR
+    A[Dự kiến] --> B[Đã duyệt]
+    B --> C[Hoàn thành]
+    B --> D[Huỷ]
+    A --> D
+```
 
 <Tip>
-  Khi kế hoạch **Hoàn thành**, nhớ:
-  1. Nhập dòng mới vào **CHANGE_LOG** (gia hạn/điều chỉnh)
-  2. Hoặc nhập dòng mới vào **LIMIT** (mở mới)
-  3. Cập nhật trạng thái PLAN thành `Hoàn thành`
+  Khi kế hoạch **Hoàn thành**, hãy nhập dữ liệu thực tế vào tab Khoản vay hoặc Thư tín dụng tương ứng.
 </Tip>

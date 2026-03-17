@@ -1,20 +1,25 @@
 ---
-title: LC — Thư tín dụng
-description: 1 dòng = 1 LC cụ thể
-icon: file-invoice
+title: Thư tín dụng
+sidebarTitle: Thư tín dụng
+description: Theo dõi chi tiết từng L/C — số tiền, ngày mở, ngày hết hạn và trạng thái.
+icon: file-contract
 ---
+
+<Info>
+  Tab **LC** trong Google Sheet — 1 dòng = 1 thư tín dụng gắn với 1 hạn mức con.
+</Info>
 
 ## Quy trình nhập
 
 <Steps>
-  <Step title="Liên kết HM">
-    **B** Mã HM con (▼) → **C** Mã HM (▼) → **D** Công ty (▼) → **E** NH (▼)
+  <Step title="Liên kết hạn mức">
+    Cột **B** — chọn Mã HM con (▼ Dropdown) để gắn LC với hạn mức.
   </Step>
-  <Step title="Thông tin LC">
-    **F** Sản phẩm → **G** Số LC → **H** Lô hàng → **I** Chiều LC → **J** Phương thức TT
+  <Step title="Nhập thông tin LC">
+    **F** Số LC → **G** Loại LC (▼) → **H** Tiền tệ (▼)
   </Step>
-  <Step title="Ngày + Giá trị">
-    **N** Tiền tệ → **O** Ngày PH → **P** Ngày HH → **Q** Ngày đáo hạn → **S** Giá trị LC → **V** Ký quỹ
+  <Step title="Nhập số tiền + ngày">
+    **I** Trị giá LC (đồng) → **K** Ngày mở → **L** Ngày hết hạn → **M** Ngày giao hàng
   </Step>
 </Steps>
 
@@ -23,29 +28,32 @@ icon: file-invoice
 | Cột | Tên | Loại | Ví dụ |
 |:----|:----|:-----|:------|
 | B | Mã HM con | ▼ Dropdown | `SUB-00003` |
-| C | Mã HM | ▼ Dropdown | `LIM-00001` |
-| D | Mã công ty | ▼ Dropdown | `QHP` |
-| E | Mã NH | ▼ Dropdown | `TCB` |
-| F | Sản phẩm | Gõ tay | `Thư tín dụng (L/C)` |
-| G | Số LC | Gõ tay | `LC-2025-001234` |
-| H | Lô hàng / Ref | Gõ tay | `Thép cuộn HRC 20FT` |
-| I | Chiều LC | Gõ tay | `Nhập khẩu` / `Xuất khẩu` |
-| J | Phương thức TT | Gõ tay | `UPAS`, `Trả chậm`, `Trả ngay` |
-| K | Lãi suất UPAS | Nhập số (nếu UPAS) | `4.5` |
-| L | Người thụ hưởng | Gõ tay | `ABC Co., Ltd` |
-| N | Tiền tệ | ▼ Dropdown | `USD` |
-| O | Ngày phát hành | 📅 | `15/01/2026` |
-| P | Ngày hết hạn | 📅 | `15/07/2026` |
-| Q | Ngày đáo hạn TT | 📅 | `15/09/2026` |
-| S | Giá trị LC | **Đồng, đủ số 0** | `15711137199` |
-| U | Dư nợ | **Đồng, đủ số 0** | `15711137199` |
-| V | Ký quỹ LC | **Đồng, đủ số 0** | `0` |
+| F | Số LC | Gõ tay | `LC2025-0001` |
+| G | Loại LC | ▼ Dropdown | `LC nhập khẩu`, `LC nội địa` |
+| H | Tiền tệ | ▼ Dropdown | `VND`, `USD` |
+| I | Trị giá LC | **Đồng, đủ số 0** | `100000000000` |
+| K | Ngày mở LC | 📅 | `01/02/2026` |
+| L | Ngày hết hạn LC | 📅 | `01/08/2026` |
+| M | Ngày giao hàng | 📅 | `15/05/2026` |
+| N | Người thụ hưởng | Gõ tay | `ABC Corp Ltd.` |
+| P | Dư nợ LC hiện tại | **Đồng, đủ số 0** | `100000000000` |
 
-## Cột tự động
+## Cột tự động — không nhập
 
-| Cột | Tên |
-|:----|:----|
-| A | Mã LC (`LC-00001`…) |
-| R | Số ngày còn HH |
-| T | Kỳ hạn |
-| W | Trạng thái |
+| Cột | Tên | Công thức |
+|:----|:----|:----------|
+| A | Mã LC | `LC-00001`… (ARRAYFORMULA) |
+| C | Mã công ty | Tra từ Hạn mức con |
+| D | Mã ngân hàng | Tra từ Hạn mức con |
+| E | Loại sản phẩm | Tra từ Hạn mức con |
+| R | Số ngày còn | = L − TODAY() |
+| S | Trạng thái | IF(P=0, "Đã thanh toán", IF(L<TODAY(), "Quá hạn", "Đang mở")) |
+
+<Accordion title="Cột tùy chọn (không bắt buộc)">
+  | Cột | Tên |
+  |:----|:----|
+  | O | Phí LC (%) |
+  | Q | Ghi chú |
+  | T | Người phụ trách |
+  | U | Mã tham chiếu |
+</Accordion>

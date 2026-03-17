@@ -1,31 +1,28 @@
 ---
-title: REPORT_MATURITY — Đáo hạn theo NH/tháng
-description: Ma trận tổng hợp giá trị đáo hạn theo ngân hàng và tháng
-icon: table-cells
+title: Đáo hạn theo ngân hàng
+sidebarTitle: Đáo hạn theo ngân hàng
+description: Xem tổng hợp khoản đáo hạn theo ngân hàng và theo tháng.
+icon: building
 ---
 
-## Mục đích
+<Info>
+  Tab **REPORT_MATURITY** trong Google Sheet — tự động tổng hợp, không cần nhập liệu.
+</Info>
 
-Ma trận **Ngân hàng × Tháng 1-12** — giúp nhìn nhanh tháng nào tập trung nhiều đáo hạn.
+## Cách sử dụng
 
-<Note>
-  Tab này **tự động tính toán** — chỉ cần thay đổi **bộ lọc**.
-</Note>
+<Steps>
+  <Step title="Mở tab báo cáo">
+    Chuyển sang tab **REPORT_MATURITY** trên Google Sheet.
+  </Step>
+  <Step title="Chọn bộ lọc">
+    Lọc theo **Ngân hàng**, **Công ty**, hoặc **Tháng đáo hạn** để thu hẹp dữ liệu.
+  </Step>
+  <Step title="Phân tích">
+    Xem tổng số tiền đáo hạn theo từng ngân hàng, từng tháng — hỗ trợ lập kế hoạch thanh toán.
+  </Step>
+</Steps>
 
-## Bộ lọc
-
-| Ô | Filter | Ví dụ |
-|:--|:-------|:------|
-| **C3** | Công ty | `QHPS`, `Tất cả` |
-| **E3** | Năm | `2026` |
-| **G3** | Ngân hàng | `TCB`, `Tất cả` |
-
-## Kết quả hiển thị
-
-| | T1 | T2 | T3 | … | T12 |
-|:--|:--|:--|:--|:--|:----|
-| **BIDV** | 0 | 5.000 | 12.500 | … | 0 |
-| **TCB** | 3.200 | 0 | 8.100 | … | 15.000 |
-| **Tổng** | 3.200 | 5.000 | 20.600 | … | 15.000 |
-
-Đơn vị: **triệu đồng**
+<Tip>
+  Kết hợp với tab **Kế hoạch tín dụng** để đối chiếu kế hoạch trả nợ với thực tế đáo hạn.
+</Tip>

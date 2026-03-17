@@ -1,20 +1,25 @@
 ---
-title: SUBLIMIT — Hạn mức con
-description: 1 dòng = 1 sản phẩm (Vay/LC/BL/CK) trong 1 LIMIT
+title: Hạn mức con
+sidebarTitle: Hạn mức con
+description: Phân bổ hạn mức tổng thành nhiều hạn mức con theo từng sản phẩm tín dụng.
 icon: sitemap
 ---
+
+<Info>
+  Tab **SUBLIMIT** trong Google Sheet — 1 dòng = 1 phân bổ hạn mức con cho 1 sản phẩm cụ thể.
+</Info>
 
 ## Quy trình nhập
 
 <Steps>
   <Step title="Chọn hạn mức cha">
-    Cột **B** — ▼ chọn `LIM-XXXXX` từ danh sách
+    Cột **B** — chọn Mã HM từ dropdown (danh sách liên kết từ tab Hạn mức tổng)
   </Step>
-  <Step title="Chọn sản phẩm">
-    **F** Nhóm SP (▼) → **G** Sản phẩm (▼ thay đổi theo F)
+  <Step title="Nhập sản phẩm + số tiền">
+    **F** Loại sản phẩm (▼) → **G** HM con phê duyệt (đồng, đủ số 0)
   </Step>
-  <Step title="Nhập số tiền">
-    **I** Tên HM con → **J** Số tiền (đồng, đủ số 0)
+  <Step title="Kiểm tra phân bổ">
+    Cột **H** (Phần trăm) tự tính = G / HM tổng. Tổng các dòng cùng 1 mã HM nên ≤ 100%.
   </Step>
 </Steps>
 
@@ -22,34 +27,18 @@ icon: sitemap
 
 | Cột | Tên | Loại | Ví dụ |
 |:----|:----|:-----|:------|
-| B | Mã HM | ▼ Dropdown | `LIM-00001` |
-| F | Nhóm SP | ▼ Dropdown | `Vay`, `LC`, `Bảo lãnh`, `Chiết khấu` |
-| G | Sản phẩm | ▼ Dropdown | `Vay ngắn hạn`, `Thư tín dụng (L/C)` |
-| H | Tỷ lệ ký quỹ (%) | Nhập số | `0`, `25`, `100` |
-| I | Tên HM con | Gõ tay | `Vay ngắn hạn BIDV` |
-| J | Số tiền | **Đồng, đủ số 0** | `150000000000` |
-| M | Ngày hết hạn | 📅 Tùy chọn | `09/06/2026` |
+| B | Mã HM (cha) | ▼ Dropdown | `LIM-00001` |
+| F | Loại sản phẩm | ▼ Dropdown | `Vay ngắn hạn`, `LC` |
+| G | HM con phê duyệt | **Đồng, đủ số 0** | `150000000000` |
 
-## Cột tự động — KHÔNG nhập
+## Cột tự động — không nhập
 
-| Cột | Tên | Nguồn |
-|:----|:----|:------|
-| A | Mã HM con | `SUB-00001`… |
-| C | Mã công ty | VLOOKUP từ LIMIT |
-| D | Mã ngân hàng | VLOOKUP từ LIMIT |
-| E | Mã chi nhánh | VLOOKUP từ LIMIT |
-| K | Tiền tệ | VLOOKUP từ LIMIT |
-| N | Trạng thái | Kế thừa LIMIT |
-| R | Mã HM NV cha | VLOOKUP từ LIMIT |
-
-## Ví dụ
-
-<Info>
-  **LIM-00004** (QHP/TCB, 1.000 tỷ, Đa sản phẩm) cần 3 sublimit:
-</Info>
-
-| B | F | G | I | J |
-|:--|:--|:--|:--|:--|
-| LIM-00004 | Vay | Vay ngắn hạn | Vay NH TCB | `150000000000` |
-| LIM-00004 | LC | Thư tín dụng (L/C) | LC TCB | `500000000000` |
-| LIM-00004 | Bảo lãnh | Bảo lãnh thanh toán | BL TCB | `50000000000` |
+| Cột | Tên | Công thức |
+|:----|:----|:----------|
+| A | Mã HM con | `SUB-00001`… (ARRAYFORMULA) |
+| C | Mã công ty | Tra từ Hạn mức tổng |
+| D | Mã ngân hàng | Tra từ Hạn mức tổng |
+| E | Tên hạn mức | Tra từ Hạn mức tổng |
+| H | Phần trăm phân bổ | = G / HM tổng |
+| I | Đã sử dụng | SUMIFS từ LOAN + LC |
+| J | Còn trống | = G − I |
