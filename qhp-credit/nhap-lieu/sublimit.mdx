@@ -1,48 +1,61 @@
 ---
-title: Hạn mức con
-sidebarTitle: Hạn mức con
-description: Chia hạn mức tổng thành nhiều phần nhỏ theo từng loại sản phẩm.
+title: SUBLIMIT — Hạn mức con
+description: 1 dòng = 1 sản phẩm (Vay/LC/BL/CK/BTT) trong 1 LIMIT
 icon: sitemap
 ---
 
-<Info>
-  Đây là tab **SUBLIMIT** trên Google Sheet. Mỗi dòng là **một phần** của hạn mức tổng được phân bổ cho một sản phẩm cụ thể (Vay ngắn hạn, LC…).
-</Info>
-
-## Quy trình nhập — 3 bước
+## Quy trình nhập
 
 <Steps>
-  <Step title="Bước 1: Chọn hạn mức tổng">
-    Nhấn vào ô cột **B** để chọn mã hạn mức từ danh sách (ví dụ: `LIM-00001`). Đây chính là hạn mức mà bạn đã nhập ở tab Hạn mức tổng.
+  <Step title="Chọn hạn mức cha">
+    Cột **B** — ▼ chọn `LIM-XXXXX` từ danh sách
   </Step>
-  <Step title="Bước 2: Chọn loại sản phẩm">
-    Cột **F** — chọn sản phẩm muốn phân bổ (ví dụ: Vay ngắn hạn, LC nhập khẩu…).
+  <Step title="Chọn sản phẩm">
+    **G** Nhóm SP (▼) → **H** Sản phẩm (▼ thay đổi theo G)
   </Step>
-  <Step title="Bước 3: Nhập số tiền phân bổ">
-    Cột **G** — nhập số tiền hạn mức con (đồng, đầy đủ số 0). Tổng các hạn mức con nên bằng hoặc nhỏ hơn hạn mức tổng.
+  <Step title="Nhập số tiền">
+    **J** Tên HM con → **K** Số tiền (đồng, đủ số 0)
   </Step>
 </Steps>
 
-## Chi tiết các cột cần nhập
+## Cột cần nhập
 
-| Cột | Nội dung | Cách nhập | Ví dụ |
-|:----|:---------|:----------|:------|
-| B | Mã hạn mức tổng | Chọn từ danh sách ▼ | `LIM-00001` |
-| F | Loại sản phẩm | Chọn từ danh sách ▼ | `Vay ngắn hạn`, `LC` |
-| G | Hạn mức con được duyệt | Nhập bằng đồng, **đầy đủ số 0** | `150000000000` (= 150 tỷ) |
+| Cột | Tên | Loại | Ví dụ |
+|:----|:----|:-----|:------|
+| B | Mã HM cha | ▼ Dropdown | `LIM-00001` |
+| G | Nhóm SP | ▼ Dropdown | `Vay`, `LC`, `Bảo lãnh`, `Chiết khấu`, `Bao thanh toán` |
+| H | Sản phẩm | ▼ Phụ thuộc G | `Vay ngắn hạn`, `Thư tín dụng (L/C)` |
+| I | Tỷ lệ ký quỹ (%) | Nhập số | `0`, `25`, `100` |
+| J | Tên HM con | Gõ tay | `Vay ngắn hạn BIDV` |
+| K | Số tiền | **Đồng, đủ số 0** | `150000000000` |
 
-## Các cột tự động — không cần nhập
+## Cột tự động — KHÔNG nhập (6 cột VLOOKUP từ LIMIT)
 
-| Cột | Nội dung | Cách tính |
-|:----|:---------|:----------|
-| A | Mã hạn mức con | Tự tạo: `SUB-00001`… |
-| C | Công ty | Tự lấy từ hạn mức tổng |
-| D | Ngân hàng | Tự lấy từ hạn mức tổng |
-| E | Tên hạn mức | Tự lấy từ hạn mức tổng |
-| H | % phân bổ | = Hạn mức con / Hạn mức tổng |
-| I | Đã sử dụng | Tự cộng từ Khoản vay + LC |
-| J | Còn trống | = Hạn mức con − Đã sử dụng |
+| Cột | Tên | Nguồn |
+|:----|:----|:------|
+| A | Mã HM con | `SUB-00001`… (ARRAYFORMULA) |
+| **C** | **Mã công ty** | VLOOKUP(B → LIMIT A:B) |
+| **D** | **Mã ngân hàng** | VLOOKUP(B → LIMIT A:C) |
+| **E** | **Mã chi nhánh** | VLOOKUP(B → LIMIT A:D) |
+| **F** | **Số HĐTD** | VLOOKUP(B → LIMIT A:E) |
+| L | Tiền tệ | VLOOKUP từ LIMIT |
+| **M** | **Ngày hiệu lực** | VLOOKUP(B → LIMIT A:L) |
+| **N** | **Ngày hết hạn** | VLOOKUP(B → LIMIT A:M) |
+| **O** | **Trạng thái** | Auto từ LM_EVENT → fallback LIMIT |
 
-<Tip>
-  Kiểm tra cột **H** (% phân bổ) — tổng tất cả hạn mức con trên cùng một hạn mức tổng nên ≤ 100%.
-</Tip>
+<Warning>
+  **8 cột tự tính** từ LIMIT — khi LIMIT thay đổi, SUBLIMIT tự cập nhật.
+  Cột **O (Trạng thái)** kế thừa từ LIMIT, hoặc lấy từ LM_EVENT nếu có event "Đóng HM con".
+</Warning>
+
+## Ví dụ
+
+<Info>
+  **LIM-00004** (QHP/TCB, 1.000 tỷ, Đa sản phẩm) cần 3 sublimit:
+</Info>
+
+| B | G | H | J | K |
+|:--|:--|:--|:--|:--|
+| LIM-00004 | Vay | Vay ngắn hạn | Vay NH TCB | `150000000000` |
+| LIM-00004 | LC | Thư tín dụng (L/C) | LC TCB | `500000000000` |
+| LIM-00004 | Bảo lãnh | Bảo lãnh thanh toán | BL TCB | `50000000000` |

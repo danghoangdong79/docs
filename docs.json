@@ -48,9 +48,9 @@
           {
             "group": "Sự kiện",
             "pages": [
+              "qhp-credit/nhap-lieu/lm-event",
               "qhp-credit/nhap-lieu/loan-event",
-              "qhp-credit/nhap-lieu/lc-event",
-              "qhp-credit/nhap-lieu/change-log"
+              "qhp-credit/nhap-lieu/lc-event"
             ]
           },
           {
