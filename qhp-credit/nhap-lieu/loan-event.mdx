@@ -1,7 +1,7 @@
 ---
 title: Biến động khoản vay
 sidebarTitle: Biến động khoản vay
-description: Ghi lại mỗi khi khoản vay có thay đổi — trả nợ, giải ngân thêm, đổi lãi suất.
+description: Ghi lại mỗi khi khoản vay có thay đổi — trả nợ, giải ngân thêm, tất toán, gia hạn.
 icon: arrow-right-arrow-left
 ---
 
@@ -9,40 +9,102 @@ icon: arrow-right-arrow-left
   Đây là tab **LOAN_EVENT** trên Google Sheet. Mỗi dòng = **một sự kiện** xảy ra trên một khoản vay.
 </Info>
 
-## Khi nào cần nhập?
+## 5 loại sự kiện
 
-| Có gì xảy ra? | Nhóm sự kiện (I) | Loại sự kiện (J) |
-|:---------------|:-----------------|:-----------------|
-| Công ty trả một phần nợ gốc | Tài chính | Trả nợ gốc |
-| Trả hết nợ, đóng khoản vay | Tài chính | Tất toán |
-| Ngân hàng giải ngân thêm | Tài chính | Giải ngân thêm |
-| Điều chỉnh lãi suất | Điều chỉnh | Đổi lãi suất |
-| Gia hạn khoản vay | Điều chỉnh | Gia hạn |
-| Cơ cấu lại nợ | Điều chỉnh | Cơ cấu nợ |
+### 💰 Tài chính — Ảnh hưởng dư nợ
+
+| Loại sự kiện | Khi nào? | Nhập amount? | Dư nợ sau GD |
+|:------------|:---------|:---:|:------------|
+| **Giải ngân** | Giải ngân **thêm** (đợt 2, 3…) | ✅ Nhập | Dư nợ cũ **+ amount** |
+| **Trả gốc** | Công ty trả **một phần** nợ gốc | ✅ Nhập | Dư nợ cũ **− amount** |
+| **Tất toán** | Trả hết nợ, **đóng** khoản vay | ❌ Tự tính | → **0** |
+
+<Warning>
+  **Giải ngân lần đầu** không nhập ở đây!
+  Lần đầu giải ngân = thêm **dòng mới bên tab LOAN** (có sẵn cột `disbursed_amount`).
+  Tab LOAN_EVENT chỉ ghi khi giải ngân **bổ sung** từ đợt 2 trở đi.
+</Warning>
+
+<Tip>
+  **Tất toán** không cần nhập số tiền. Hệ thống **tự lấy dư nợ hiện tại** và tính dư nợ → 0.
+  Bạn chỉ cần: chọn khoản vay → chọn "Tất toán" → xong.
+</Tip>
+
+### 📋 Hợp đồng — Thay đổi điều khoản
+
+| Loại sự kiện | Khi nào? | Ghi gì? |
+|:------------|:---------|:--------|
+| **Gia hạn** | Kéo dài thời hạn vay | Ghi **ngày đáo hạn mới** vào cột Ghi chú |
+| **Điều chỉnh** | Đổi lãi suất, sửa lỗi, thay đổi khác | Ghi **chi tiết thay đổi** vào cột Ghi chú |
+
+---
+
+## Ví dụ: Vòng đời khoản vay
+
+<Steps>
+  <Step title="LOAN: Nhập khoản vay mới — giải ngân 50 tỷ">
+    Thêm **dòng mới bên tab LOAN** khi ngân hàng giải ngân lần đầu.
+
+    | Tab | Cột | Giá trị |
+    |:----|:----|:--------|
+    | **LOAN** | disbursed_amount | `50000000000` |
+    | **LOAN** | current_balance | `50000000000` |
+
+    → Khoản vay được tạo, dư nợ khởi điểm = **50 tỷ**
+  </Step>
+  <Step title="LOAN_EVENT: Giải ngân thêm 20 tỷ">
+    Một tháng sau, ngân hàng giải ngân thêm. Thêm dòng bên **LOAN_EVENT**.
+
+    | Cột | Giá trị |
+    |:----|:--------|
+    | Loại sự kiện (J) | `Giải ngân` |
+    | Số tiền GD (N) | `20000000000` |
+
+    → Hệ thống tự tính: 50 tỷ + 20 tỷ = dư nợ **70 tỷ**
+  </Step>
+  <Step title="LOAN_EVENT: Trả gốc 10 tỷ">
+    Trả nợ gốc định kỳ.
+
+    | Cột | Giá trị |
+    |:----|:--------|
+    | Loại sự kiện (J) | `Trả gốc` |
+    | Số tiền GD (N) | `10000000000` |
+
+    → Hệ thống tự tính: 70 tỷ − 10 tỷ = dư nợ **60 tỷ**
+  </Step>
+  <Step title="LOAN_EVENT: Tất toán">
+    Trả hết nợ. **Không cần nhập số tiền.**
+
+    | Cột | Giá trị |
+    |:----|:--------|
+    | Loại sự kiện (J) | `Tất toán` |
+
+    → Hệ thống tự tính: dư nợ → **0** ✓
+  </Step>
+</Steps>
+
+---
 
 ## Chi tiết các cột cần nhập
 
-| Cột | Nội dung | Cách nhập | Ví dụ |
-|:----|:---------|:----------|:------|
-| B | Mã khoản vay | Chọn từ danh sách ▼ | `LOAN-00001` |
-| C | Số khế ước | Gõ tay | `KU-2025-00123` |
-| D | Mã công ty | Chọn từ danh sách ▼ | `QHP` |
-| E | Mã ngân hàng | Chọn từ danh sách ▼ | `BIDV` |
-| F | Loại vay | Gõ tay | `Vay ngắn hạn` |
-| G | Dư nợ **trước** khi thay đổi | Nhập bằng đồng | `50000000000` |
-| H | Ngày xảy ra sự kiện | Chọn ngày | `20/03/2026` |
-| I | Nhóm sự kiện | Chọn từ danh sách ▼ | `Tài chính`, `Điều chỉnh` |
-| J | Loại sự kiện | Gõ tay | `Trả nợ gốc` |
-| K | Thông tin thay đổi | Gõ tay | `current_balance` hoặc `interest_rate` |
-| N | Số tiền giao dịch | Nhập bằng đồng, **đầy đủ số 0** | `10000000000` (= 10 tỷ) |
-| O | Dư nợ **sau** khi thay đổi | Nhập bằng đồng, **đầy đủ số 0** | `40000000000` (= 40 tỷ) |
-| P | Người nhập | Gõ tay | `H. Đồng` |
-| R | Ghi chú | Gõ tay | `Trả nợ gốc định kỳ T3` |
+Chỉ nhập **4–5 cột**, còn lại hệ thống tự tính:
+
+| Cột | Nội dung | Cách nhập | Bắt buộc? |
+|:----|:---------|:----------|:---------:|
+| **B** | Mã khoản vay | Chọn từ danh sách ▼ | ✅ |
+| **H** | Ngày sự kiện | Chọn ngày | ✅ |
+| **J** | Loại sự kiện | Chọn từ danh sách ▼ | ✅ |
+| **N** | Số tiền giao dịch | Nhập bằng đồng | Giải ngân & Trả gốc |
+| **P** | Người nhập | Gõ tay | Tùy chọn |
+| **Q** | Ghi chú | Gõ tay | Gia hạn & Điều chỉnh |
 
 <Note>
-  Cột **A** (Mã sự kiện `LE-00001`…) được **tạo tự động**.
+  **Các cột tự tính** (không cần nhập):
+  - **A**: Mã sự kiện (`LE-00001`…)
+  - **C–G**: Thông tin khoản vay (tự lấy từ tab LOAN)
+  - **I**: Nhóm sự kiện (FINANCIAL / CONTRACT)
+  - **K**: Trường thay đổi
+  - **L**: Giá trị cũ (dư nợ trước GD)
+  - **M**: Giá trị mới (dư nợ sau GD)
+  - **O**: Dư nợ sau giao dịch
 </Note>
-
-<Tip>
-  Sau khi nhập sự kiện, nhớ cập nhật lại **dư nợ hiện tại** trên tab Khoản vay cho khớp.
-</Tip>
