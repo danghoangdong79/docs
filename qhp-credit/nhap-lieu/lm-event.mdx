@@ -1,126 +1,109 @@
 ---
-title: LM_EVENT — Sự kiện hạn mức
-description: Ghi nhận mọi thay đổi của LIMIT và SUBLIMIT (10 loại event)
-icon: timeline
+title: Sự kiện hạn mức
+sidebarTitle: Sự kiện hạn mức
+description: Ghi lại mỗi khi hạn mức có thay đổi — phê duyệt, gia hạn, điều chỉnh, đóng.
+icon: arrows-rotate
 ---
 
+<Info>
+  Tab **LM_EVENT** — mỗi dòng = một sự kiện trên hạn mức tín dụng.
+</Info>
+
+## 10 loại sự kiện
+
+### LIMIT (7 loại)
+
+| Loại | Nhóm | Nhập gì? | Ảnh hưởng |
+|:-----|:-----|:---------|:----------|
+| **Phê duyệt mới** | Phê duyệt | K (HM mới) | Trạng thái → **Đang hoạt động** |
+| **Tái cấp** | Phê duyệt | K (HM mới) | Trạng thái → **Đang hoạt động** |
+| **Thay đổi hạn mức** | Điều chỉnh | K (HM mới) | HM phê duyệt thay đổi |
+| **Gia hạn** | Hợp đồng | K (ngày mới) | Đổi ngày hết hạn |
+| **Đổi trạng thái** | Hợp đồng | I (trạng thái) | Chuyển trạng thái HM |
+| **Đóng hạn mức** | Đóng | *(không nhập)* | Trạng thái → **Đã đóng** |
+| **Thay đổi TSĐB** | Điều chỉnh | K (tỷ lệ mới) | Đổi tỷ lệ tài sản đảm bảo |
+
+### SUBLIMIT (3 loại)
+
+| Loại | Nhóm | Nhập gì? | Ảnh hưởng |
+|:-----|:-----|:---------|:----------|
+| **Phân bổ HM con** | Phê duyệt | K (HM mới) | Trạng thái → **Đang hoạt động** |
+| **Thay đổi HM con** | Điều chỉnh | K (HM mới) | HM con thay đổi |
+| **Đóng HM con** | Đóng | *(không nhập)* | Trạng thái → **Đã đóng** |
+
 <Warning>
-  Tab này ảnh hưởng trực tiếp đến cột **Trạng thái** trên **LIMIT (P)** và **SUBLIMIT (O)**.
-  Formula tự lấy event **mới nhất** để cập nhật trạng thái.
+  Cột **D trống** → event ảnh hưởng **LIMIT** (hạn mức cha).
+  Cột **D có giá trị** → event ảnh hưởng **SUBLIMIT** (hạn mức con).
 </Warning>
 
-## Khi nào nhập?
-
-<AccordionGroup>
-  <Accordion title="7 loại LIMIT event" icon="building-columns">
-    | Tình huống | Loại thay đổi (G) | Trạng thái mới (I) |
-    |:-----------|:-------------------|:--------------------| 
-    | Cấp HĐTD mới lần đầu | `Phê duyệt mới` | `Đang hoạt động` |
-    | Gia hạn HĐTD + ký HĐ mới | `Tái cấp` | `Đang hoạt động` |
-    | Tăng/giảm HM phê duyệt | `Thay đổi hạn mức` | — |
-    | Kéo dài ngày hết hạn | `Gia hạn` | — |
-    | Chuyển trạng thái HM | `Đổi trạng thái` | ▼ Chọn trạng thái |
-    | Chấm dứt HĐTD | `Đóng hạn mức` | `Đã đóng` |
-    | Thay đổi tỷ lệ đảm bảo | `Thay đổi TSĐB` | — |
-  </Accordion>
-  <Accordion title="3 loại SUBLIMIT event" icon="sitemap">
-    | Tình huống | Loại thay đổi (G) | Trạng thái mới (I) |
-    |:-----------|:-------------------|:--------------------| 
-    | Tạo/phân bổ sublimit mới | `Phân bổ HM con` | `Đang hoạt động` |
-    | Tăng/giảm HM con | `Thay đổi HM con` | — |
-    | Đóng sublimit | `Đóng HM con` | `Đã đóng` |
-  </Accordion>
-</AccordionGroup>
+---
 
 ## Cột cần nhập
 
-| Cột | Tên | Loại | Ví dụ |
-|:----|:----|:-----|:------|
-| B | Ngày thay đổi | 📅 | `19/03/2026` |
-| C | Mã hạn mức | ▼ Dropdown | `LIM-00001` |
-| D | Mã HM con | ▼ (nếu event sublimit) | `SUB-00003` hoặc *trống* |
-| G | Loại thay đổi | ▼ Dropdown (10 loại, có màu) | `Gia hạn`, `Đóng hạn mức` |
-| I | Trạng thái mới | ▼ Dropdown (5 giá trị, có màu) | `Đang hoạt động`, `Đã đóng` |
-| K | Giá trị mới | Gõ tay | `500000000000` hoặc `09/06/2027` |
-| L | Người thay đổi | Gõ tay | `Nguyễn Văn A` |
-| M | Ghi chú | Gõ tay | `Gia hạn HĐTD thêm 1 năm` |
+| Cột | Nội dung | Bắt buộc? |
+|:----|:---------|:---------:|
+| **B** | Ngày thay đổi | ✅ |
+| **C** | Mã hạn mức ▼ | ✅ |
+| **D** | Mã HM con ▼ | Nếu event sublimit |
+| **G** | Loại thay đổi ▼ | ✅ |
+| **I** | Trạng thái mới ▼ | Đổi trạng thái / Đóng |
+| **K** | Giá trị mới | Thay đổi HM / Gia hạn |
+| **L** | Người thay đổi | Tùy chọn |
+| **M** | Ghi chú | Tùy chọn |
 
-## Cột tự động — KHÔNG nhập
+<Note>
+  **Cột tự tính** — không cần nhập:
+  - **A** (Mã thay đổi), **E** (Mã công ty), **F** (Mã ngân hàng)
+  - **H** (Trường thay đổi — suy từ loại event)
+  - **J** (Giá trị cũ — auto lookup từ LIMIT/SUBLIMIT)
+</Note>
 
-| Cột | Tên | Công thức |
-|:----|:----|:----------|
-| A | Mã thay đổi | `CHG-00001`… (ARRAYFORMULA) |
-| E | Mã công ty | VLOOKUP(C → LIMIT) |
-| F | Mã ngân hàng | VLOOKUP(C → LIMIT) |
-| H | Trường thay đổi | VLOOKUP(G → CONFIG) — tự suy từ loại event |
-| **J** | **Giá trị cũ** | **SWITCH(G)** — auto lookup giá trị hiện tại từ LIMIT/SUBLIMIT |
-
-<Info>
-  Cột **J (Giá trị cũ)** tự điền dựa vào loại event:
-  - `Thay đổi hạn mức` → lấy HM phê duyệt hiện tại từ LIMIT
-  - `Gia hạn` → lấy ngày hết hạn hiện tại từ LIMIT
-  - `Đổi trạng thái` → lấy trạng thái hiện tại từ LIMIT
-  - `Thay đổi HM con` → lấy số tiền hiện tại từ SUBLIMIT
-  - `Phê duyệt mới` / `Phân bổ HM con` → trống (chưa có giá trị cũ)
-</Info>
-
-## Dropdown trạng thái mới (I) — có màu
-
-| Giá trị | Màu | Ý nghĩa |
-|:--------|:----|:---------|
-| `Đang hoạt động` | 🟢 Xanh lá | HM đang sử dụng bình thường |
-| `Đang tái cấp` | 🔵 Xanh dương | Đang chờ NH duyệt tái cấp |
-| `Tạm dừng` | 🟡 Vàng | NH tạm ngưng giải ngân |
-| `Đã đóng` | 🔴 Đỏ | Chấm dứt HĐTD |
-| `Hết hạn` | 🟤 Nâu | Quá ngày hết hạn |
-
-## Cơ chế hoạt động
-
-<Info>
-  - **Cột D trống** → thay đổi ảnh hưởng **LIMIT** (hạn mức cha)
-  - **Cột D có giá trị** → thay đổi ảnh hưởng **SUBLIMIT** (hạn mức con)
-</Info>
+---
 
 ## Ví dụ
 
 <AccordionGroup>
   <Accordion title="Gia hạn HĐTD">
-    HĐTD hết hạn **30/09/2026** → gia hạn đến **30/09/2027**
+    HĐTD hết hạn **30/09/2026** → gia hạn đến **30/09/2027**.
 
-    | B | C | D | G | I | K | M |
-    |:--|:--|:--|:--|:--|:--|:--|
-    | 01/03/2026 | LIM-00004 | *(trống)* | Gia hạn | — | 30/09/2027 | Gia hạn BIDV 12 tháng |
+    | B | C | D | G | K | M |
+    |:--|:--|:--|:--|:--|:--|
+    | 01/03/2026 | LIM-00004 | *(trống)* | Gia hạn | 30/09/2027 | Gia hạn BIDV 12 tháng |
 
-    → **J tự điền:** `30/09/2026` (ngày HH hiện tại)
+    → Tự tính: J = `30/09/2026` (ngày HH hiện tại)
   </Accordion>
   <Accordion title="Thay đổi hạn mức">
-    HM VTB từ **250 tỷ** → tăng lên **300 tỷ**
+    HM VTB từ **250 tỷ** → tăng lên **300 tỷ**.
 
-    | B | C | D | G | I | K | M |
-    |:--|:--|:--|:--|:--|:--|:--|
-    | 15/02/2026 | LIM-00003 | *(trống)* | Thay đổi hạn mức | — | 300000000000 | Tăng HM VTB thêm 50 tỷ |
+    | B | C | D | G | K | M |
+    |:--|:--|:--|:--|:--|:--|
+    | 15/02/2026 | LIM-00003 | *(trống)* | Thay đổi hạn mức | 300000000000 | Tăng HM VTB thêm 50 tỷ |
 
-    → **J tự điền:** `250.000.000.000` (HM hiện tại)
+    → Tự tính: J = `250.000.000.000` (HM hiện tại)
   </Accordion>
   <Accordion title="Đóng hạn mức">
-    Đóng hoàn toàn HĐTD VIB
+    Đóng hoàn toàn HĐTD VIB — không cần nhập K.
 
-    | B | C | D | G | I | K | M |
-    |:--|:--|:--|:--|:--|:--|:--|
-    | 18/03/2026 | LIM-00007 | *(trống)* | Đóng hạn mức | Đã đóng | — | Đóng HĐTD VIB |
+    | B | C | D | G | I |
+    |:--|:--|:--|:--|:--|
+    | 18/03/2026 | LIM-00007 | *(trống)* | Đóng hạn mức | Đã đóng |
 
-    → **J tự điền:** `Đang hoạt động` (status hiện tại)
-    → **LIMIT P** tự cập nhật thành `Đã đóng`
-    → Tất cả **SUBLIMIT** của LIM-00007 cũng thành `Đã đóng`
+    → Tự tính: J = `Đang hoạt động` (status hiện tại)
+    → LIMIT P tự cập nhật thành **Đã đóng**
   </Accordion>
   <Accordion title="Đóng sublimit">
-    Đóng HM con bảo lãnh VIB
+    Đóng HM con bảo lãnh VIB — nhập **D** để chỉ định sublimit.
 
-    | B | C | D | G | I | K | M |
-    |:--|:--|:--|:--|:--|:--|:--|
-    | 18/03/2026 | LIM-00007 | SUB-00023 | Đóng HM con | Đã đóng | — | Đóng HM con BL VIB |
+    | B | C | D | G | I |
+    |:--|:--|:--|:--|:--|
+    | 18/03/2026 | LIM-00007 | SUB-00023 | Đóng HM con | Đã đóng |
 
-    → **J tự điền:** `Đang hoạt động` (status HM con hiện tại)
-    → Chỉ **SUB-00023** thành `Đã đóng`, các SUB khác không ảnh hưởng
+    → Tự tính: J = `Đang hoạt động` (status HM con hiện tại)
+    → Chỉ **SUB-00023** thành Đã đóng, các SUB khác không ảnh hưởng.
   </Accordion>
 </AccordionGroup>
+
+<Warning>
+  Nhập **đúng thứ tự thời gian** — event mới phải có ngày sau event cũ.
+  Trạng thái trên **LIMIT (P)** và **SUBLIMIT (O)** tự cập nhật từ event mới nhất.
+</Warning>
