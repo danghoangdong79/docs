@@ -1,51 +1,91 @@
 ---
-title: LC — Thư tín dụng
-description: 1 dòng = 1 LC cụ thể
-icon: file-invoice
+title: Thư tín dụng (LC)
+sidebarTitle: Thư tín dụng
+description: Nhập chi tiết từng LC — loại LC, số tiền, ngày mở, ngày hết hạn, bên thụ hưởng.
+icon: file-contract
 ---
 
-## Quy trình nhập
+<Info>
+  Tab **LC** — mỗi dòng = một thư tín dụng dưới một hạn mức con.
+</Info>
 
-<Steps>
-  <Step title="Liên kết HM">
-    **B** Mã HM con (▼) → **C** Mã HM (▼) → **D** Công ty (▼) → **E** NH (▼)
-  </Step>
-  <Step title="Thông tin LC">
-    **F** Sản phẩm → **G** Số LC → **H** Lô hàng → **I** Chiều LC → **J** Phương thức TT
-  </Step>
-  <Step title="Ngày + Giá trị">
-    **N** Tiền tệ → **O** Ngày PH → **P** Ngày HH → **Q** Ngày đáo hạn → **S** Giá trị LC → **V** Ký quỹ
-  </Step>
-</Steps>
+## Khi nào nhập?
+
+Mỗi khi ngân hàng **mở một LC mới** cho công ty — thêm dòng mới vào đây.
+
+---
 
 ## Cột cần nhập
 
-| Cột | Tên | Loại | Ví dụ |
-|:----|:----|:-----|:------|
-| B | Mã HM con | ▼ Dropdown | `SUB-00003` |
-| C | Mã HM | ▼ Dropdown | `LIM-00001` |
-| D | Mã công ty | ▼ Dropdown | `QHP` |
-| E | Mã NH | ▼ Dropdown | `TCB` |
-| F | Sản phẩm | Gõ tay | `Thư tín dụng (L/C)` |
-| G | Số LC | Gõ tay | `LC-2025-001234` |
-| H | Lô hàng / Ref | Gõ tay | `Thép cuộn HRC 20FT` |
-| I | Chiều LC | Gõ tay | `Nhập khẩu` / `Xuất khẩu` |
-| J | Phương thức TT | Gõ tay | `UPAS`, `Trả chậm`, `Trả ngay` |
-| K | Lãi suất UPAS | Nhập số (nếu UPAS) | `4.5` |
-| L | Người thụ hưởng | Gõ tay | `ABC Co., Ltd` |
-| N | Tiền tệ | ▼ Dropdown | `USD` |
-| O | Ngày phát hành | 📅 | `15/01/2026` |
-| P | Ngày hết hạn | 📅 | `15/07/2026` |
-| Q | Ngày đáo hạn TT | 📅 | `15/09/2026` |
-| S | Giá trị LC | **Đồng, đủ số 0** | `15711137199` |
-| U | Dư nợ | **Đồng, đủ số 0** | `15711137199` |
-| V | Ký quỹ LC | **Đồng, đủ số 0** | `0` |
+### Nhóm 1: Định danh
 
-## Cột tự động
+| Cột | Nội dung | Cách nhập |
+|:----|:---------|:----------|
+| **B** | Mã hạn mức con | Chọn ▼ `SUB-00001` |
+| **G** | Số LC | Gõ tay |
+| **H** | Lô hàng / Ref | Gõ tay (tùy chọn) |
 
-| Cột | Tên |
-|:----|:----|
-| A | Mã LC (`LC-00001`…) |
-| R | Số ngày còn HH |
-| T | Kỳ hạn |
-| W | Trạng thái |
+### Nhóm 2: Phân loại LC
+
+| Cột | Nội dung | Cách nhập | Giá trị |
+|:----|:---------|:----------|:--------|
+| **I** | Chiều LC | Chọn ▼ | `Nhập khẩu` / `Xuất khẩu` |
+| **J** | Loại LC | Chọn ▼ | `UPAS` / `Trả chậm` / `Trả ngay` |
+| **K** | Tính chất LC | Chọn ▼ | `Thương mại` / `SBLC` |
+| **L** | Chuyển nhượng | ☐ Checkbox | Tích nếu LC chuyển nhượng được |
+| **M** | Xác nhận | ☐ Checkbox | Tích nếu có NH thứ 2 xác nhận |
+
+### Nhóm 3: Tài chính
+
+| Cột | Nội dung | Cách nhập |
+|:----|:---------|:----------|
+| **N** | Lãi suất UPAS | Nhập số `5.2%` (chỉ khi J = UPAS) |
+| **O** | Bên thụ hưởng | Gõ tay (tên NCC) |
+| **P** | Ngày TT NCC | Chọn ngày |
+| **Q** | Tiền tệ | Chọn ▼ `VND` / `USD` |
+
+### Nhóm 4: Thời gian
+
+| Cột | Nội dung | Cách nhập |
+|:----|:---------|:----------|
+| **R** | Ngày phát hành | Chọn ngày |
+| **T** | Ngày đáo hạn TT | Chọn ngày |
+| **Y** | Ký quỹ LC | Nhập số |
+| **AC** | Ngày HH gốc | Chọn ngày (= ngày HH ban đầu) |
+
+<Note>
+  **Cột tự tính** — không cần nhập:
+  - **A** (Mã LC), **C–F** (từ SUBLIMIT)
+  - **S** (Ngày HH — tự cập nhật khi Gia hạn)
+  - **U** (Số ngày còn), **V** (Trị giá LC), **W** (Kỳ hạn)
+  - **X** (Dư nợ), **Z** (Trạng thái), **AB** (Event cuối)
+</Note>
+
+---
+
+## Phân loại LC
+
+<AccordionGroup>
+  <Accordion title="UPAS (Usance Payable At Sight)">
+    - NCC **nhận tiền ngay**, DN **trả chậm** 295–300 ngày
+    - NH nước ngoài tài trợ → có **lãi suất UPAS** (cột N)
+    - Kỳ hạn dài nhất, chi phí cao nhất
+  </Accordion>
+  <Accordion title="Trả chậm (Usance LC)">
+    - NH chấp nhận trả NCC **sau 90 ngày**
+    - Không lãi UPAS, chỉ phí chấp nhận
+  </Accordion>
+  <Accordion title="Trả ngay (At Sight)">
+    - NH trả NCC **ngay** khi chứng từ hợp lệ
+    - Chi phí thấp nhất
+  </Accordion>
+  <Accordion title="SBLC (Standby LC)">
+    - LC **dự phòng** — NH chỉ trả khi DN vi phạm HĐ
+    - Giống bảo lãnh, kỳ hạn dài (trung dài hạn)
+    - Chọn K = `SBLC`
+  </Accordion>
+</AccordionGroup>
+
+<Warning>
+  Số tiền nhập đầy đủ số 0. Ví dụ: 15.7 tỷ = `15711137199`.
+</Warning>

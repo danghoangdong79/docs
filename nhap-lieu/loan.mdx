@@ -1,50 +1,55 @@
 ---
-title: LOAN — Khoản vay
-description: 1 dòng = 1 khế ước vay (giải ngân cụ thể)
-icon: money-bill-trend-up
+title: Khoản vay
+sidebarTitle: Khoản vay
+description: Nhập chi tiết từng khoản vay — số tiền, lãi suất, ngày giải ngân, ngày đáo hạn.
+icon: money-bill-transfer
 ---
 
-## Quy trình nhập
+<Info>
+  Tab **LOAN** — mỗi dòng = một khoản vay dưới một hạn mức con.
+</Info>
 
-<Steps>
-  <Step title="Nhập KU + liên kết HM">
-    **B** Số khế ước → **C** Mã HM con (▼) → **D** Mã HM (▼) → **E** Công ty (▼) → **F** NH (▼)
-  </Step>
-  <Step title="Thông tin khoản vay">
-    **G** Tiền tệ (▼) → **H** Loại vay → **I** Lãi suất → **J** Loại lãi suất
-  </Step>
-  <Step title="Ngày + Số tiền">
-    **K** Ngày nhận nợ → **L** Ngày đến hạn → **N** Giải ngân → **O** Dư nợ hiện tại
-  </Step>
-</Steps>
+## Khi nào nhập?
+
+Mỗi khi công ty **giải ngân khoản vay mới** — thêm dòng mới vào đây.
+
+<Tip>
+  Hệ thống tự tạo event **"Giải ngân mới"** ở LOAN_EVENT và tự cập nhật dư nợ.
+</Tip>
+
+---
 
 ## Cột cần nhập
 
-| Cột | Tên | Loại | Ví dụ |
-|:----|:----|:-----|:------|
-| B | Số khế ước | Gõ tay | `LD2529703709` |
-| C | Mã HM con | ▼ Dropdown | `SUB-00001` |
-| D | Mã HM | ▼ Dropdown | `LIM-00001` |
-| E | Mã công ty | ▼ Dropdown | `QHP` |
-| F | Mã NH | ▼ Dropdown | `TCB` |
-| G | Tiền tệ | ▼ Dropdown | `VND` |
-| H | Loại khoản vay | Gõ tay | `Vay ngắn hạn`, `Vay dài hạn` |
-| I | Lãi suất (%/năm) | Nhập số | `5.5` |
-| J | Loại lãi suất | Gõ tay | `Cố định`, `Thả nổi` |
-| K | Ngày nhận nợ | 📅 | `15/01/2026` |
-| L | Ngày đến hạn | 📅 | `15/07/2026` |
-| N | Số tiền giải ngân | **Đồng, đủ số 0** | `3955895058` |
-| O | Dư nợ hiện tại | **Đồng, đủ số 0** | `1505895058` |
+| Cột | Nội dung | Cách nhập |
+|:----|:---------|:----------|
+| **B** | Số khế ước | Gõ tay |
+| **C** | Mã hạn mức con | Chọn ▼ |
+| **E** | Mã công ty | Chọn ▼ |
+| **F** | Mã ngân hàng | Chọn ▼ |
+| **G** | Tiền tệ | Chọn ▼ |
+| **H** | Loại vay | Chọn ▼ |
+| **I** | Lãi suất gốc (%/năm) | Nhập số (VD: 0.12 = 12%) |
+| **K** | Loại lãi suất | Chọn ▼ |
+| **L** | Ngày giải ngân | Chọn ngày |
+| **M** | Kỳ hạn | Nhập text (VD: `6M`) |
 
-## Cột tự động
+<Note>
+  Các cột còn lại hệ thống **tự tính** — không cần nhập.
+  Ngày đáo hạn, lãi suất hiện tại, dư nợ, trạng thái đều tự cập nhật.
+</Note>
 
-| Cột | Tên |
-|:----|:----|
-| A | Mã khoản vay (`LOAN-00001`…) |
-| M | Kỳ hạn (tháng) |
-| Q | Trạng thái |
-| R | Số ngày còn HH |
+## Trạng thái khoản vay
 
-<Accordion title="Cột tùy chọn">
-  **P** Ngày cập nhật DN · **S** Mã dự án · **T** Nguồn dữ liệu · **U** Ghi chú
-</Accordion>
+Hệ thống tự xác định trạng thái:
+
+| Trạng thái | Màu | Ý nghĩa |
+|:-----------|:---:|:--------|
+| 🟢 **Đang hoạt động** | Xanh | Bình thường, còn > 30 ngày |
+| 🟡 **Sắp đáo hạn** | Cam | Còn ≤ 30 ngày |
+| 🔴 **Quá hạn** | Đỏ | Đã quá ngày đáo hạn |
+| ⚪ **Tất toán** | Xám | Đã trả hết nợ |
+
+<Warning>
+  Số tiền nhập đầy đủ số 0. Ví dụ: 50 tỷ = `50000000000`.
+</Warning>

@@ -50,7 +50,7 @@
     },
     {
       "group": "Sự kiện",
-      "pages": ["nhap-lieu/loan-event", "nhap-lieu/lc-event", "nhap-lieu/change-log"]
+      "pages": ["nhap-lieu/lm-event", "nhap-lieu/loan-event", "nhap-lieu/lc-event"]
     },
     {
       "group": "Kế hoạch",

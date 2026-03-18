@@ -1,52 +1,118 @@
 ---
-title: LC_EVENT — Sự kiện LC
-description: Ghi nhận mọi biến động trên thư tín dụng
+title: Biến động thư tín dụng
+sidebarTitle: Biến động LC
+description: Ghi lại mỗi khi LC có thay đổi — phát hành, thanh toán, sửa đổi, gia hạn, đóng.
 icon: arrows-rotate
 ---
 
-## Khi nào nhập?
+<Info>
+  Tab **LC_EVENT** — mỗi dòng = một sự kiện trên thư tín dụng.
+</Info>
 
-| Tình huống | Nhóm SK (I) | Loại sự kiện (J) |
-|:-----------|:------------|:------------------|
-| Thanh toán 1 phần | `FINANCIAL` | `Thanh toán` |
-| Tất toán LC | `FINANCIAL` | `Tất toán` |
-| Tu chỉnh tăng/giảm | `ADJUSTMENT` | `Tu chỉnh tăng giá trị` |
-| Gia hạn LC | `ADJUSTMENT` | `Gia hạn` |
-| Đóng LC | `STATUS` | `Đóng LC` |
+## Các loại sự kiện
+
+| Loại | Nhóm | Nhập gì? | Ảnh hưởng lên LC |
+|:-----|:-----|:---------|:-----------------|
+| **Phát hành** | FINANCIAL | N (số tiền) | Dư nợ **+ amount**, Trị giá LC **+ amount** |
+| **Thanh toán** | FINANCIAL | N (số tiền) | Dư nợ **− amount** |
+| **Sửa đổi tăng** | CONTRACT | N (số tiền) | Dư nợ **+ amount**, Trị giá LC **+ amount** |
+| **Sửa đổi giảm** | CONTRACT | N (số tiền) | Dư nợ **− amount**, Trị giá LC **− amount** |
+| **Gia hạn** | CONTRACT | M (ngày mới) | LC!S → **ngày hết hạn mới** |
+| **Đóng LC** | FINANCIAL | *(không nhập)* | Dư nợ → **0**, Status → **Đã đóng** |
+| **Chuyển nhượng** | FINANCIAL | N (số tiền) | Dư nợ **− amount** |
+
+---
 
 ## Cột cần nhập
 
-| Cột | Tên | Loại | Ví dụ |
-|:----|:----|:-----|:------|
-| B | Mã LC | ▼ Dropdown | `LC-00001` |
-| C | Số LC | Gõ tay | `LC-TAM-001` |
-| D | Mã công ty | ▼ Dropdown | `QHP` |
-| E | Mã ngân hàng | ▼ Dropdown | `TCB` |
-| F | Loại LC | Gõ tay | `UPAS`, `Sight`, `Usance` |
-| G | Giá trị LC | **Đồng** — giá trị **TRƯỚC** sự kiện | `15711137199` |
-| H | Ngày sự kiện | 📅 | `20/03/2026` |
-| I | Nhóm SK | ▼ Dropdown | `FINANCIAL`, `ADJUSTMENT`, `STATUS` |
-| J | Loại sự kiện | Gõ tay | `Thanh toán`, `Tu chỉnh` |
-| K | Trường thay đổi | Gõ tay | `outstanding_amount`, `lc_amount` |
-| L | Giá trị cũ | Gõ tay | `15.711.137.199` |
-| M | Giá trị mới | Gõ tay | *(trống nếu thanh toán)* |
-| N | Số tiền GD | **Đồng, đủ số 0** | `785556860` |
-| O | Dư nợ sau GD | **Đồng, đủ số 0** | `14925580339` |
-| P | Người chỉnh sửa | Gõ tay | `H. Đồng` |
-| Q | Ngày hiệu lực | 📅 | `20/03/2026` |
+| Cột | Nội dung | Bắt buộc? |
+|:----|:---------|:---------:|
+| **B** | Mã LC | ✅ |
+| **H** | Ngày sự kiện | ✅ |
+| **J** | Loại sự kiện ▼ | ✅ |
+| **M** | Giá trị mới | Gia hạn (ngày mới) |
+| **N** | Số tiền GD | Phát hành / Thanh toán / Sửa đổi / Chuyển nhượng |
+| **P** | Người nhập | Tùy chọn |
+| **Q** | Ngày hiệu lực | Tùy chọn |
+| **R** | Ghi chú | Tùy chọn |
 
 <Note>
-  Cột **A** (Mã sự kiện `LCE-00001`…) tự động tạo.
+  **Cột tự tính** — không cần nhập:
+  - **A** (Mã sự kiện), **C–G** (từ LC — số LC, công ty, ngân hàng, tính chất, trị giá)
+  - **I** (Nhóm SK), **K** (Trường thay đổi), **L** (Giá trị cũ)
+  - **O** (Dư nợ sau GD), **S** (Dư nợ trước GD)
 </Note>
 
-## Ví dụ: Thanh toán LC 1 phần
+---
 
-LC trị giá **15,71 tỷ** → thanh toán **785,6 triệu** → dư nợ còn **14,93 tỷ**
+## Ví dụ nhập liệu
 
-| B | G | H | I | J | K | N | O | P |
-|:--|:--|:--|:--|:--|:--|:--|:--|:--|
-| LC-00001 | 15711137199 | 20/03/2026 | FINANCIAL | Thanh toán | outstanding_amount | 785556860 | 14925580339 | H. Đồng |
+<AccordionGroup>
+  <Accordion title="1. Phát hành LC mới — 1 tỷ">
+    LC mới phát hành trị giá **1.000.000.000 VND**.
+
+    | B | H | J | N |
+    |:--|:--|:--|:--|
+    | LC-00015 | 01/01/2026 | Phát hành | 1000000000 |
+
+    → Tự tính: O (dư nợ sau) = **1.000.000.000**
+  </Accordion>
+  <Accordion title="2. Sửa đổi tăng — thêm 200 triệu">
+    Bổ sung thêm giá trị LC **200.000.000**.
+
+    | B | H | J | N |
+    |:--|:--|:--|:--|
+    | LC-00015 | 15/02/2026 | Sửa đổi tăng | 200000000 |
+
+    → Tự tính: O = **1.200.000.000** (trước 1 tỷ + 200 triệu)
+  </Accordion>
+  <Accordion title="3. Sửa đổi giảm — giảm 100 triệu">
+    Giảm giá trị LC **100.000.000**.
+
+    | B | H | J | N |
+    |:--|:--|:--|:--|
+    | LC-00015 | 01/03/2026 | Sửa đổi giảm | 100000000 |
+
+    → Tự tính: O = **1.100.000.000** (trước 1.2 tỷ − 100 triệu)
+  </Accordion>
+  <Accordion title="4. Gia hạn — đổi ngày hết hạn">
+    Gia hạn LC đến ngày **01/09/2026**.
+
+    | B | H | J | M |
+    |:--|:--|:--|:--|
+    | LC-00015 | 15/03/2026 | Gia hạn | 01/09/2026 |
+
+    → Tự tính: LC!S (ngày HH) cập nhật thành **01/09/2026**
+  </Accordion>
+  <Accordion title="5. Thanh toán một phần — 500 triệu">
+    Thanh toán **500.000.000** từ dư nợ 1.1 tỷ.
+
+    | B | H | J | N |
+    |:--|:--|:--|:--|
+    | LC-00015 | 01/04/2026 | Thanh toán | 500000000 |
+
+    → Tự tính: O = **600.000.000** (trước 1.1 tỷ − 500 triệu)
+  </Accordion>
+  <Accordion title="6. Chuyển nhượng — 200 triệu">
+    Chuyển nhượng **200.000.000** cho bên thứ 3.
+
+    | B | H | J | N |
+    |:--|:--|:--|:--|
+    | LC-00015 | 15/04/2026 | Chuyển nhượng | 200000000 |
+
+    → Tự tính: O = **400.000.000** (trước 600 triệu − 200 triệu)
+  </Accordion>
+  <Accordion title="7. Đóng LC">
+    Đóng LC — không cần nhập số tiền.
+
+    | B | H | J |
+    |:--|:--|:--|
+    | LC-00015 | 01/05/2026 | Đóng LC |
+
+    → Tự tính: O = **0**, LC tab status = **Đã đóng**
+  </Accordion>
+</AccordionGroup>
 
 <Warning>
-  Sau khi nhập event, **nhớ cập nhật** cột Dư nợ (U) trên tab **LC** tương ứng.
+  Nhập **đúng thứ tự thời gian** — event mới phải có ngày sau event cũ. Hệ thống tính dư nợ dựa trên thứ tự dòng.
 </Warning>

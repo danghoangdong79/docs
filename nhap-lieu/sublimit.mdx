@@ -1,6 +1,6 @@
 ---
 title: SUBLIMIT — Hạn mức con
-description: 1 dòng = 1 sản phẩm (Vay/LC/BL/CK) trong 1 LIMIT
+description: 1 dòng = 1 sản phẩm (Vay/LC/BL/CK/BTT) trong 1 LIMIT
 icon: sitemap
 ---
 
@@ -11,10 +11,10 @@ icon: sitemap
     Cột **B** — ▼ chọn `LIM-XXXXX` từ danh sách
   </Step>
   <Step title="Chọn sản phẩm">
-    **F** Nhóm SP (▼) → **G** Sản phẩm (▼ thay đổi theo F)
+    **G** Nhóm SP (▼) → **H** Sản phẩm (▼ thay đổi theo G)
   </Step>
   <Step title="Nhập số tiền">
-    **I** Tên HM con → **J** Số tiền (đồng, đủ số 0)
+    **J** Tên HM con → **K** Số tiền (đồng, đủ số 0)
   </Step>
 </Steps>
 
@@ -22,25 +22,31 @@ icon: sitemap
 
 | Cột | Tên | Loại | Ví dụ |
 |:----|:----|:-----|:------|
-| B | Mã HM | ▼ Dropdown | `LIM-00001` |
-| F | Nhóm SP | ▼ Dropdown | `Vay`, `LC`, `Bảo lãnh`, `Chiết khấu` |
-| G | Sản phẩm | ▼ Dropdown | `Vay ngắn hạn`, `Thư tín dụng (L/C)` |
-| H | Tỷ lệ ký quỹ (%) | Nhập số | `0`, `25`, `100` |
-| I | Tên HM con | Gõ tay | `Vay ngắn hạn BIDV` |
-| J | Số tiền | **Đồng, đủ số 0** | `150000000000` |
-| M | Ngày hết hạn | 📅 Tùy chọn | `09/06/2026` |
+| B | Mã HM cha | ▼ Dropdown | `LIM-00001` |
+| G | Nhóm SP | ▼ Dropdown | `Vay`, `LC`, `Bảo lãnh`, `Chiết khấu`, `Bao thanh toán` |
+| H | Sản phẩm | ▼ Phụ thuộc G | `Vay ngắn hạn`, `Thư tín dụng (L/C)` |
+| I | Tỷ lệ ký quỹ (%) | Nhập số | `0`, `25`, `100` |
+| J | Tên HM con | Gõ tay | `Vay ngắn hạn BIDV` |
+| K | Số tiền | **Đồng, đủ số 0** | `150000000000` |
 
-## Cột tự động — KHÔNG nhập
+## Cột tự động — KHÔNG nhập (6 cột VLOOKUP từ LIMIT)
 
 | Cột | Tên | Nguồn |
 |:----|:----|:------|
-| A | Mã HM con | `SUB-00001`… |
-| C | Mã công ty | VLOOKUP từ LIMIT |
-| D | Mã ngân hàng | VLOOKUP từ LIMIT |
-| E | Mã chi nhánh | VLOOKUP từ LIMIT |
-| K | Tiền tệ | VLOOKUP từ LIMIT |
-| N | Trạng thái | Kế thừa LIMIT |
-| R | Mã HM NV cha | VLOOKUP từ LIMIT |
+| A | Mã HM con | `SUB-00001`… (ARRAYFORMULA) |
+| **C** | **Mã công ty** | VLOOKUP(B → LIMIT A:B) |
+| **D** | **Mã ngân hàng** | VLOOKUP(B → LIMIT A:C) |
+| **E** | **Mã chi nhánh** | VLOOKUP(B → LIMIT A:D) |
+| **F** | **Số HĐTD** | VLOOKUP(B → LIMIT A:E) |
+| L | Tiền tệ | VLOOKUP từ LIMIT |
+| **M** | **Ngày hiệu lực** | VLOOKUP(B → LIMIT A:L) |
+| **N** | **Ngày hết hạn** | VLOOKUP(B → LIMIT A:M) |
+| **O** | **Trạng thái** | Auto từ LM_EVENT → fallback LIMIT |
+
+<Warning>
+  **8 cột tự tính** từ LIMIT — khi LIMIT thay đổi, SUBLIMIT tự cập nhật.
+  Cột **O (Trạng thái)** kế thừa từ LIMIT, hoặc lấy từ LM_EVENT nếu có event "Đóng HM con".
+</Warning>
 
 ## Ví dụ
 
@@ -48,7 +54,7 @@ icon: sitemap
   **LIM-00004** (QHP/TCB, 1.000 tỷ, Đa sản phẩm) cần 3 sublimit:
 </Info>
 
-| B | F | G | I | J |
+| B | G | H | J | K |
 |:--|:--|:--|:--|:--|
 | LIM-00004 | Vay | Vay ngắn hạn | Vay NH TCB | `150000000000` |
 | LIM-00004 | LC | Thư tín dụng (L/C) | LC TCB | `500000000000` |
