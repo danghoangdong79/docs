@@ -6,38 +6,63 @@ icon: money-bill-transfer
 ---
 
 <Info>
-  Đây là tab **LOAN** trên Google Sheet. Mỗi dòng là **một khoản vay** cụ thể dưới một hạn mức con.
+  Tab **LOAN** — mỗi dòng = một khoản vay dưới một hạn mức con.
 </Info>
 
-## Khi nào cần nhập?
+## Khi nào nhập?
 
-Mỗi khi công ty **giải ngân một khoản vay mới** tại ngân hàng — bạn thêm một dòng mới vào đây.
+Mỗi khi công ty **giải ngân khoản vay mới** — thêm dòng mới vào đây.
 
-## Chi tiết các cột cần nhập
+<Tip>
+  Hệ thống tự tạo event **"Giải ngân mới"** ở LOAN_EVENT và tự cập nhật dư nợ.
+</Tip>
 
-| Cột | Nội dung | Cách nhập | Ví dụ |
-|:----|:---------|:----------|:------|
-| B | Mã hạn mức con | Chọn từ danh sách ▼ | `SUB-00001` |
-| C | Mã công ty | Chọn từ danh sách ▼ | `QHP` |
-| D | Mã ngân hàng | Chọn từ danh sách ▼ | `BIDV` |
-| E | Số khế ước | Gõ tay — số trên hợp đồng vay | `KU-2025-00123` |
-| F | Loại vay | Chọn từ danh sách ▼ | `Vay ngắn hạn`, `Vay trung hạn` |
-| G | Mục đích vay | Gõ tay | `Bổ sung vốn lưu động` |
-| H | Số tiền giải ngân | Nhập bằng đồng, **đầy đủ số 0** | `50000000000` (= 50 tỷ) |
-| I | Dư nợ hiện tại | Nhập bằng đồng, **đầy đủ số 0** | `50000000000` |
-| J | Tiền tệ | Chọn từ danh sách ▼ | `VND` |
-| K | Lãi suất (%/năm) | Nhập số thập phân | `6.5` |
-| L | Loại lãi suất | Chọn từ danh sách ▼ | `Thả nổi`, `Cố định` |
-| M | Ngày giải ngân | Chọn ngày | `15/03/2026` |
-| N | Ngày đáo hạn | Chọn ngày | `15/06/2026` |
-| O | Trạng thái | Chọn từ danh sách ▼ | `Đang vay`, `Tất toán` |
-| P | Người phụ trách | Gõ tay | `H. Đồng` |
-| Q | Ghi chú | Gõ tay | `Khoản vay bổ sung Q1/2026` |
+---
+
+## Cột cần nhập
+
+| Cột | Nội dung | Cách nhập |
+|:----|:---------|:----------|
+| **B** | Số khế ước | Gõ tay |
+| **C** | Mã hạn mức con | Chọn ▼ |
+| **E** | Mã công ty | Chọn ▼ |
+| **F** | Mã ngân hàng | Chọn ▼ |
+| **G** | Tiền tệ | Chọn ▼ |
+| **H** | Loại vay | Chọn ▼ |
+| **I** | Lãi suất gốc (%/năm) | Nhập số (VD: 0.12 = 12%) |
+| **K** | Loại lãi suất | Chọn ▼ |
+| **L** | Ngày giải ngân | Chọn ngày |
+| **M** | Kỳ hạn | Nhập text (VD: `6M`) |
+
+## Cột tự tính
+
+| Cột | Nội dung | Nguồn |
+|:----|:---------|:------|
+| **A** | Mã khoản vay | Tự đánh số |
+| **J** | Lãi suất hiện tại | Nếu có ĐCLS event → lấy lãi suất mới, nếu không → I gốc |
+| **N** | Ngày đáo hạn | Nếu có Gia hạn event → ngày mới, nếu không → EDATE(L, M) |
+| **O** | Số tiền giải ngân | Σ giải ngân từ LOAN_EVENT |
+| **P** | Dư nợ hiện tại | Running balance từ LOAN_EVENT (Tất toán → 0) |
+| **Q** | Ngày cập nhật DN | Ngày event gần nhất |
+| **R** | Trạng thái | Tự tính từ sự kiện + ngày đáo hạn |
+| **S** | Số ngày còn HH | N − TODAY() |
 
 <Note>
-  Cột **A** (Mã khoản vay `LOAN-00001`…) được **tạo tự động**, bạn không cần nhập.
+  **J** và **N** tự cập nhật khi có event Gia hạn / ĐCLS ở LOAN_EVENT.
+  Không cần sửa tay — chỉ cần thêm event là xong.
 </Note>
 
+## Trạng thái khoản vay
+
+Cột **R** tự động xác định trạng thái:
+
+| Trạng thái | Màu | Điều kiện |
+|:-----------|:---:|:----------|
+| 🟢 **Đang hoạt động** | Xanh | Bình thường, còn > 30 ngày |
+| 🟡 **Sắp đáo hạn** | Cam | Còn ≤ 30 ngày |
+| 🔴 **Quá hạn** | Đỏ | Đã quá ngày đáo hạn |
+| ⚪ **Tất toán** | Xám | Có event "Tất toán" ở LOAN_EVENT |
+
 <Warning>
-  **Nhớ**: Số tiền nhập đầy đủ số 0. Ví dụ 50 tỷ = `50000000000` (50 + 9 số 0). Sheet sẽ tự hiển thị dấu chấm phân cách.
+  Số tiền nhập đầy đủ số 0. Ví dụ: 50 tỷ = `50000000000`.
 </Warning>
