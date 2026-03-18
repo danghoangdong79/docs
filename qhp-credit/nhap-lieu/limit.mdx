@@ -1,66 +1,60 @@
 ---
-title: LIMIT — Hạn mức tổng
-description: 1 dòng = 1 hạn mức tại 1 ngân hàng cho 1 pháp nhân
+title: Hạn mức tổng
+sidebarTitle: Hạn mức tổng
+description: Nhập hạn mức tín dụng mà ngân hàng cấp cho công ty — số tiền, ngày, loại HM.
 icon: building-columns
 ---
 
-## Quy trình nhập
+<Info>
+  Tab **LIMIT** — mỗi dòng = một hạn mức tại một ngân hàng cho một pháp nhân.
+</Info>
 
-<Steps>
-  <Step title="Chọn Công ty + Ngân hàng">
-    Cột **B** (▼ Dropdown) → **C** (▼ Dropdown) → **D** chi nhánh (▼ phụ thuộc C)
-  </Step>
-  <Step title="Nhập thông tin HĐTD">
-    **E** Số HĐTD → **F** Tên hạn mức → **G** Loại HM (▼) → **H** Tiền tệ (▼)
-  </Step>
-  <Step title="Nhập số tiền + ngày">
-    **I** HM phê duyệt (đồng, đủ số 0) → **L** Ngày hiệu lực → **M** Ngày hết hạn → **N** Chu kỳ review (▼)
-  </Step>
-</Steps>
+## Khi nào nhập?
+
+Mỗi khi công ty **ký hợp đồng tín dụng mới** với ngân hàng — thêm dòng mới vào đây.
+
+<Tip>
+  Trạng thái hạn mức tự cập nhật từ tab [Sự kiện hạn mức](/qhp-credit/nhap-lieu/lm-event).
+</Tip>
+
+---
 
 ## Cột cần nhập
 
-| Cột | Tên | Loại | Ví dụ |
-|:----|:----|:-----|:------|
-| B | Mã công ty | ▼ Dropdown | `QHP`, `QHPI`, `QHPS`, `HMS` |
-| C | Mã ngân hàng | ▼ Dropdown | `BIDV`, `TCB`, `TPB`, `HDB` |
-| D | Mã chi nhánh | ▼ Phụ thuộc C | `BIDV-SGD` — chỉ hiện chi nhánh thuộc NH đã chọn |
-| E | Số HĐTD | Gõ tay | `052/2025/10090848/HĐTD` |
-| F | Tên hạn mức | Gõ tay | `HM ngân hàng BIDV => QHP` |
-| G | Loại HM | ▼ Dropdown | `Đa sản phẩm`, `Vốn lưu động` |
-| H | Tiền tệ | ▼ Dropdown | `VND`, `USD` |
-| I | HM phê duyệt | **Đồng, đủ số 0** | `300000000000` |
-| L | Ngày hiệu lực | 📅 | `09/06/2025` |
-| M | Ngày hết hạn | 📅 | `09/06/2026` |
-| N | Chu kỳ review | ▼ Dropdown | `Hàng năm` |
-| S | Tỷ lệ TSĐB | Gõ tay | `Hỗn hợp`, `40%` |
-
-## Cột tự động — KHÔNG nhập
-
-| Cột | Tên | Công thức |
-|:----|:----|:----------|
-| A | Mã HM | `LIM-00001`… (ARRAYFORMULA) |
-| J | Đã phân bổ | SUMIFS từ SUBLIMIT |
-| K | Chưa phân bổ | = I − J |
-| O | Ngày review kế tiếp | Tự tính từ N + chu kỳ |
-| **P** | **Trạng thái** | **Auto từ LM_EVENT** hoặc expiry < TODAY |
-| T | Số ngày còn HH | = M − TODAY() |
-| U | Cảnh báo review | So sánh O với TODAY() |
-
-<Warning>
-  Cột **P (Trạng thái)** tự cập nhật khi nhập event ở tab **LM_EVENT**.
-  Nếu HM hết hạn (M < today) → tự động `Hết hạn`.
-  Nếu có event "Đổi trạng thái" hoặc "Đóng hạn mức" → lấy trạng thái từ event mới nhất.
-</Warning>
-
-<Accordion title="Cột tùy chọn (không bắt buộc)">
-  | Cột | Tên |
-  |:----|:----|
-  | Q | Người phụ trách |
-  | R | Ghi chú |
-</Accordion>
+| Cột | Nội dung | Cách nhập |
+|:----|:---------|:----------|
+| **B** | Mã công ty | Chọn ▼ |
+| **C** | Mã ngân hàng | Chọn ▼ |
+| **D** | Mã chi nhánh | Chọn ▼ (phụ thuộc C) |
+| **E** | Số HĐTD | Gõ tay |
+| **F** | Tên hạn mức | Gõ tay |
+| **G** | Loại HM | Chọn ▼ |
+| **H** | Tiền tệ | Chọn ▼ |
+| **I** | HM phê duyệt | Nhập số, đầy đủ số 0 |
+| **L** | Ngày hiệu lực | Chọn ngày |
+| **M** | Ngày hết hạn | Chọn ngày |
+| **N** | Chu kỳ review | Chọn ▼ |
+| **Q** | Người phụ trách | Gõ tay |
+| **R** | Ghi chú | Gõ tay |
+| **S** | Tỷ lệ TSĐB | Gõ tay |
 
 <Note>
-  **Về shared limits:** Tổng sublimit có thể lớn hơn HM phê duyệt — đây là thiết kế đúng cho hạn mức dùng chung.
-  Kiểm soát qua usage thực tế, không qua tổng sublimit.
+  Các cột còn lại hệ thống **tự tính** — không cần nhập.
+  Cột A (Mã HM), J–K (phân bổ), O (ngày review), P (trạng thái), T–U (cảnh báo) tự động cập nhật.
 </Note>
+
+## Trạng thái hạn mức
+
+Hệ thống tự xác định trạng thái:
+
+| Trạng thái | Màu | Ý nghĩa |
+|:-----------|:---:|:--------|
+| 🟢 **Đang hoạt động** | Xanh lá | HM đang sử dụng bình thường |
+| 🔵 **Đang tái cấp** | Xanh dương | Đang chờ NH duyệt tái cấp |
+| 🟡 **Tạm dừng** | Vàng | NH tạm ngưng giải ngân |
+| 🔴 **Đã đóng** | Đỏ | Chấm dứt HĐTD |
+| 🟤 **Hết hạn** | Nâu | Quá ngày hết hạn |
+
+<Warning>
+  Số tiền nhập đầy đủ số 0. Ví dụ: 300 tỷ = `300000000000`.
+</Warning>
