@@ -34,34 +34,21 @@ Mỗi khi công ty **giải ngân khoản vay mới** — thêm dòng mới vào
 | **L** | Ngày giải ngân | Chọn ngày |
 | **M** | Kỳ hạn | Nhập text (VD: `6M`) |
 
-## Cột tự tính
-
-| Cột | Nội dung | Nguồn |
-|:----|:---------|:------|
-| **A** | Mã khoản vay | Tự đánh số |
-| **J** | Lãi suất hiện tại | Nếu có ĐCLS event → lấy lãi suất mới, nếu không → I gốc |
-| **N** | Ngày đáo hạn | Nếu có Gia hạn event → ngày mới, nếu không → EDATE(L, M) |
-| **O** | Số tiền giải ngân | Σ giải ngân từ LOAN_EVENT |
-| **P** | Dư nợ hiện tại | Running balance từ LOAN_EVENT (Tất toán → 0) |
-| **Q** | Ngày cập nhật DN | Ngày event gần nhất |
-| **R** | Trạng thái | Tự tính từ sự kiện + ngày đáo hạn |
-| **S** | Số ngày còn HH | N − TODAY() |
-
 <Note>
-  **J** và **N** tự cập nhật khi có event Gia hạn / ĐCLS ở LOAN_EVENT.
-  Không cần sửa tay — chỉ cần thêm event là xong.
+  Các cột còn lại hệ thống **tự tính** — không cần nhập.
+  Ngày đáo hạn, lãi suất hiện tại, dư nợ, trạng thái đều tự cập nhật.
 </Note>
 
 ## Trạng thái khoản vay
 
-Cột **R** tự động xác định trạng thái:
+Hệ thống tự xác định trạng thái:
 
-| Trạng thái | Màu | Điều kiện |
-|:-----------|:---:|:----------|
+| Trạng thái | Màu | Ý nghĩa |
+|:-----------|:---:|:--------|
 | 🟢 **Đang hoạt động** | Xanh | Bình thường, còn > 30 ngày |
 | 🟡 **Sắp đáo hạn** | Cam | Còn ≤ 30 ngày |
 | 🔴 **Quá hạn** | Đỏ | Đã quá ngày đáo hạn |
-| ⚪ **Tất toán** | Xám | Có event "Tất toán" ở LOAN_EVENT |
+| ⚪ **Tất toán** | Xám | Đã trả hết nợ |
 
 <Warning>
   Số tiền nhập đầy đủ số 0. Ví dụ: 50 tỷ = `50000000000`.

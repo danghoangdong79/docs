@@ -16,9 +16,9 @@ icon: arrows-rotate
 | **Giải ngân mới** | Tài chính | Hệ thống tự tạo | Dư nợ = amount |
 | **Giải ngân bổ sung** | Tài chính | Nhập N (số tiền) | Dư nợ **+ amount** |
 | **Trả gốc** | Tài chính | Nhập N (số tiền) | Dư nợ **− amount** |
-| **Tất toán** | Tài chính | Không nhập | Dư nợ → **0**, trạng thái → Tất toán |
-| **Gia hạn** | Hợp đồng | Nhập M (ngày mới) | Cập nhật ngày đáo hạn ở LOAN |
-| **Điều chỉnh lãi suất** | Hợp đồng | Nhập M (lãi suất mới) | Cập nhật lãi suất ở LOAN |
+| **Tất toán** | Tài chính | Không nhập | Dư nợ → **0** |
+| **Gia hạn** | Hợp đồng | Nhập M (ngày mới) | Đổi ngày đáo hạn |
+| **Điều chỉnh lãi suất** | Hợp đồng | Nhập M (lãi suất mới) | Đổi lãi suất |
 
 <Warning>
   **Giải ngân mới** = hệ thống tự tạo khi thêm dòng ở tab [Khoản vay](/qhp-credit/nhap-lieu/loan).
@@ -40,29 +40,8 @@ icon: arrows-rotate
 | **Q** | Ngày hiệu lực | Tùy chọn |
 | **R** | Ghi chú | Tùy chọn |
 
-## Cột tự tính
-
-| Cột | Nội dung | Nguồn |
-|:----|:---------|:------|
-| **A** | Mã sự kiện | Tự đánh số |
-| **C** | Số khế ước | Từ LOAN (INDEX+MATCH) |
-| **D–F** | Công ty, ngân hàng, loại vay | Từ LOAN (INDEX+MATCH) |
-| **G** | Dư nợ gốc | Từ LOAN (INDEX+MATCH) |
-| **I** | Nhóm sự kiện | FINANCIAL / CONTRACT |
-| **K** | Trường thay đổi | Tự xác định |
-| **L** | Giá trị cũ | Dư nợ trước GD / ngày đáo hạn cũ / lãi suất cũ |
-| **O** | Dư nợ sau GD | = balance_after_calc (T) |
-
-### Cột hỗ trợ (S–U)
-
-| Cột | Tên | Công thức |
-|:----|:----|:----------|
-| **S** | prev_balance | Dư nợ trước GD (SUMPRODUCT trên U) |
-| **T** | balance_after_calc | S + U (Tất toán → 0) |
-| **U** | financial_effect | +N (giải ngân), −N (trả gốc), 0 (khác) |
-
 <Note>
-  Các cột lookup (C–G) dùng **INDEX+MATCH** — an toàn khi thêm/xóa cột ở LOAN.
+  Các cột còn lại hệ thống **tự tính** — không cần nhập.
 </Note>
 
 ---
@@ -95,7 +74,7 @@ icon: arrows-rotate
     |:--|:--|:--|
     | LOAN-00001 | 30/03/2026 | Tất toán |
 
-    → Tự tính: L = dư nợ, O = 0. LOAN trạng thái → **Tất toán**, dư nợ → **0**
+    → Tự tính: L = dư nợ, O = 0. Trạng thái khoản vay → **Tất toán**.
   </Accordion>
   <Accordion title="Gia hạn khoản vay">
     Đến hạn 15/03 → gia hạn đến 15/09. Nhập **ngày mới** vào cột M.
@@ -104,7 +83,7 @@ icon: arrows-rotate
     |:--|:--|:--|:--|
     | LOAN-00001 | 10/03/2026 | Gia hạn | 15/09/2026 |
 
-    → Tự tính: L = 15/03/2026 (ngày đáo hạn cũ). LOAN cột N tự cập nhật thành 15/09/2026.
+    → Ngày đáo hạn ở LOAN tự cập nhật thành 15/09/2026.
   </Accordion>
   <Accordion title="Điều chỉnh lãi suất">
     Lãi suất 5.5% → 6.2%. Nhập **lãi suất mới** vào cột M.
@@ -113,6 +92,6 @@ icon: arrows-rotate
     |:--|:--|:--|:--|
     | LOAN-00001 | 01/04/2026 | Điều chỉnh lãi suất | 0.062 |
 
-    → Tự tính: L = 5,50% (lãi suất cũ). LOAN cột J tự cập nhật thành 6,20%.
+    → Lãi suất hiện tại ở LOAN tự cập nhật thành 6,20%.
   </Accordion>
 </AccordionGroup>
