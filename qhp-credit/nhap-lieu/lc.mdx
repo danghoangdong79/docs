@@ -6,32 +6,43 @@ icon: file-contract
 ---
 
 <Info>
-  Đây là tab **LC** trên Google Sheet. Mỗi dòng là **một thư tín dụng (L/C)** cụ thể.
+  Tab **LC** — mỗi dòng = một thư tín dụng dưới một hạn mức con.
 </Info>
 
-## Khi nào cần nhập?
+## Khi nào nhập?
 
-Mỗi khi ngân hàng **mở một LC mới** cho công ty — bạn thêm một dòng mới vào đây.
+Mỗi khi ngân hàng **mở một LC mới** cho công ty — thêm dòng mới vào đây.
 
-## Chi tiết các cột cần nhập
+---
 
-| Cột | Nội dung | Cách nhập | Ví dụ |
-|:----|:---------|:----------|:------|
-| B | Mã hạn mức con | Chọn từ danh sách ▼ | `SUB-00002` |
-| C | Mã công ty | Chọn từ danh sách ▼ | `QHP` |
-| D | Mã ngân hàng | Chọn từ danh sách ▼ | `TCB` |
-| E | Số LC | Gõ tay — số trên thư tín dụng | `LC2025-0001` |
-| F | Loại LC | Chọn từ danh sách ▼ | `LC nhập khẩu`, `LC nội địa` |
-| G | Trị giá LC | Nhập bằng đồng, **đầy đủ số 0** | `100000000000` (= 100 tỷ) |
-| H | Dư nợ LC hiện tại | Nhập bằng đồng, **đầy đủ số 0** | `80000000000` |
-| I | Tiền tệ | Chọn từ danh sách ▼ | `VND`, `USD` |
-| J | Ngày mở LC | Chọn ngày | `01/02/2026` |
-| K | Ngày hết hạn | Chọn ngày | `01/08/2026` |
-| L | Bên thụ hưởng | Gõ tay | `Công ty XYZ (Nhà cung cấp)` |
-| M | Trạng thái | Chọn từ danh sách ▼ | `Đang hiệu lực`, `Đã tất toán` |
-| N | Người phụ trách | Gõ tay | `H. Đồng` |
-| O | Ghi chú | Gõ tay | `LC nhập nguyên liệu lô T3` |
+## Cột cần nhập
+
+| Cột | Nội dung | Cách nhập |
+|:----|:---------|:----------|
+| **B** | Mã hạn mức con | Chọn ▼ |
+| **G** | Số LC | Gõ tay |
+| **H** | Số lô hàng | Gõ tay |
+| **I** | Chiều LC | Chọn ▼ |
+| **J** | Phương thức thanh toán | Chọn ▼ |
+| **K** | Lãi suất UPAS | Nhập số |
+| **L** | Bên thụ hưởng | Gõ tay |
+| **M** | Ngày thanh toán NCC | Chọn ngày |
+| **N** | Tiền tệ | Chọn ▼ |
+| **O** | Ngày mở LC | Chọn ngày |
+| **P** | Ngày hết hạn | Chọn ngày |
+| **Q** | Ngày đáo hạn | Chọn ngày |
+| **S** | Trị giá LC | Nhập số, đầy đủ số 0 |
+| **T** | Kỳ hạn | Nhập text |
+| **U** | Dư nợ hiện tại | Nhập số |
+| **V** | Số tiền ký quỹ | Nhập số |
+| **W** | Trạng thái | Chọn ▼ |
+| **X** | Ghi chú | Gõ tay |
 
 <Note>
-  Cột **A** (Mã LC `LC-00001`…) được **tạo tự động**.
+  Các cột còn lại hệ thống **tự tính** — không cần nhập.
+  Cột A (Mã LC), C–F (từ SUBLIMIT), R (ngày còn lại) tự động cập nhật.
 </Note>
+
+<Warning>
+  Số tiền nhập đầy đủ số 0. Ví dụ: 100 tỷ = `100000000000`.
+</Warning>
