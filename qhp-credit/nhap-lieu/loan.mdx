@@ -1,55 +1,92 @@
 ---
-title: Khoản vay
+title: Khoản vay (LOAN)
 sidebarTitle: Khoản vay
-description: Nhập chi tiết từng khoản vay — số tiền, lãi suất, ngày giải ngân, ngày đáo hạn.
+description: Quản lý từng khoản vay — khế ước, lãi suất, kỳ hạn, dư nợ và trạng thái tự động.
 icon: money-bill-transfer
 ---
 
 <Info>
-  Tab **LOAN** — mỗi dòng = một khoản vay dưới một hạn mức con.
+  **LOAN** quản lý chi tiết khoản vay. Mỗi dòng = một khế ước giải ngân thuộc một Hạn mức con (SUBLIMIT).
 </Info>
 
-## Khi nào nhập?
+## Khi nào cần nhập?
 
-Mỗi khi công ty **giải ngân khoản vay mới** — thêm dòng mới vào đây.
+- ✅ Công ty **giải ngân khoản vay mới** → thêm 1 dòng
+- ✅ Cập nhật thông tin ban đầu (số khế ước, lãi suất, kỳ hạn...)
 
 <Tip>
-  Hệ thống tự tạo event **"Giải ngân mới"** ở LOAN_EVENT và tự cập nhật dư nợ.
+  **Không nhập ở đây** khi giải ngân bổ sung, trả gốc, tất toán hay thay đổi lãi suất. Hãy nhập vào tab [Biến động khoản vay](/qhp-credit/nhap-lieu/loan-event) — LOAN sẽ **tự động cập nhật** dư nợ và trạng thái!
 </Tip>
 
 ---
 
-## Cột cần nhập
+## Cột nhập liệu
 
-| Cột | Nội dung | Cách nhập |
-|:----|:---------|:----------|
-| **B** | Số khế ước | Gõ tay |
-| **C** | Mã hạn mức con | Chọn ▼ |
-| **E** | Mã công ty | Chọn ▼ |
-| **F** | Mã ngân hàng | Chọn ▼ |
-| **G** | Tiền tệ | Chọn ▼ |
-| **H** | Loại vay | Chọn ▼ |
-| **I** | Lãi suất gốc (%/năm) | Nhập số (VD: 0.12 = 12%) |
-| **K** | Loại lãi suất | Chọn ▼ |
-| **L** | Ngày giải ngân | Chọn ngày |
-| **M** | Kỳ hạn | Nhập text (VD: `6M`) |
+Bạn chỉ cần tương tác **9 cột** — 17 cột còn lại hệ thống tự tính.
 
-<Note>
-  Các cột còn lại hệ thống **tự tính** — không cần nhập.
-  Ngày đáo hạn, lãi suất hiện tại, dư nợ, trạng thái đều tự cập nhật.
-</Note>
-
-## Trạng thái khoản vay
-
-Hệ thống tự xác định trạng thái:
-
-| Trạng thái | Màu | Ý nghĩa |
-|:-----------|:---:|:--------|
-| 🟢 **Đang hoạt động** | Xanh | Bình thường, còn > 30 ngày |
-| 🟡 **Sắp đáo hạn** | Cam | Còn ≤ 30 ngày |
-| 🔴 **Quá hạn** | Đỏ | Đã quá ngày đáo hạn |
-| ⚪ **Tất toán** | Xám | Đã trả hết nợ |
+| Cột | Tên | Cách nhập | Hướng dẫn |
+|:----|:----|:----------|:----------|
+| **B** | Số khế ước | ✏️ Nhập tay | Số hợp đồng giải ngân |
+| **C** | Mã HM con | ▼ Dropdown | Chọn sublimit → tự điền D-G |
+| **H** | Mã dự án | ✏️ Nhập tay | Mã dự án (nếu có) |
+| **I** | Loại khoản vay | ▼ Dropdown | Vay ngắn hạn, Vay dài hạn, Thấu chi... |
+| **J** | Lãi suất (%/năm) | ✏️ Nhập số | VD: `7.5` (nhập trực tiếp %) |
+| **L** | Loại lãi suất | ▼ Dropdown | Cố định / Thả nổi |
+| **M** | Ngày nhận nợ | 📅 Chọn ngày | Ngày giải ngân |
+| **N** | Kỳ hạn (ngày) | ✏️ Nhập số | VD: `90`, `120`, `365` |
+| **U** | Ghi chú | ✏️ Nhập tay | Ghi chú tự do |
 
 <Warning>
-  Số tiền nhập đầy đủ số 0. Ví dụ: 50 tỷ = `50000000000`.
+  **Thứ tự nhập:** Chọn **C** (Mã HM con) **trước** → D-G tự điền → rồi nhập H, I, J, L, M, N.
 </Warning>
+
+---
+
+## Cột tự động (🔒 Không sửa)
+
+<Tabs>
+  <Tab title="Kế thừa từ SUBLIMIT">
+    Khi chọn Mã HM con ở cột C, các cột sau **tự động điền**:
+
+    | Cột | Tên | Nguồn |
+    |:----|:----|:------|
+    | **A** | Mã khoản vay | Tự sinh `LOAN-00001`... |
+    | **D** | Mã HM | SUBLIMIT → limit_id |
+    | **E** | Mã công ty | SUBLIMIT → entity_code |
+    | **F** | Mã ngân hàng | SUBLIMIT → bank_code |
+    | **G** | Tiền tệ | SUBLIMIT → currency |
+  </Tab>
+  <Tab title="Lãi suất & Thời hạn">
+    | Cột | Tên | Cách hoạt động |
+    |:----|:----|:---------------|
+    | **K** | LS hiệu lực | Lãi suất sau điều chỉnh (nếu có event "Điều chỉnh LS") |
+    | **O** | Ngày đáo hạn | `= M + N` hoặc ngày mới từ event "Gia hạn" |
+    | **T** | Ngày còn HH | `= O − Hôm nay` (ẩn khi đã tất toán) |
+  </Tab>
+  <Tab title="Số dư">
+    | Cột | Tên | Cách hoạt động |
+    |:----|:----|:---------------|
+    | **P** | Số tiền giải ngân | Tổng giải ngân từ LOAN_EVENT |
+    | **Q** | Dư nợ hiện tại | Balance cuối cùng (0 nếu tất toán) |
+    | **R** | Ngày CN dư nợ | Ngày event gần nhất |
+    | **S** | Trạng thái | 5 cấp tự động (xem bảng bên dưới) |
+  </Tab>
+</Tabs>
+
+---
+
+## Hệ thống trạng thái
+
+Cột **S** tự động phân loại theo thứ tự ưu tiên:
+
+| # | Trạng thái | Màu | Khi nào? |
+|:--|:-----------|:-----|:---------|
+| 1 | ⚫ **Tất toán** | Đen/trắng | Có event "Tất toán" trong LOAN_EVENT |
+| 2 | 🔴 **Quá hạn** | Đỏ đậm | Đã vượt ngày đáo hạn, chưa tất toán |
+| 3 | 🔴 **Đến hạn** | Đỏ nhạt | Ngày đáo hạn = Hôm nay |
+| 4 | 🟡 **Sắp hết hạn** | Vàng | Còn ≤ 30 ngày |
+| 5 | 🟢 **Đang hoạt động** | Xanh | Bình thường |
+
+<Note>
+  Ưu tiên từ trên xuống — nếu khoản vay "Tất toán" thì **luôn** hiển thị Tất toán, bất kể ngày đáo hạn.
+</Note>
