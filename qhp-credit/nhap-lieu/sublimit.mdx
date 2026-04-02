@@ -1,67 +1,96 @@
 ---
 title: Hạn mức con (SUBLIMIT)
 sidebarTitle: Hạn mức con
-description: Nhập phân bổ hạn mức theo sản phẩm chi tiết — Vay, LC, Bảo lãnh, Chiết khấu, BTT. Khớp nối tự động với Cây Hạn Mức LIMIT.
+description: Phân bổ hạn mức theo sản phẩm — Vay, LC, Bảo lãnh, Chiết khấu, BTT. Liên kết tự động với LIMIT mẹ.
 icon: sitemap
 ---
 
 <Info>
-  Tab **SUBLIMIT** — Vận hành trên phiên bản Template Trinity 2.1 (24 Cột).
-  Mỗi dòng đại diện cho sự Phân bổ Sản phẩm (Sub-Facility) được tách chiết ra từ Hạn mức Mẹ (LIMIT).
+  **SUBLIMIT** là nhánh con của LIMIT. Mỗi dòng = một phân bổ sản phẩm được tách từ Hạn mức Mẹ.
 </Info>
 
 ## Khi nào cần nhập?
 
-Bất cứ khi nào Khối tín dụng cần **chia nhỏ ngân sách** cho từng mục sản phẩm (Ví dụ HM Tổng 500 Tỷ, trích 200 Tỷ để chạy mảng L/C Dành riêng) thì bạn tạo 1 dòng ở đây.
+- ✅ Cần **chia nhỏ** hạn mức tổng cho từng sản phẩm (VD: HM 500 tỷ → trích 200 tỷ cho L/C)
+- ✅ Ngân hàng cấp **nhiều sản phẩm** trong cùng một HĐTD
 
 <Tip>
-  Tổng HM Sublimit được phép lớn hơn HM phê duyệt của LIMIT mẹ. Đây là tính năng Cho phép dùng chung (Shared Limits).
+  Tổng SUBLIMIT được phép **lớn hơn** HM phê duyệt LIMIT mẹ — đây là tính năng dùng chung hạn mức (Shared Limits).
 </Tip>
 
 ---
 
-## Kiến Trúc Nhập Liệu Động (Dropdown Lọc Đa Tầng)
+## Cột nhập liệu
 
-Nhờ vào hệ thống Dropdown Dependency tối ưu siêu cấp, bạn thao tác logic cực kỳ nhanh gọn thông qua 9 Cột cho phép Nhập liệu:
+Bạn chỉ cần tương tác **9 cột** — 15 cột còn lại tự động.
 
-| Cột Input | Tên Cột | Cách nhập Siêu tốc |
-|:----|:---------|:----------|
-| **B** | Công ty | ▼ Chọn Công ty chủ quản trên Dropdown |
-| **C** | Mã Hạn Mức Mẹ | ▼ **Lọc Động:** Bạn chỉ nhìn thấy và chọn được các Mã LIMIT hiện đang "Đang hoạt động" thuộc quyền Công ty đã check ở B. |
-| **H** | Nhóm sản phẩm | ▼ Chọn nhóm (Ví dụ: Vay, Bảo Lãnh, Thanh toán...) |
-| **I** | Sản phẩm Chi tiết| ▼ **Lọc Động:** Tương tự, nếu nhóm là L/C, sẽ chỉ đổ ra "UPAS LC", "LC Trả chậm" v.v. |
-| **J** | Tỷ lệ ký quỹ | ✏️ Gõ `10` tự biên thành `10.00%` |
-| **K** | Tên HM con | ✏️ Tên Custom gợi nhớ |
-| **N** | Ngày hiệu lực | 📅 `dd/MM/yyyy` (Bỏ trống vẫn chạy) |
-| **R** | Người phụ trách | ▼ Assignee phụ trách |
-| **S** | Ghi chú | ✏️ Text tùy ý |
+| Cột | Tên | Cách nhập | Hướng dẫn |
+|:----|:----|:----------|:----------|
+| **B** | Công ty | ▼ Dropdown | Chọn pháp nhân **trước** khi chọn Mã HM |
+| **C** | Mã HM mẹ | ▼ Dropdown động | *Chỉ hiện HM đang hoạt động thuộc công ty đã chọn* |
+| **H** | Nhóm sản phẩm | ▼ Dropdown | Vay, LC, Bảo lãnh, Chiết khấu, BTT |
+| **I** | Sản phẩm | ▼ Dropdown động | *Tự lọc theo nhóm sản phẩm ở cột H* |
+| **J** | Tỷ lệ ký quỹ | ✏️ Nhập số | VD: `10` → hiển thị `10%` |
+| **K** | Tên HM con | ✏️ Nhập tay | Tên gợi nhớ cho phân bổ |
+| **N** | Ngày hiệu lực | 📅 Chọn ngày | Bỏ trống → kế thừa từ LIMIT |
+| **R** | Người phụ trách | ▼ Dropdown | Chọn người quản lý |
+| **S** | Ghi chú | ✏️ Nhập tay | Điều kiện, ghi chú riêng |
+
+<Warning>
+  **Thứ tự nhập quan trọng:** Chọn **B** (Công ty) → **C** (Mã HM) → **H** (Nhóm SP) → **I** (Sản phẩm). Dropdown sẽ tự lọc theo bước trước.
+</Warning>
 
 ---
 
-## Ma Trận Cột Khóa Tự Động (Hard-Protect)
+## Cột tự động (🔒 Không sửa)
+
+<Tabs>
+  <Tab title="Kế thừa từ LIMIT">
+    Khi chọn Mã HM ở cột C, các cột sau **tự động điền** từ LIMIT mẹ:
+    
+    | Cột | Tên | Nguồn |
+    |:----|:----|:------|
+    | **A** | Mã HM con | Tự sinh `SUB-00001`... |
+    | **D** | Ngân hàng | LIMIT → bank_code |
+    | **E** | Chi nhánh | LIMIT → branch_code |
+    | **F** | Tên HM cha | LIMIT → facility_name |
+    | **G** | Số HĐTD | LIMIT → agreement_no |
+    | **M** | Tiền tệ | LIMIT → currency |
+  </Tab>
+  <Tab title="Vòng đời">
+    | Cột | Tên | Cách hoạt động |
+    |:----|:----|:---------------|
+    | **L** | HM phân bổ | Số tiền mới nhất từ `LM_EVENT` |
+    | **O** | Ngày hết hạn | Ngày hết hạn mới nhất từ `LM_EVENT` |
+    | **P** | Số ngày còn lại | `= O − Hôm nay` |
+    | **Q** | Trạng thái | 6 cấp — kế thừa từ LIMIT cha + vòng đời riêng |
+  </Tab>
+  <Tab title="Helper ẩn">
+    Cột **T→X** chứa dữ liệu phục vụ công thức nội bộ, không cần quan tâm.
+  </Tab>
+</Tabs>
+
+---
+
+## Quy tắc trạng thái
+
+Trạng thái cột **Q** có logic **kế thừa** — SUBLIMIT chết theo LIMIT cha:
+
+<Steps>
+  <Step title="Kiểm tra LIMIT cha">
+    LIMIT mẹ **Đã đóng** hoặc **Tạm dừng** → SUBLIMIT chết theo, bất kể điều kiện riêng.
+  </Step>
+  <Step title="Kiểm tra event riêng">
+    SUBLIMIT có event "Đổi trạng thái → Đã đóng/Tạm dừng" → áp dụng.
+  </Step>
+  <Step title="Kiểm tra tái cấp">
+    Có event "Tái cấp" chưa đến hiệu lực → **Đang tái cấp**.
+  </Step>
+  <Step title="Kiểm tra thời hạn">
+    Quá hạn → **Hết hạn**. Còn ≤ 30 ngày → **Sắp hết hạn**. Còn lại → **Đang hoạt động**.
+  </Step>
+</Steps>
 
 <Note>
-  Giống như LIMIT mẹ, hệ thống SUBLIMIT sở hữu 15 Cột Hoàn Toàn Tự Động tính toán bằng MAP & LAMBDA.
-  Tất cả đã áp dụng chế độ Bảo mật Không Cảnh Báo "Restrict", vì vậy khi bạn dùng Filter tại dòng Tiêu đề thì Google Sheets sẽ chạy mượt như lụa.
+  Khi trạng thái chuyển sang **Đã đóng**, dòng dữ liệu phủ xám tối + gạch ngang — giúp bạn phân biệt nhanh.
 </Note>
-
-### Khối Cột Kế thừa Thông minh
-Khi bạn gõ mã Hạn mức Mẹ tại Cột `C`, Hạn mức Sublimit lập tức "đánh cắp" dữ kiện từ LIMIT mẹ để tự nhảy Data mà bạn không tốn 1 Giây chép lại:
-- **Ngân hàng (D)** 🔒
-- **Chi nhánh (E)** 🔒
-- **Tên HM Mẹ (F)** 🔒
-- **Số HĐTD (G)** 🔒
-- **Lượng Tiền Phân bổ (L)** 🔒
-- **Tiền Tệ (M)** 🔒
-
-### Khối Tính toán Vòng Đời Sublimit
-- **Cột A (ID HM Con):** Sinh tự động `SUB-0000x`.
-- **Cột N (Hết Hạn N):** Đẩy hạn `expiry_date` từ LM_EVENT lên tự động tuyệt đối.
-- **Cột P (Số ngày còn lại):** Bấm xung đếm ngược hằng ngày.
-- **Cột Q (Trạng Thái Status):** Hàm Logic LET siêu tĩnh với Quy luật Kế thừa: 
-  *Nếu LIMIT Mẹ đã Đóng hoặc Tạm dừng -> SUBLIMIT tự chết theo. Nếu Mẹ Bình Thường -> SUBLIMIT chạy vòng đời Event riêng của mình (Sắp hết hạn / Hoạt động / Đang tái cấp).*
-- **Cột T -> X:** Cột Helper nằm ẩn phục vụ Load Cột Q nhanh hơn và Kế thừa cờ Trạng thái của LIMIT Mẹ.
-
-<Warning>
-  Khi trạng thái tự động chuyển thành **Đã đóng**, dòng SUBLIMIT cũng lập tức phủ lớp Xám tối cho toàn viền từ Cột A->Z giống như LIMIT mẹ! Bạn có thể dọn dẹp màn hình rất nhanh chóng.
-</Warning>

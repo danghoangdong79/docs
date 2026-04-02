@@ -1,77 +1,96 @@
 ---
 title: Hạn mức tổng (LIMIT)
 sidebarTitle: Hạn mức tổng
-description: Hướng dẫn nhập liệu và theo dõi cấu trúc siêu tự động của Hạn mức tín dụng tổng tại Ngân hàng.
+description: Quản lý hạn mức tín dụng tổng — phê duyệt, gia hạn, theo dõi trạng thái tự động.
 icon: building-columns
 ---
 
 <Info>
-  Tab **LIMIT** — Kiến trúc Version 2.1 (Trinity VSTACK). Đây là trái tim của hệ thống Tín dụng QHP.
-  Mỗi dòng = Một Hạn mức Cấp phát ở Cấp độ Tổng của 1 Pháp nhân.
+  **LIMIT** là trái tim của hệ thống. Mỗi dòng = một Hạn mức Tín dụng tổng tại một Ngân hàng cho một Pháp nhân.
 </Info>
 
-## Khi nào cần sử dụng?
+## Khi nào cần nhập?
 
-Hằng khi công ty **Ký duyệt một Hợp đồng hạn mức mới** hoặc Hạn mức cũ được **Gia hạn**, bạn thêm/sửa dữ liệu ở Tab LIMIT. 
-Bất kỳ sự kiện Giải ngân, Thu nợ, Phân bổ nào cũng sẽ chạy ngầm và Tự động tính toán trả về Tab này.
+- ✅ Công ty **ký duyệt Hợp đồng hạn mức mới** → thêm 1 dòng
+- ✅ Cập nhật thông tin Hạn mức (tên, TSĐB, chu kỳ review...)
 
 <Tip>
-  Sự kiện tăng/giảm số tiền Hạn mức và Tái cấp vòng quay không nhập ở đây, mà nhập vào tab [Sự kiện hạn mức](/qhp-credit/nhap-lieu/lm-event), LIMIT sẽ tự động bắt lấy dòng sự kiện thời gian mới nhất!
+  **Không nhập ở đây** khi tăng/giảm số tiền, gia hạn, hay đóng hạn mức. Hãy nhập vào tab [Sự kiện hạn mức](/qhp-credit/nhap-lieu/lm-event) — LIMIT sẽ **tự động cập nhật** từ sự kiện mới nhất!
 </Tip>
 
 ---
 
-## Bảng Cột Nhập liệu (Quy định 26 Cột)
+## Cột nhập liệu
 
-Với kiến trúc Version 2.1, Sheet LIMIT gồm **26 cột (A-Z)**. Hệ thống đã triển khai thiết lập **Hard-Protect (Restrict)** cho 14 cột tính toán siêu dữ liệu tự động.
+Bạn chỉ cần tương tác với **12 cột** — 14 cột còn lại hệ thống tự tính.
 
-### Các cột Nhập Tay (Bạn được tương tác):
-
-| Cột | Tên Cột | Cách nhập | Lưu ý |
-|:----|:--------|:----------|:---|
-| **B** | Công ty | ▼ Chọn | Chọn từ Menu (Dropdown) |
-| **C** | Ngân hàng | ▼ Chọn | Dropdown linh hoạt |
-| **D** | Chi nhánh | ▼ Chọn động | Cột này tự lọc Menu phụ thuộc vào Ngân hàng C |
-| **E** | Số HĐTD | ✏️ Gõ tay | Nhập nguyên văn số hợp đồng |
-| **F** | Tên hạn mức | ✏️ Gõ tay | Ví dụ: "Vay ngắn hạn bổ sung VLĐ" |
-| **G** | Loại TSĐB | ▼ Chọn | Tín chấp / Thế chấp / Hỗn hợp |
-| **H** | Loại HM | ▼ Chọn | Đơn sản phẩm / Đa sản phẩm |
-| **I** | Tiền tệ | ▼ Chọn | Thông dụng: VND hoặc USD |
-| **M** | Ngày hiệu lực | 📅 Chọn ngày | Chuẩn Formatting `dd/MM/yyyy` |
-| **Q** | Chu kỳ review | ▼ Chọn | Hàng tháng / Theo Quý... |
-| **T** | Người quản lý | ▼ Chọn | Phân nhiệm vụ |
-| **U** | Ghi chú | ✏️ Gõ tay | Văn bản tự do |
+| Cột | Tên | Cách nhập | Hướng dẫn |
+|:----|:----|:----------|:----------|
+| **B** | Công ty | ▼ Dropdown | Chọn pháp nhân |
+| **C** | Ngân hàng | ▼ Dropdown | Chọn ngân hàng đối tác |
+| **D** | Chi nhánh | ▼ Dropdown động | *Tự lọc theo ngân hàng đã chọn ở cột C* |
+| **E** | Số HĐTD | ✏️ Nhập tay | VD: `052/2025/HĐTD` |
+| **F** | Tên hạn mức | ✏️ Nhập tay | VD: `HM ngân hàng BIDV` |
+| **G** | TSĐB | ▼ Dropdown | Tín chấp / Thế chấp / Hỗn hợp |
+| **H** | Loại HM | ▼ Dropdown | Đơn sản phẩm / Đa sản phẩm |
+| **I** | Tiền tệ | ▼ Dropdown | VND, USD, EUR... |
+| **M** | Ngày hiệu lực | 📅 Chọn ngày | Format: `dd/MM/yyyy` |
+| **Q** | Chu kỳ review | ▼ Dropdown | Hàng tháng / Hàng quý / 6 tháng / Hàng năm |
+| **T** | Người phụ trách | ▼ Dropdown | Chọn người quản lý |
+| **U** | Ghi chú | ✏️ Nhập tay | Chi tiết TSĐB, điều kiện đặc biệt... |
 
 ---
 
-## Cơ Chế Khóa Auto-Lock (Restrict) 
+## Cột tự động (🔒 Không sửa)
+
+Tất cả các cột dưới đây đã được **khóa bảo vệ** — không pop-up cảnh báo khi Filter hay Sort.
+
+<Tabs>
+  <Tab title="Số tiền">
+    | Cột | Tên | Cách hoạt động |
+    |:----|:----|:---------------|
+    | **J** | HM phê duyệt | Lấy số tiền mới nhất từ `LM_EVENT` |
+    | **K** | Đã phân bổ | Tổng `SUBLIMIT` đang hoạt động |
+    | **L** | Chưa phân bổ | `= J − K` (âm = vượt phân bổ) |
+  </Tab>
+  <Tab title="Thời hạn">
+    | Cột | Tên | Cách hoạt động |
+    |:----|:----|:---------------|
+    | **N** | Ngày hết hạn | Ngày hết hạn mới nhất từ `LM_EVENT` |
+    | **O** | Số ngày còn lại | `= N − Hôm nay` (âm = đã quá hạn) |
+  </Tab>
+  <Tab title="Trạng thái & Review">
+    | Cột | Tên | Cách hoạt động |
+    |:----|:----|:---------------|
+    | **P** | Trạng thái | 6 cấp ưu tiên (xem bảng bên dưới) |
+    | **R** | Ngày review tiếp | Tính từ ngày hiệu lực + chu kỳ |
+    | **S** | Cảnh báo review | ⚠️ nếu đã quá hạn review |
+  </Tab>
+  <Tab title="Auto-ID & Helper">
+    | Cột | Tên | Cách hoạt động |
+    |:----|:----|:---------------|
+    | **A** | Mã HM | Tự sinh `LIM-00001`, `LIM-00002`... |
+    | **V** | Trạng thái KH | Tra cứu từ sheet PLAN |
+    | **W** | Deadline KH | Tra cứu từ sheet PLAN |
+    | **X→Z** | Helper ẩn | Phục vụ công thức nội bộ |
+  </Tab>
+</Tabs>
+
+---
+
+## Hệ thống trạng thái
+
+Cột **P** tự động phân loại theo thứ tự ưu tiên:
+
+| # | Trạng thái | Màu | Khi nào? |
+|:--|:-----------|:-----|:---------|
+| 1 | 🟤 **Đã đóng** | Xám + gạch ngang | Có event "Đổi trạng thái → Đã đóng" |
+| 2 | 🟡 **Tạm dừng** | Vàng nhạt | Có event "Đổi trạng thái → Tạm dừng" |
+| 3 | 🔵 **Đang tái cấp** | Xanh lam nhạt | Có event "Tái cấp" chưa đến hiệu lực |
+| 4 | 🔴 **Hết hạn** | Đỏ | Ngày hết hạn < Hôm nay |
+| 5 | 🟠 **Sắp hết hạn** | Cam nhạt | Còn ≤ 30 ngày |
+| 6 | 🟢 **Đang hoạt động** | Mặc định | Không có vấn đề gì |
 
 <Note>
-  **Màn chắn bảo mật Restrict:** Dù bạn dùng tài khoản Owner Admin bấm Lọc (Filter) hay Sort toàn trang tính, Google Sheets sẽ KHÔNG BAO GIỜ bị nhảy Pop-up "Cảnh báo chỉnh sửa" làm phiền bạn nữa! Toàn bộ dãy tự động đã chặn Edit ngầm tuyệt đối bằng API. 
+  Ưu tiên từ trên xuống dưới — nếu HM "Đã đóng" thì **luôn** hiển thị Đã đóng, bất kể thời hạn.
 </Note>
-
-| Cột 🔒 | Nội dung Hệ thống | Cơ chế VSTACK tự tính |
-|:----|:--------|:----------|
-| **A** | ID Hạn Mức | Sinh tự động chuỗi `LIM-0000x` để Index |
-| **J** | HM phê duyệt | Kết nối liên thông đến `LM_EVENT` rút số tiền mới nhất |
-| **K** | Đã phân bổ | Quét toàn bộ sheet `SUBLIMIT` (còn sống) và SUM gộp cho Limit |
-| **L** | Chưa phân bổ | Trừ tự động bằng J - K (Nếu âm sẽ báo vi phạm cảnh báo) |
-| **N** | Ngày hết hạn | Cuộn lấy mốc ngày Hết hạn xa nhất từ Data `LM_EVENT` |
-| **O** | Số ngày còn | Đếm lùi tự động đến deadline (Days = N - TODAY) |
-| **P** | Trạng thái | Thuật toán quét 5 nhánh: Hoạt động / Sắp hết hạn / Tạm dừng / Tái cấp... |
-| **R** | Ngày review tiếp | Tự nhảy Date bằng chu trình Hàm `EDATE` |
-| **S** | Cảnh báo | Phát hiện Vi phạm Hạn mức hoặc Quá hạn Review |
-| **V - Z**| Khối Helper ẩn | Cung cấp dữ liệu lõi cho toàn bộ Array |
-
----
-
-## Bảng Màu Giao Diện Cảnh Báo Sớm
-Hệ thống nay đã khóa Range `A->Z` đối với các trạng thái chết lâm sàng.
-
-| Trạng thái LIMIT (P) | Màu nền UI | Hiệu ứng đặc biệt |
-|:-----------|:---:|:--------|
-| 🟢 **[L4] Đang hoạt động** | Trắng Nhạt | Xanh lá trong vắt |
-| 🔵 **[L9] Đang tái cấp** | Xanh Lam Nhạt | Tracking riêng khi quá hạn nhưng chờ Bank gia hạn |
-| 🟡 **[L8] Tạm dừng** | Vàng Nhạt | Màu cam gắt |
-| 🔴 **[L6] Hết hạn** | Đỏ Rực | Số ngày quá hạn âm nhấp nháy đỏ |
-| 🟤 **[L7] Đã đóng** | Xám Tro Toàn Dòng | Bị **_Gạch Ngang và Làm Mờ_** cả dòng dữ liệu A -> Z để lọc mắt dọn dẹp không gian |
