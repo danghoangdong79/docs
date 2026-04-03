@@ -1,5 +1,5 @@
 ---
-title: Sự kiện hạn mức (LM_EVENT)
+title: Sự kiện hạn mức
 sidebarTitle: Sự kiện hạn mức
 description: Ghi nhận mọi thay đổi trên hạn mức — phê duyệt, gia hạn, điều chỉnh, đổi trạng thái. Dữ liệu từ đây điều khiển LIMIT và SUBLIMIT.
 icon: arrows-rotate
@@ -9,31 +9,21 @@ icon: arrows-rotate
   **LM_EVENT** là nhật ký sự kiện. Mỗi dòng = một thay đổi trên hạn mức tín dụng.
 </Info>
 
-## Vai trò trong hệ thống
-
-LM_EVENT là **nguồn dữ liệu duy nhất** cho mọi biến động hạn mức. Khi bạn nhập 1 dòng event, hệ thống tự động:
-
-- Cập nhật **số tiền phê duyệt** trên LIMIT
-- Cập nhật **ngày hết hạn** trên LIMIT và SUBLIMIT
-- Chuyển **trạng thái** LIMIT và SUBLIMIT
-
-<Warning>
-  **Quy tắc phân biệt:**  
-  - Cột D **để trống** → event cho **LIMIT** (hạn mức cha)  
-  - Cột D **có giá trị** → event cho **SUBLIMIT** (hạn mức con)
-</Warning>
-
----
-
 ## 5 loại sự kiện
 
 | Loại thay đổi | Cần nhập thêm | Ảnh hưởng |
 |:---------------|:--------------|:----------|
-| **Phê duyệt mới** | L (số tiền), K (ngày HH) | Khởi tạo HM, trạng thái → Đang hoạt động |
-| **Tái cấp** | L (số tiền), K (ngày HH mới) | Cấp lại vòng quay mới |
+| **Phê duyệt mới** | L (số tiền) + K (ngày HH) | Khởi tạo HM → Đang hoạt động |
+| **Tái cấp** | L (số tiền) + K (ngày HH mới) | Cấp lại vòng quay mới |
 | **Thay đổi hạn mức** | L (số tiền mới) | Tăng / giảm HM phê duyệt |
 | **Gia hạn** | K (ngày HH mới) | Kéo dài thời hạn HĐTD |
 | **Đổi trạng thái** | I (trạng thái mới) | Đóng / Tạm dừng / Mở lại HM |
+
+<Warning>
+  **Quy tắc phân biệt:**
+  - Cột D **để trống** → event cho **LIMIT** (hạn mức cha)
+  - Cột D **có giá trị** → event cho **SUBLIMIT** (hạn mức con)
+</Warning>
 
 ---
 
@@ -45,51 +35,40 @@ Bạn chỉ tương tác **8 cột** — 12 cột còn lại tự tính.
 |:----|:----|:----------|:---------|
 | **B** | Ngày thay đổi | 📅 Chọn ngày | ✅ Luôn bắt buộc |
 | **C** | Mã hạn mức | ▼ Dropdown | ✅ Luôn bắt buộc |
-| **D** | Mã HM con | ▼ Dropdown động | Chỉ khi event cho sublimit |
+| **D** | Mã HM con | ▼ Dropdown — *tự lọc theo C* | Chỉ khi event cho sublimit |
 | **G** | Loại thay đổi | ▼ Dropdown | ✅ Luôn bắt buộc |
-| **I** | Trạng thái mới | ▼ Dropdown | Chỉ khi G = "Đổi trạng thái" |
+| **I** | Trạng thái mới | ▼ Dropdown | Chỉ khi "Đổi trạng thái" |
 | **K** | Ngày hết hạn | 📅 Chọn ngày | Phê duyệt / Gia hạn / Tái cấp |
-| **L** | Giá trị (số tiền) | ✏️ Nhập số | Phê duyệt / Thay đổi HM / Tái cấp |
+| **L** | Giá trị | ✏️ Nhập số | Phê duyệt / Thay đổi HM / Tái cấp |
 | **N** | Ngày hiệu lực | 📅 Chọn ngày | Tùy chọn |
-| **O** | Người thay đổi | ✏️ Nhập tay | Tùy chọn |
-| **P** | Ghi chú | ✏️ Nhập tay | Tùy chọn |
-
-<Tip>
-  Dropdown cột **D** tự lọc chỉ hiện sublimit thuộc mã hạn mức ở cột C. Để trống nếu event cho HM cha.
-</Tip>
 
 ---
 
-## Cột tự động (🔒 Không sửa)
+## Cột tự động
 
 <Tabs>
-  <Tab title="Auto-ID & Lookup">
-    | Cột | Tên | Cách hoạt động |
-    |:----|:----|:---------------|
-    | **A** | Mã thay đổi | Tự sinh `CHG-00001`... |
+  <Tab title="Lookup">
+    | Cột | Tên | Nguồn |
+    |:----|:----|:------|
+    | **A** | Mã thay đổi | Tự sinh `CHG-00001`… |
     | **E** | Mã công ty | Tra cứu từ LIMIT |
     | **F** | Mã ngân hàng | Tra cứu từ LIMIT |
-    | **H** | Trường thay đổi | Tra cứu từ loại thay đổi (cột G) |
+    | **H** | Trường thay đổi | Tra cứu từ loại thay đổi (G) |
   </Tab>
-  <Tab title="Giá trị giao dịch">
-    | Cột | Tên | Cách hoạt động |
-    |:----|:----|:---------------|
-    | **J** | Giá trị cũ | Tự tính: Phê duyệt → 0, còn lại → lấy từ event trước |
-    | **M** | Giá trị sau GD | Tự tính theo loại: dùng L (nhập) hoặc giữ nguyên |
-  </Tab>
-  <Tab title="Helper ẩn">
-    Cột **Q→T** chứa dữ liệu tra cứu nội bộ (event trước đó, giá trị hiện tại), không cần quan tâm.
+  <Tab title="Giao dịch">
+    | Cột | Tên | Nguồn |
+    |:----|:----|:------|
+    | **J** | Giá trị cũ | Phê duyệt → 0, còn lại → event trước |
+    | **M** | Giá trị sau GD | Tính theo loại: dùng L hoặc giữ nguyên |
   </Tab>
 </Tabs>
 
 ---
 
-## Ví dụ thực tế
+## Ví dụ
 
 <AccordionGroup>
   <Accordion title="Phê duyệt hạn mức mới 300 tỷ">
-    Công ty ký HĐTD mới với BIDV, hạn mức 300 tỷ.
-
     | B | C | G | K | L |
     |:--|:--|:--|:--|:--|
     | 09/06/2025 | LIM-00001 | Phê duyệt mới | 09/06/2026 | 300.000.000.000 |
@@ -98,23 +77,19 @@ Bạn chỉ tương tác **8 cột** — 12 cột còn lại tự tính.
   </Accordion>
 
   <Accordion title="Gia hạn thêm 12 tháng">
-    HĐTD hết hạn 30/09/2026 → gia hạn đến 30/09/2027.
-
     | B | C | G | K |
     |:--|:--|:--|:--|
     | 01/03/2026 | LIM-00004 | Gia hạn | 30/09/2027 |
 
-    → LIMIT tự cập nhật: **Ngày hết hạn** = 30/09/2027
+    → LIMIT: **Ngày hết hạn** cập nhật = 30/09/2027
   </Accordion>
 
   <Accordion title="Tăng hạn mức lên 300 tỷ">
-    HM hiện tại 250 tỷ, tăng lên 300 tỷ.
-    
     | B | C | G | L |
     |:--|:--|:--|:--|
     | 15/02/2026 | LIM-00003 | Thay đổi hạn mức | 300.000.000.000 |
 
-    → Cột J tự hiện giá trị cũ = 250 tỷ. LIMIT cập nhật HM = 300 tỷ.
+    → Giá trị cũ = 250 tỷ. LIMIT cập nhật **HM = 300 tỷ**.
   </Accordion>
 
   <Accordion title="Đóng hạn mức">
@@ -122,7 +97,7 @@ Bạn chỉ tương tác **8 cột** — 12 cột còn lại tự tính.
     |:--|:--|:--|:--|
     | 18/03/2026 | LIM-00007 | Đổi trạng thái | Đã đóng |
 
-    → LIMIT và toàn bộ SUBLIMIT con chuyển sang **Đã đóng**.
+    → LIMIT và toàn bộ SUBLIMIT con → **Đã đóng**.
   </Accordion>
 
   <Accordion title="Tạm dừng rồi mở lại">
@@ -142,12 +117,12 @@ Bạn chỉ tương tác **8 cột** — 12 cột còn lại tự tính.
   </Accordion>
 
   <Accordion title="Đóng sublimit con">
-    Chỉ đóng 1 sublimit, không ảnh hưởng LIMIT cha hay sublimit khác.
+    Chỉ đóng 1 sublimit, không ảnh hưởng LIMIT cha.
 
     | B | C | D | G | I |
     |:--|:--|:--|:--|:--|
     | 18/03/2026 | LIM-00007 | SUB-00023 | Đổi trạng thái | Đã đóng |
 
-    → Chỉ **SUB-00023** thành Đã đóng. Các sublimit khác bình thường.
+    → Chỉ **SUB-00023** thành Đã đóng.
   </Accordion>
 </AccordionGroup>

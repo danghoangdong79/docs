@@ -1,42 +1,82 @@
 ---
 title: Kế hoạch tín dụng
 sidebarTitle: Kế hoạch tín dụng
-description: Lên kế hoạch vay, trả nợ, mở LC trong tương lai.
+description: Lên kế hoạch vay, trả nợ, mở LC, gia hạn hạn mức. Theo dõi thực tế so với kế hoạch.
 icon: calendar-check
 ---
 
 <Info>
-  Đây là tab **PLAN** trên Google Sheet. Mỗi dòng = **một kế hoạch** dự kiến trong tương lai.
+  **PLAN** là tab lập kế hoạch tín dụng. Mỗi dòng = một dự kiến trong tương lai — hệ thống tự đối soát khi thực hiện xong.
 </Info>
 
 ## Khi nào cần nhập?
 
-| Dự kiến làm gì? | Loại kế hoạch (F) | Trạng thái ban đầu |
-|:-----------------|:-------------------|:--------------------|
-| Sắp giải ngân khoản vay mới | Giải ngân mới | Dự kiến |
-| Cần trả nợ gốc sắp tới | Trả nợ gốc | Dự kiến |
-| Dự kiến mở LC nhập hàng | Mở LC | Dự kiến |
-| Cần gia hạn hạn mức sắp hết | Gia hạn HM | Dự kiến |
+| Dự kiến làm gì? | Loại kế hoạch |
+|:-----------------|:--------------|
+| Giải ngân khoản vay mới | Giải ngân mới |
+| Trả nợ gốc sắp tới | Trả nợ gốc |
+| Mở LC nhập hàng | Mở LC |
+| Gia hạn hạn mức sắp hết | Gia hạn HM |
 
-## Chi tiết các cột cần nhập
+---
 
-| Cột | Nội dung | Cách nhập | Ví dụ |
-|:----|:---------|:----------|:------|
-| B | Mã hạn mức | Chọn từ danh sách ▼ | `LIM-00001` |
-| C | Mã công ty | Chọn từ danh sách ▼ | `QHP` |
-| D | Mã ngân hàng | Chọn từ danh sách ▼ | `BIDV` |
-| E | Loại sản phẩm | Chọn từ danh sách ▼ | `Vay`, `LC` |
-| F | Loại kế hoạch | Chọn từ danh sách ▼ | `Giải ngân mới`, `Trả nợ gốc` |
-| G | Trạng thái | Chọn từ danh sách ▼ | `Dự kiến`, `Đã duyệt`, `Hoàn thành`, `Huỷ` |
-| H | Ngày dự kiến | Chọn ngày | `15/06/2026` |
-| I | Số tiền dự kiến | Nhập bằng đồng, **đầy đủ số 0** | `100000000000` (= 100 tỷ) |
-| J | Tiền tệ | Chọn từ danh sách ▼ | `VND`, `USD` |
-| K | Người lập | Gõ tay | `H. Đồng` |
-| L | Ghi chú | Gõ tay | `Giải ngân bổ sung vốn lưu động Q3` |
+## Cột nhập liệu
+
+<Steps>
+  <Step title="Phân loại">
+    | Cột | Tên | Cách nhập |
+    |:----|:----|:----------|
+    | **B** | Công ty | ▼ Dropdown |
+    | **C** | Loại sản phẩm | ▼ Dropdown — Hạn mức / Khoản vay / LC / BL |
+    | **D** | Loại hành động | ▼ Dropdown — Gia hạn / Tăng / Giảm / Mới… |
+    | **E** | Mã tham chiếu | ▼ Dropdown — LIM-00022, LOAN-00010… |
+  </Step>
+  <Step title="Kế hoạch">
+    | Cột | Tên | Cách nhập |
+    |:----|:----|:----------|
+    | **I** | Ngày dự kiến | 📅 Chọn ngày |
+    | **J** | Hạn mới | 📅 Chọn ngày (nếu gia hạn) |
+    | **N** | Giá trị dự kiến | ✏️ Nhập số |
+  </Step>
+  <Step title="Quản lý">
+    | Cột | Tên | Cách nhập |
+    |:----|:----|:----------|
+    | **T** | Trạng thái | ▼ Dropdown |
+    | **U** | Ưu tiên | ▼ Dropdown |
+    | **V** | Người phụ trách | ✏️ Gõ tay |
+    | **Z** | Ghi chú | ✏️ Gõ tay |
+  </Step>
+</Steps>
 
 <Note>
-  Cột **A** (Mã kế hoạch `PL-00001`…) được **tạo tự động**.
+  Cột **A** (Mã kế hoạch `PLN-00001`…) được **tạo tự động**.
 </Note>
+
+---
+
+## Cột tự động
+
+<Tabs>
+  <Tab title="Tra cứu">
+    | Cột | Tên | Nguồn |
+    |:----|:----|:------|
+    | **F** | Mã ngân hàng | Lookup từ ref_id |
+    | **G** | Tên sản phẩm | Lookup từ ref_id |
+    | **H** | Hạn gốc | Lookup ngày hết hạn hiện tại |
+  </Tab>
+  <Tab title="Đối soát">
+    | Cột | Tên | Nguồn |
+    |:----|:----|:------|
+    | **K** | Ngày thực tế | Tra từ Event sheets |
+    | **L** | Chênh lệch ngày | `I − K` |
+    | **M** | Giá trị hiện tại | Tra từ LIMIT/LOAN/LC |
+    | **O** | Giá trị thực tế | Tra từ Event sheets |
+    | **P** | Chênh lệch tiền | `N − O` |
+    | **S** | Trạng thái hoàn thành | ✅🔴🟡🟢⏳ |
+  </Tab>
+</Tabs>
+
+---
 
 ## Vòng đời kế hoạch
 

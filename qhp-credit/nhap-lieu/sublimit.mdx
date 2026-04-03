@@ -1,56 +1,67 @@
 ---
-title: Hạn mức con (SUBLIMIT)
+title: Hạn mức con
 sidebarTitle: Hạn mức con
 description: Phân bổ hạn mức theo sản phẩm — Vay, LC, Bảo lãnh, Chiết khấu, BTT. Liên kết tự động với LIMIT mẹ.
 icon: sitemap
 ---
 
 <Info>
-  **SUBLIMIT** là nhánh con của LIMIT. Mỗi dòng = một phân bổ sản phẩm được tách từ Hạn mức Mẹ.
+  **SUBLIMIT** là nhánh con của LIMIT. Mỗi dòng = một phân bổ sản phẩm được tách từ Hạn mức mẹ.
 </Info>
 
 ## Khi nào cần nhập?
 
-- ✅ Cần **chia nhỏ** hạn mức tổng cho từng sản phẩm (VD: HM 500 tỷ → trích 200 tỷ cho L/C)
-- ✅ Ngân hàng cấp **nhiều sản phẩm** trong cùng một HĐTD
+Thêm dòng mỗi khi cần **chia nhỏ** hạn mức tổng cho từng sản phẩm — VD: HM 500 tỷ → trích 200 tỷ cho L/C.
 
 <Tip>
-  Tổng SUBLIMIT được phép **lớn hơn** HM phê duyệt LIMIT mẹ — đây là tính năng dùng chung hạn mức (Shared Limits).
+  Tổng SUBLIMIT được phép **lớn hơn** HM phê duyệt — đây là tính năng dùng chung hạn mức (Shared Limits).
 </Tip>
 
 ---
 
 ## Cột nhập liệu
 
-Bạn chỉ cần tương tác **9 cột** — 15 cột còn lại tự động.
+Bạn chỉ tương tác **9 cột** — 15 cột còn lại tự động.
 
-| Cột | Tên | Cách nhập | Hướng dẫn |
-|:----|:----|:----------|:----------|
-| **B** | Công ty | ▼ Dropdown | Chọn pháp nhân **trước** khi chọn Mã HM |
-| **C** | Mã HM mẹ | ▼ Dropdown động | *Chỉ hiện HM đang hoạt động thuộc công ty đã chọn* |
-| **H** | Nhóm sản phẩm | ▼ Dropdown | Vay, LC, Bảo lãnh, Chiết khấu, BTT |
-| **I** | Sản phẩm | ▼ Dropdown động | *Tự lọc theo nhóm sản phẩm ở cột H* |
-| **J** | Tỷ lệ ký quỹ | ✏️ Nhập số | VD: `10` → hiển thị `10%` |
-| **K** | Tên HM con | ✏️ Nhập tay | Tên gợi nhớ cho phân bổ |
-| **N** | Ngày hiệu lực | 📅 Chọn ngày | Bỏ trống → kế thừa từ LIMIT |
-| **R** | Người phụ trách | ▼ Dropdown | Chọn người quản lý |
-| **S** | Ghi chú | ✏️ Nhập tay | Điều kiện, ghi chú riêng |
+<Steps>
+  <Step title="Chọn hạn mức cha">
+    | Cột | Tên | Cách nhập |
+    |:----|:----|:----------|
+    | **B** | Công ty | ▼ Dropdown — chọn **trước** |
+    | **C** | Mã HM mẹ | ▼ Dropdown — *chỉ hiện HM đang hoạt động thuộc công ty đã chọn* |
+  </Step>
+  <Step title="Chọn sản phẩm">
+    | Cột | Tên | Cách nhập |
+    |:----|:----|:----------|
+    | **H** | Nhóm sản phẩm | ▼ Dropdown — Vay, LC, Bảo lãnh, Chiết khấu, BTT |
+    | **I** | Sản phẩm | ▼ Dropdown — *tự lọc theo nhóm ở cột H* |
+  </Step>
+  <Step title="Nhập chi tiết">
+    | Cột | Tên | Cách nhập |
+    |:----|:----|:----------|
+    | **J** | Tỷ lệ ký quỹ | ✏️ Nhập số — VD: `10` → 10% |
+    | **K** | Tên HM con | ✏️ Gõ tay |
+    | **N** | Ngày hiệu lực | 📅 Chọn ngày — bỏ trống → kế thừa từ LIMIT |
+    | **R** | Người phụ trách | ▼ Dropdown |
+    | **S** | Ghi chú | ✏️ Gõ tay |
+  </Step>
+</Steps>
 
 <Warning>
-  **Thứ tự nhập quan trọng:** Chọn **B** (Công ty) → **C** (Mã HM) → **H** (Nhóm SP) → **I** (Sản phẩm). Dropdown sẽ tự lọc theo bước trước.
+  **Thứ tự nhập quan trọng:** B → C → H → I. Mỗi dropdown tự lọc theo bước trước.
 </Warning>
 
 ---
 
-## Cột tự động (🔒 Không sửa)
+## Cột tự động
 
 <Tabs>
   <Tab title="Kế thừa từ LIMIT">
-    Khi chọn Mã HM ở cột C, các cột sau **tự động điền** từ LIMIT mẹ:
-    
+    Chọn Mã HM ở cột C → các cột sau tự điền:
+
     | Cột | Tên | Nguồn |
     |:----|:----|:------|
-    | **A** | Mã HM con | Tự sinh `SUB-00001`... |
+    | **A** | Mã HM con | Tự sinh `SUB-00001`… |
     | **D** | Ngân hàng | LIMIT → bank_code |
     | **E** | Chi nhánh | LIMIT → branch_code |
     | **F** | Tên HM cha | LIMIT → facility_name |
@@ -58,15 +69,12 @@ Bạn chỉ cần tương tác **9 cột** — 15 cột còn lại tự động.
     | **M** | Tiền tệ | LIMIT → currency |
   </Tab>
   <Tab title="Vòng đời">
-    | Cột | Tên | Cách hoạt động |
-    |:----|:----|:---------------|
-    | **L** | HM phân bổ | Số tiền mới nhất từ `LM_EVENT` |
-    | **O** | Ngày hết hạn | Ngày hết hạn mới nhất từ `LM_EVENT` |
-    | **P** | Số ngày còn lại | `= O − Hôm nay` |
+    | Cột | Tên | Nguồn |
+    |:----|:----|:------|
+    | **L** | HM phân bổ | Số tiền mới nhất từ LM_EVENT |
+    | **O** | Ngày hết hạn | Ngày HH mới nhất từ LM_EVENT |
+    | **P** | Số ngày còn lại | `O − Hôm nay` |
     | **Q** | Trạng thái | 6 cấp — kế thừa từ LIMIT cha + vòng đời riêng |
-  </Tab>
-  <Tab title="Helper ẩn">
-    Cột **T→X** chứa dữ liệu phục vụ công thức nội bộ, không cần quan tâm.
   </Tab>
 </Tabs>
 
@@ -78,7 +86,7 @@ Trạng thái cột **Q** có logic **kế thừa** — SUBLIMIT chết theo LIM
 
 <Steps>
   <Step title="Kiểm tra LIMIT cha">
-    LIMIT mẹ **Đã đóng** hoặc **Tạm dừng** → SUBLIMIT chết theo, bất kể điều kiện riêng.
+    LIMIT mẹ **Đã đóng** hoặc **Tạm dừng** → SUBLIMIT chết theo.
   </Step>
   <Step title="Kiểm tra event riêng">
     SUBLIMIT có event "Đổi trạng thái → Đã đóng/Tạm dừng" → áp dụng.
@@ -92,5 +100,5 @@ Trạng thái cột **Q** có logic **kế thừa** — SUBLIMIT chết theo LIM
 </Steps>
 
 <Note>
-  Khi trạng thái chuyển sang **Đã đóng**, dòng dữ liệu phủ xám tối + gạch ngang — giúp bạn phân biệt nhanh.
+  Khi chuyển sang **Đã đóng**, dòng dữ liệu phủ xám tối + gạch ngang — giúp phân biệt nhanh.
 </Note>

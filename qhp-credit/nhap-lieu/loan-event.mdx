@@ -1,5 +1,5 @@
 ---
-title: Biến động khoản vay (LOAN_EVENT)
+title: Biến động khoản vay
 sidebarTitle: Biến động khoản vay
 description: Ghi nhận mọi thay đổi trên khoản vay — giải ngân, trả nợ, tất toán, gia hạn, điều chỉnh lãi suất.
 icon: arrows-rotate
@@ -9,33 +9,26 @@ icon: arrows-rotate
   **LOAN_EVENT** là nhật ký biến động. Mỗi dòng = một sự kiện trên khoản vay.
 </Info>
 
-## Vai trò trong hệ thống
-
-LOAN_EVENT là **nguồn dữ liệu duy nhất** cho mọi biến động khoản vay. Khi bạn nhập 1 dòng event, hệ thống tự động:
-
-- Cập nhật **dư nợ** trên LOAN
-- Cập nhật **ngày đáo hạn** (nếu gia hạn)
-- Cập nhật **lãi suất hiệu lực** (nếu điều chỉnh)
-- Chuyển **trạng thái** khoản vay
-
----
-
 ## 6 loại sự kiện
 
-| Loại sự kiện | Nhóm | Cần nhập thêm | Ảnh hưởng dư nợ |
-|:-------------|:-----|:--------------|:-----------------|
-| **Giải ngân mới** | Tài chính | N (số tiền) | Dư nợ = amount |
-| **Giải ngân bổ sung** | Tài chính | N (số tiền) | Dư nợ **+ amount** |
-| **Trả gốc** | Tài chính | N (số tiền) | Dư nợ **− amount** |
-| **Tất toán** | Tài chính | — | Dư nợ → **0** |
-| **Gia hạn** | Hợp đồng | M (ngày mới) | Không đổi |
-| **Điều chỉnh lãi suất** | Hợp đồng | M (LS mới) | Không đổi |
+| Loại sự kiện | Cần nhập | Ảnh hưởng dư nợ |
+|:-------------|:---------|:-----------------|
+| **Giải ngân mới** | *Hệ thống tự tạo* | Dư nợ = amount |
+| **Giải ngân bổ sung** | N (số tiền) | Dư nợ **+ amount** |
+| **Trả gốc** | N (số tiền) | Dư nợ **− amount** |
+| **Tất toán** | — | Dư nợ → **0** |
+| **Gia hạn** | M (ngày mới) | Không đổi |
+| **Điều chỉnh lãi suất** | M (LS mới) | Không đổi |
+
+<Warning>
+  **Giải ngân mới** = hệ thống tự tạo khi thêm dòng ở tab [Khoản vay](/qhp-credit/nhap-lieu/loan). Bạn chỉ nhập **Giải ngân bổ sung** từ đợt 2 trở đi.
+</Warning>
 
 ---
 
 ## Cột nhập liệu
 
-Bạn chỉ tương tác **6 cột** — 15 cột còn lại tự tính.
+Bạn chỉ tương tác **8 cột** — phần còn lại tự tính.
 
 | Cột | Tên | Cách nhập | Khi nào? |
 |:----|:----|:----------|:---------|
@@ -43,8 +36,10 @@ Bạn chỉ tương tác **6 cột** — 15 cột còn lại tự tính.
 | **H** | Ngày sự kiện | 📅 Chọn ngày | ✅ Luôn bắt buộc |
 | **J** | Loại sự kiện | ▼ Dropdown | ✅ Luôn bắt buộc |
 | **M** | Giá trị mới | ✏️ Nhập | Gia hạn (ngày) / ĐCLS (lãi suất) |
-| **N** | Số tiền GD | ✏️ Nhập số | GN mới / GN bổ sung / Trả gốc |
-| **R** | Ghi chú | ✏️ Nhập tay | Tùy chọn |
+| **N** | Số tiền GD | ✏️ Nhập số | GN bổ sung / Trả gốc |
+| **P** | Người nhập | ✏️ Gõ tay | Tùy chọn |
+| **Q** | Ngày hiệu lực | 📅 Chọn ngày | Tùy chọn |
+| **R** | Ghi chú | ✏️ Gõ tay | Tùy chọn |
 
 <Tip>
   **Tất toán** chỉ cần nhập B, H, J — không cần nhập số tiền. Hệ thống tự tính balance = 0.
@@ -52,13 +47,13 @@ Bạn chỉ tương tác **6 cột** — 15 cột còn lại tự tính.
 
 ---
 
-## Cột tự động (🔒 Không sửa)
+## Cột tự động
 
 <Tabs>
   <Tab title="Auto-ID & Lookup">
-    | Cột | Tên | Cách hoạt động |
-    |:----|:----|:---------------|
-    | **A** | Mã sự kiện | Tự sinh `LE-00001`... |
+    | Cột | Tên | Nguồn |
+    |:----|:----|:------|
+    | **A** | Mã sự kiện | Tự sinh `LE-00001`… |
     | **C** | Số khế ước | Tra cứu từ LOAN |
     | **D** | Mã công ty | Tra cứu từ LOAN |
     | **E** | Mã ngân hàng | Tra cứu từ LOAN |
@@ -66,68 +61,57 @@ Bạn chỉ tương tác **6 cột** — 15 cột còn lại tự tính.
     | **G** | Dư nợ gốc | Tra cứu từ LOAN |
   </Tab>
   <Tab title="Giá trị giao dịch">
-    | Cột | Tên | Cách hoạt động |
-    |:----|:----|:---------------|
+    | Cột | Tên | Nguồn |
+    |:----|:----|:------|
     | **K** | Trường thay đổi | Tự xác định từ loại sự kiện |
     | **L** | Giá trị cũ | Dư nợ / LS / ngày trước khi thay đổi |
     | **O** | DN sau GD | Balance sau giao dịch |
     | **S** | DN trước GD | Balance trước giao dịch |
-    | **T** | DN sau (calc) | Balance sau (dùng cho LOAN tra cứu) |
-    | **U** | Ảnh hưởng | +/−/0 (tăng / giảm / không đổi) |
+    | **T** | DN sau (calc) | Balance dùng cho LOAN tra cứu |
   </Tab>
 </Tabs>
 
 ---
 
-## Ví dụ thực tế
+## Ví dụ
 
 <AccordionGroup>
-  <Accordion title="Giải ngân mới 50 tỷ">
-    Thêm khoản vay mới, giải ngân lần đầu 50 tỷ.
-
-    | B | H | J | N |
-    |:--|:--|:--|:--|
-    | LOAN-00001 | 19/11/2025 | Giải ngân mới | 50.000.000.000 |
-
-    → LOAN cập nhật: **Dư nợ** = 50 tỷ, **Trạng thái** = Đang hoạt động
-  </Accordion>
-
   <Accordion title="Giải ngân bổ sung 20 tỷ">
-    Dư nợ hiện tại 50 tỷ, ngân hàng giải ngân thêm 20 tỷ.
+    Dư nợ hiện tại **50 tỷ**, giải ngân thêm **20 tỷ**.
 
     | B | H | J | N |
     |:--|:--|:--|:--|
     | LOAN-00001 | 15/03/2026 | Giải ngân bổ sung | 20.000.000.000 |
 
-    → LOAN: Dư nợ = **70 tỷ** (50 + 20)
+    → Dư nợ cũ = 50 tỷ, Dư nợ mới = **70 tỷ**
   </Accordion>
 
-  <Accordion title="Trả gốc 10 tỷ">
+  <Accordion title="Trả nợ gốc 10 tỷ">
     | B | H | J | N |
     |:--|:--|:--|:--|
     | LOAN-00001 | 20/03/2026 | Trả gốc | 10.000.000.000 |
 
-    → LOAN: Dư nợ = **60 tỷ** (70 − 10)
+    → Dư nợ = **60 tỷ** (70 − 10)
   </Accordion>
 
   <Accordion title="Tất toán">
-    Trả hết nợ. **Không cần nhập số tiền!**
+    Trả hết nợ. **Không cần nhập số tiền.**
 
     | B | H | J |
     |:--|:--|:--|
     | LOAN-00001 | 30/03/2026 | Tất toán |
 
-    → LOAN: Dư nợ = **0**, Trạng thái = **Tất toán** ⚫
+    → Dư nợ = **0**, Trạng thái khoản vay → **Tất toán** ⚫
   </Accordion>
 
   <Accordion title="Gia hạn khoản vay">
-    Đáo hạn 15/03 → gia hạn đến 15/09. Nhập **ngày mới** vào cột M.
+    Đến hạn 15/03 → gia hạn đến 15/09. Nhập **ngày mới** vào cột M.
 
     | B | H | J | M |
     |:--|:--|:--|:--|
     | LOAN-00001 | 10/03/2026 | Gia hạn | 15/09/2026 |
 
-    → LOAN: **Ngày đáo hạn** cập nhật → 15/09/2026
+    → LOAN: **Ngày đáo hạn** = 15/09/2026
   </Accordion>
 
   <Accordion title="Điều chỉnh lãi suất">
@@ -137,6 +121,6 @@ Bạn chỉ tương tác **6 cột** — 15 cột còn lại tự tính.
     |:--|:--|:--|:--|
     | LOAN-00001 | 01/04/2026 | Điều chỉnh lãi suất | 6.2 |
 
-    → LOAN: **LS hiệu lực** cập nhật → 6.20%
+    → LOAN: **LS hiệu lực** = 6,20%
   </Accordion>
 </AccordionGroup>

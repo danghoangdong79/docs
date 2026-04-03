@@ -1,41 +1,41 @@
 ---
-title: Biến động thư tín dụng
+title: Biến động LC
 sidebarTitle: Biến động LC
-description: Ghi lại mỗi khi LC có thay đổi — thanh toán, tu chỉnh, gia hạn.
+description: Ghi nhận mỗi khi LC có thay đổi — thanh toán, tu chỉnh, gia hạn, tất toán.
 icon: arrows-rotate
 ---
 
 <Info>
-  Tab **LC_EVENT** — mỗi dòng = một sự kiện trên thư tín dụng.
+  **LC_EVENT** là nhật ký biến động. Mỗi dòng = một sự kiện trên thư tín dụng.
 </Info>
 
 ## Các loại sự kiện
 
-| Loại | Nhóm | Nhập gì? | Ảnh hưởng |
-|:-----|:-----|:---------|:----------|
-| **Thanh toán** | Tài chính | Nhập N (số tiền) | Dư nợ **− amount** |
-| **Tất toán** | Tài chính | Không nhập | Dư nợ → **0** |
-| **Sửa đổi giảm** | Tài chính | Nhập N (số tiền) | Dư nợ **− amount** |
-| **Chuyển nhượng** | Tài chính | Nhập N (số tiền) | Dư nợ **− amount** |
-| **Tu chỉnh tăng** | Điều chỉnh | Nhập N (số tiền) | Dư nợ **+ amount** |
-| **Tu chỉnh giảm** | Điều chỉnh | Nhập N (số tiền) | Dư nợ **− amount** |
-| **Gia hạn** | Điều chỉnh | Nhập M (ngày mới) | Đổi ngày hết hạn |
+| Loại | Cần nhập | Ảnh hưởng dư nợ |
+|:-----|:---------|:-----------------|
+| **Thanh toán** | N (số tiền) | Dư nợ **− amount** |
+| **Tất toán** | — | Dư nợ → **0** |
+| **Tu chỉnh tăng** | N (số tiền) | Dư nợ **+ amount** |
+| **Tu chỉnh giảm** | N (số tiền) | Dư nợ **− amount** |
+| **Sửa đổi giảm** | N (số tiền) | Dư nợ **− amount** |
+| **Chuyển nhượng** | N (số tiền) | Dư nợ **− amount** |
+| **Gia hạn** | M (ngày mới) | Đổi ngày hết hạn |
 
 ---
 
-## Cột cần nhập
+## Cột nhập liệu
 
-| Cột | Nội dung | Bắt buộc? |
-|:----|:---------|:---------:|
-| **B** | Mã LC ▼ | ✅ |
-| **H** | Ngày sự kiện | ✅ |
-| **I** | Nhóm sự kiện ▼ | ✅ |
-| **J** | Loại sự kiện ▼ | ✅ |
-| **K** | Trường thay đổi | ✅ |
-| **M** | Giá trị mới | Gia hạn |
-| **N** | Số tiền GD | Thanh toán / Tu chỉnh |
-| **P** | Người nhập | Tùy chọn |
-| **Q** | Ngày hiệu lực | Tùy chọn |
+| Cột | Tên | Cách nhập | Bắt buộc? |
+|:----|:----|:----------|:---------:|
+| **B** | Mã LC | ▼ Dropdown | ✅ |
+| **H** | Ngày sự kiện | 📅 Chọn ngày | ✅ |
+| **I** | Nhóm sự kiện | ▼ Dropdown | ✅ |
+| **J** | Loại sự kiện | ▼ Dropdown | ✅ |
+| **K** | Trường thay đổi | ▼ Dropdown | ✅ |
+| **M** | Giá trị mới | ✏️ Nhập | Gia hạn |
+| **N** | Số tiền GD | ✏️ Nhập số | TT / Tu chỉnh |
+| **P** | Người nhập | ✏️ Gõ tay | Tùy chọn |
+| **Q** | Ngày hiệu lực | 📅 Chọn ngày | Tùy chọn |
 
 <Note>
   Các cột còn lại hệ thống **tự tính** — không cần nhập.
@@ -46,18 +46,31 @@ icon: arrows-rotate
 ## Ví dụ
 
 <AccordionGroup>
-  <Accordion title="Thanh toán BCT 5 tỷ">
+  <Accordion title="Thanh toán 5 tỷ">
     Dư nợ LC **20 tỷ**, thanh toán **5 tỷ**.
 
     | B | H | I | J | K | N |
     |:--|:--|:--|:--|:--|:--|
-    | LC-00001 | 20/03/2026 | FINANCIAL | Thanh toán | outstanding_amount | 5000000000 |
+    | LC-00001 | 20/03/2026 | FINANCIAL | Thanh toán | outstanding_amount | 5.000.000.000 |
 
-    → Tự tính: L = 20 tỷ, O = 15 tỷ
+    → Dư nợ cũ = 20 tỷ, Dư nợ mới = **15 tỷ**
   </Accordion>
+
   <Accordion title="Tất toán LC">
     | B | H | I | J | K |
     |:--|:--|:--|:--|:--|
     | LC-00001 | 30/03/2026 | FINANCIAL | Tất toán | outstanding_amount |
+
+    → Dư nợ = **0**, LC hoàn tất.
+  </Accordion>
+
+  <Accordion title="Gia hạn LC">
+    LC hết hạn 30/06 → gia hạn đến 30/09.
+
+    | B | H | I | J | K | M |
+    |:--|:--|:--|:--|:--|:--|
+    | LC-00001 | 15/06/2026 | ADJUSTMENT | Gia hạn | expiry_date | 30/09/2026 |
+
+    → Ngày hết hạn LC cập nhật = 30/09/2026.
   </Accordion>
 </AccordionGroup>

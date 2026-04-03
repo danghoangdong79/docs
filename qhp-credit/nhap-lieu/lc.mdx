@@ -1,46 +1,61 @@
 ---
-title: Thư tín dụng (LC)
+title: Thư tín dụng
 sidebarTitle: Thư tín dụng
 description: Nhập chi tiết từng LC — số tiền, ngày mở, ngày hết hạn, bên thụ hưởng.
 icon: file-contract
 ---
 
 <Info>
-  Tab **LC** — mỗi dòng = một thư tín dụng dưới một hạn mức con.
+  **LC** quản lý thư tín dụng. Mỗi dòng = một LC thuộc một Hạn mức con (SUBLIMIT).
 </Info>
 
-## Khi nào nhập?
+## Khi nào cần nhập?
 
-Mỗi khi ngân hàng **mở một LC mới** cho công ty — thêm dòng mới vào đây.
+Thêm **1 dòng mới** mỗi khi ngân hàng mở LC mới cho công ty.
 
 ---
 
-## Cột cần nhập
+## Cột nhập liệu
 
-| Cột | Nội dung | Cách nhập |
-|:----|:---------|:----------|
-| **B** | Mã hạn mức con | Chọn ▼ |
-| **G** | Số LC | Gõ tay |
-| **H** | Số lô hàng | Gõ tay |
-| **I** | Chiều LC | Chọn ▼ |
-| **J** | Phương thức thanh toán | Chọn ▼ |
-| **K** | Lãi suất UPAS | Nhập số |
-| **L** | Bên thụ hưởng | Gõ tay |
-| **M** | Ngày thanh toán NCC | Chọn ngày |
-| **N** | Tiền tệ | Chọn ▼ |
-| **O** | Ngày mở LC | Chọn ngày |
-| **P** | Ngày hết hạn | Chọn ngày |
-| **Q** | Ngày đáo hạn | Chọn ngày |
-| **S** | Trị giá LC | Nhập số, đầy đủ số 0 |
-| **T** | Kỳ hạn | Nhập text |
-| **U** | Dư nợ hiện tại | Nhập số |
-| **V** | Số tiền ký quỹ | Nhập số |
-| **W** | Trạng thái | Chọn ▼ |
-| **X** | Ghi chú | Gõ tay |
+<Steps>
+  <Step title="Liên kết hạn mức">
+    | Cột | Tên | Cách nhập |
+    |:----|:----|:----------|
+    | **B** | Mã HM con | ▼ Dropdown — *chọn xong → C-F tự điền* |
+  </Step>
+  <Step title="Thông tin LC">
+    | Cột | Tên | Cách nhập |
+    |:----|:----|:----------|
+    | **G** | Số LC | ✏️ Gõ tay |
+    | **H** | Số lô hàng | ✏️ Gõ tay |
+    | **I** | Chiều LC | ▼ Dropdown |
+    | **J** | Phương thức thanh toán | ▼ Dropdown |
+    | **K** | Lãi suất UPAS | ✏️ Nhập số |
+    | **L** | Bên thụ hưởng | ✏️ Gõ tay |
+  </Step>
+  <Step title="Ngày tháng & giá trị">
+    | Cột | Tên | Cách nhập |
+    |:----|:----|:----------|
+    | **M** | Ngày TT NCC | 📅 Chọn ngày |
+    | **N** | Tiền tệ | ▼ Dropdown |
+    | **O** | Ngày mở LC | 📅 Chọn ngày |
+    | **P** | Ngày hết hạn | 📅 Chọn ngày |
+    | **Q** | Ngày đáo hạn | 📅 Chọn ngày |
+    | **S** | Trị giá LC | ✏️ Nhập số |
+    | **T** | Kỳ hạn | ✏️ Gõ tay |
+  </Step>
+  <Step title="Trạng thái & ghi chú">
+    | Cột | Tên | Cách nhập |
+    |:----|:----|:----------|
+    | **U** | Dư nợ hiện tại | ✏️ Nhập số |
+    | **V** | Số tiền ký quỹ | ✏️ Nhập số |
+    | **W** | Trạng thái | ▼ Dropdown |
+    | **X** | Ghi chú | ✏️ Gõ tay |
+  </Step>
+</Steps>
 
 <Note>
-  Các cột còn lại hệ thống **tự tính** — không cần nhập.
-  Cột A (Mã LC), C–F (từ SUBLIMIT), R (ngày còn lại) tự động cập nhật.
+  Cột A (Mã LC) và C-F (thông tin từ SUBLIMIT) tự điền — không cần nhập.
 </Note>
 
 <Warning>

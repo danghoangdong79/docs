@@ -1,7 +1,7 @@
 ---
-title: Hạn mức tổng (LIMIT)
+title: Hạn mức tổng
 sidebarTitle: Hạn mức tổng
-description: Quản lý hạn mức tín dụng tổng — phê duyệt, gia hạn, theo dõi trạng thái tự động.
+description: Mỗi dòng = một hợp đồng hạn mức tín dụng. Nhập thông tin cơ bản — số tiền, trạng thái và ngày hết hạn tự cập nhật từ Sự kiện.
 icon: building-columns
 ---
 
@@ -11,68 +11,72 @@ icon: building-columns
 
 ## Khi nào cần nhập?
 
-- ✅ Công ty **ký duyệt Hợp đồng hạn mức mới** → thêm 1 dòng
-- ✅ Cập nhật thông tin Hạn mức (tên, TSĐB, chu kỳ review...)
+Thêm **1 dòng mới** mỗi khi công ty ký duyệt Hợp đồng tín dụng mới với ngân hàng.
 
 <Tip>
-  **Không nhập ở đây** khi tăng/giảm số tiền, gia hạn, hay đóng hạn mức. Hãy nhập vào tab [Sự kiện hạn mức](/qhp-credit/nhap-lieu/lm-event) — LIMIT sẽ **tự động cập nhật** từ sự kiện mới nhất!
+  Tăng/giảm số tiền, gia hạn, tạm dừng hay đóng hạn mức? **Không sửa ở đây** — hãy nhập vào tab [Sự kiện hạn mức](/qhp-credit/nhap-lieu/lm-event), hệ thống sẽ tự cập nhật.
 </Tip>
 
 ---
 
 ## Cột nhập liệu
 
-Bạn chỉ cần tương tác với **12 cột** — 14 cột còn lại hệ thống tự tính.
+Bạn chỉ tương tác **12 cột** — 14 cột còn lại hệ thống tự tính.
 
-| Cột | Tên | Cách nhập | Hướng dẫn |
-|:----|:----|:----------|:----------|
-| **B** | Công ty | ▼ Dropdown | Chọn pháp nhân |
-| **C** | Ngân hàng | ▼ Dropdown | Chọn ngân hàng đối tác |
-| **D** | Chi nhánh | ▼ Dropdown động | *Tự lọc theo ngân hàng đã chọn ở cột C* |
-| **E** | Số HĐTD | ✏️ Nhập tay | VD: `052/2025/HĐTD` |
-| **F** | Tên hạn mức | ✏️ Nhập tay | VD: `HM ngân hàng BIDV` |
-| **G** | TSĐB | ▼ Dropdown | Tín chấp / Thế chấp / Hỗn hợp |
-| **H** | Loại HM | ▼ Dropdown | Đơn sản phẩm / Đa sản phẩm |
-| **I** | Tiền tệ | ▼ Dropdown | VND, USD, EUR... |
-| **M** | Ngày hiệu lực | 📅 Chọn ngày | Format: `dd/MM/yyyy` |
-| **Q** | Chu kỳ review | ▼ Dropdown | Hàng tháng / Hàng quý / 6 tháng / Hàng năm |
-| **T** | Người phụ trách | ▼ Dropdown | Chọn người quản lý |
-| **U** | Ghi chú | ✏️ Nhập tay | Chi tiết TSĐB, điều kiện đặc biệt... |
+<Steps>
+  <Step title="Chọn đối tác">
+    | Cột | Tên | Cách nhập |
+    |:----|:----|:----------|
+    | **B** | Công ty | ▼ Dropdown |
+    | **C** | Ngân hàng | ▼ Dropdown |
+    | **D** | Chi nhánh | ▼ Dropdown — *tự lọc theo ngân hàng ở cột C* |
+  </Step>
+  <Step title="Nhập thông tin hợp đồng">
+    | Cột | Tên | Cách nhập |
+    |:----|:----|:----------|
+    | **E** | Số HĐTD | ✏️ Gõ tay — VD: `052/2025/HĐTD` |
+    | **F** | Tên hạn mức | ✏️ Gõ tay — VD: `HM ngân hàng BIDV` |
+    | **G** | TSĐB | ▼ Dropdown — Tín chấp / Thế chấp / Hỗn hợp |
+    | **H** | Loại HM | ▼ Dropdown — Đơn sản phẩm / Đa sản phẩm |
+    | **I** | Tiền tệ | ▼ Dropdown |
+    | **M** | Ngày hiệu lực | 📅 Chọn ngày |
+  </Step>
+  <Step title="Gán quản lý">
+    | Cột | Tên | Cách nhập |
+    |:----|:----|:----------|
+    | **Q** | Chu kỳ review | ▼ Dropdown — Hàng tháng / Quý / 6T / Năm |
+    | **T** | Người phụ trách | ▼ Dropdown |
+    | **U** | Ghi chú | ✏️ Gõ tay |
+  </Step>
+</Steps>
 
 ---
 
-## Cột tự động (🔒 Không sửa)
+## Cột tự động
 
-Tất cả các cột dưới đây đã được **khóa bảo vệ** — không pop-up cảnh báo khi Filter hay Sort.
+Tất cả đã được **khóa bảo vệ** — không thể chỉnh sửa.
 
 <Tabs>
   <Tab title="Số tiền">
-    | Cột | Tên | Cách hoạt động |
-    |:----|:----|:---------------|
-    | **J** | HM phê duyệt | Lấy số tiền mới nhất từ `LM_EVENT` |
-    | **K** | Đã phân bổ | Tổng `SUBLIMIT` đang hoạt động |
-    | **L** | Chưa phân bổ | `= J − K` (âm = vượt phân bổ) |
+    | Cột | Tên | Nguồn |
+    |:----|:----|:------|
+    | **J** | HM phê duyệt | Số tiền mới nhất từ LM_EVENT |
+    | **K** | Đã phân bổ | Tổng SUBLIMIT đang hoạt động |
+    | **L** | Chưa phân bổ | `J − K` |
   </Tab>
   <Tab title="Thời hạn">
-    | Cột | Tên | Cách hoạt động |
-    |:----|:----|:---------------|
-    | **N** | Ngày hết hạn | Ngày hết hạn mới nhất từ `LM_EVENT` |
-    | **O** | Số ngày còn lại | `= N − Hôm nay` (âm = đã quá hạn) |
+    | Cột | Tên | Nguồn |
+    |:----|:----|:------|
+    | **N** | Ngày hết hạn | Ngày HH mới nhất từ LM_EVENT |
+    | **O** | Số ngày còn lại | `N − Hôm nay` |
   </Tab>
-  <Tab title="Trạng thái & Review">
-    | Cột | Tên | Cách hoạt động |
-    |:----|:----|:---------------|
-    | **P** | Trạng thái | 6 cấp ưu tiên (xem bảng bên dưới) |
+  <Tab title="Trạng thái">
+    | Cột | Tên | Nguồn |
+    |:----|:----|:------|
+    | **A** | Mã HM | Tự sinh `LIM-00001`… |
+    | **P** | Trạng thái | 6 cấp ưu tiên (bảng bên dưới) |
     | **R** | Ngày review tiếp | Tính từ ngày hiệu lực + chu kỳ |
-    | **S** | Cảnh báo review | ⚠️ nếu đã quá hạn review |
-  </Tab>
-  <Tab title="Auto-ID & Helper">
-    | Cột | Tên | Cách hoạt động |
-    |:----|:----|:---------------|
-    | **A** | Mã HM | Tự sinh `LIM-00001`, `LIM-00002`... |
-    | **V** | Trạng thái KH | Tra cứu từ sheet PLAN |
-    | **W** | Deadline KH | Tra cứu từ sheet PLAN |
-    | **X→Z** | Helper ẩn | Phục vụ công thức nội bộ |
+    | **S** | Cảnh báo review | ⚠️ khi quá hạn review |
   </Tab>
 </Tabs>
 
@@ -80,17 +84,17 @@ Tất cả các cột dưới đây đã được **khóa bảo vệ** — khôn
 
 ## Hệ thống trạng thái
 
-Cột **P** tự động phân loại theo thứ tự ưu tiên:
+Cột **P** tự phân loại, ưu tiên từ trên xuống:
 
-| # | Trạng thái | Màu | Khi nào? |
-|:--|:-----------|:-----|:---------|
-| 1 | 🟤 **Đã đóng** | Xám + gạch ngang | Có event "Đổi trạng thái → Đã đóng" |
-| 2 | 🟡 **Tạm dừng** | Vàng nhạt | Có event "Đổi trạng thái → Tạm dừng" |
-| 3 | 🔵 **Đang tái cấp** | Xanh lam nhạt | Có event "Tái cấp" chưa đến hiệu lực |
-| 4 | 🔴 **Hết hạn** | Đỏ | Ngày hết hạn < Hôm nay |
-| 5 | 🟠 **Sắp hết hạn** | Cam nhạt | Còn ≤ 30 ngày |
-| 6 | 🟢 **Đang hoạt động** | Mặc định | Không có vấn đề gì |
+| # | Trạng thái | Khi nào? |
+|:--|:-----------|:---------|
+| 1 | 🟤 **Đã đóng** | Có event "Đổi trạng thái → Đã đóng" |
+| 2 | 🟡 **Tạm dừng** | Có event "Đổi trạng thái → Tạm dừng" |
+| 3 | 🔵 **Đang tái cấp** | Có event "Tái cấp" chưa đến hiệu lực |
+| 4 | 🔴 **Hết hạn** | Ngày hết hạn < Hôm nay |
+| 5 | 🟠 **Sắp hết hạn** | Còn ≤ 30 ngày |
+| 6 | 🟢 **Đang hoạt động** | Mặc định |
 
 <Note>
-  Ưu tiên từ trên xuống dưới — nếu HM "Đã đóng" thì **luôn** hiển thị Đã đóng, bất kể thời hạn.
+  Nếu HM "Đã đóng" thì **luôn** hiển thị Đã đóng — bất kể ngày hết hạn.
 </Note>
