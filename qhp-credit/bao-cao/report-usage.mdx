@@ -1,37 +1,33 @@
 ---
-title: Sử dụng hạn mức
-sidebarTitle: Sử dụng hạn mức
-description: Xem mỗi ngân hàng đã dùng bao nhiêu phần trăm hạn mức — dùng để đánh giá room còn trống.
+title: REPORT_USAGE — Hạn mức & Sử dụng
+description: So sánh hạn mức được cấp vs đã sử dụng
 icon: chart-pie
 ---
 
-<Info>
-  Đây là tab **REPORT_USAGE** trên Google Sheet — dữ liệu **tự động tổng hợp**, bạn không cần nhập gì.
-</Info>
+## Mục đích
 
-## Cách sử dụng
+So sánh **hạn mức được cấp** vs **đã sử dụng** — tỷ lệ sử dụng (%) theo NH và nhóm sản phẩm.
 
-<Steps>
-  <Step title="Mở tab báo cáo">
-    Trên Google Sheet, chuyển sang tab **REPORT_USAGE**.
-  </Step>
-  <Step title="Chọn bộ lọc">
-    Lọc theo **Ngân hàng**, **Công ty**, hoặc **Loại sản phẩm** để xem chi tiết.
-  </Step>
-  <Step title="Đọc tỷ lệ sử dụng">
-    Cột **% sử dụng** cho biết đã dùng bao nhiêu phần trăm hạn mức. Trên 90% cần chú ý.
-  </Step>
-</Steps>
+<Note>
+  Tab này **tự động tính toán** — chỉ cần thay đổi **bộ lọc**.
+</Note>
 
-## Ý nghĩa các chỉ số
+## Bộ lọc
 
-| Chỉ số | Nghĩa là gì | Lấy từ đâu |
-|:-------|:------------|:-----------|
-| Hạn mức được duyệt | Tổng tiền ngân hàng cho phép sử dụng | Tab Hạn mức tổng |
-| Đã sử dụng | Tổng dư nợ khoản vay + LC hiện tại | Tự cộng từ tab Khoản vay + LC |
-| Còn trống | = Hạn mức duyệt − Đã sử dụng | Phần room còn lại |
-| % Sử dụng | = Đã sử dụng / Hạn mức duyệt × 100% | Mức độ khai thác hạn mức |
+| Ô | Filter | Ví dụ |
+|:--|:-------|:------|
+| **B1** | Công ty | `QHP`, `Tất cả` |
+| **E1** | Ngân hàng | `BIDV`, `Tất cả` |
+
+## Kết quả hiển thị
+
+| NH | Loại SP | HM phê duyệt | Đã sử dụng | Tỷ lệ (%) | Còn trống |
+|:---|:--------|:-------------|:-----------|:-----------|:----------|
+| BIDV | Vay | 300.000 | 180.000 | 60% | 120.000 |
+| TCB | LC | 500.000 | 420.000 | 84% | 80.000 |
+
+Đơn vị: **triệu đồng**
 
 <Warning>
-  Khi **% Sử dụng vượt 90%** — hãy xin tăng hạn mức hoặc trả bớt dư nợ trước khi giải ngân thêm.
+  Tỷ lệ sử dụng > **80%** cần lưu ý — có thể cần đề xuất tăng HM qua tab **PLAN**.
 </Warning>

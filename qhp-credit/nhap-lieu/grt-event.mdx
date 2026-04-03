@@ -1,0 +1,156 @@
+---
+title: Biến động bảo lãnh
+sidebarTitle: Biến động BL
+description: Ghi nhận mọi thay đổi trên bảo lãnh — phát hành, tăng/giảm giá trị, gia hạn, giải tỏa, bồi thường.
+icon: rotate
+---
+
+<Info>
+  **GRT_EVENT** là nhật ký biến động. Mỗi dòng = một sự kiện trên thư bảo lãnh.
+</Info>
+
+## 11 loại sự kiện
+
+| Loại sự kiện | Nhóm | Ảnh hưởng dư nợ |
+|:-------------|:-----|:----------------|
+| **Phát hành** | FINANCIAL | Dư nợ = amount |
+| **Tăng giá trị** | FINANCIAL | Dư nợ **+ amount** |
+| **Giảm giá trị** | FINANCIAL | Dư nợ **− amount** |
+| **Gia hạn** | CONTRACT | Không đổi dư nợ |
+| **Thay đổi phí** | CONTRACT | Không đổi dư nợ |
+| **Giải tỏa 1 phần** | FINANCIAL | Dư nợ **− amount** |
+| **Giải tỏa toàn bộ** | FINANCIAL | Dư nợ → **0** |
+| **Yêu cầu bồi thường 1 phần** | FINANCIAL | Dư nợ **− amount** |
+| **Yêu cầu bồi thường toàn bộ** | FINANCIAL | Dư nợ → **0** |
+| **Hủy** | CONTRACT | Không đổi dư nợ |
+| **Đóng** | CONTRACT | Không đổi dư nợ |
+
+<Warning>
+  **Phát hành** là sự kiện đầu tiên khi mở BL mới. Các sự kiện sau ghi nhận biến động.
+</Warning>
+
+---
+
+## Cột nhập liệu
+
+Bạn chỉ tương tác **7 cột** — phần còn lại tự tính.
+
+| Cột | Tên | Cách nhập | Khi nào? |
+|:----|:----|:----------|:---------|
+| **B** | Mã bảo lãnh | ▼ Dropdown | ✅ Luôn bắt buộc |
+| **I** | Ngày sự kiện | 📅 Chọn ngày | ✅ Luôn bắt buộc |
+| **M** | Loại sự kiện | ▼ Dropdown | ✅ Luôn bắt buộc |
+| **P** | Giá trị mới | ✏️ Nhập | Gia hạn (ngày mới) / Thay đổi phí |
+| **Q** | Số tiền GD | ✏️ Nhập số | Phát hành / Tăng / Giảm / Giải tỏa 1 phần |
+| **T** | Ngày hiệu lực | 📅 Chọn ngày | Tùy chọn |
+| **U** | Người chỉnh sửa | ▼ Dropdown | Tùy chọn |
+| **V** | Ghi chú | ✏️ Tùy ý | |
+
+<Tip>
+  **Giải tỏa toàn bộ / Hủy / Đóng** chỉ cần nhập B, I, M — không cần nhập số tiền. Hệ thống tự tính balance = 0.
+</Tip>
+
+---
+
+## Cột tự động
+
+<Tabs>
+  <Tab title="Auto-ID & Lookup">
+    | Cột | Tên | Nguồn |
+    |:----|:----|:------|
+    | **A** | Mã sự kiện | Tự sinh `BGE-00001`… |
+    | **C** | Số thư BL | Tra cứu từ GRT |
+    | **D** | Mã công ty | Tra cứu từ GRT |
+    | **E** | Mã ngân hàng | Tra cứu từ GRT |
+    | **F** | Mã dự án | Tra cứu từ GRT |
+    | **G** | Loại bảo lãnh | Tra cứu từ GRT |
+    | **H** | Giá trị BL | Tra cứu từ GRT |
+    | **J** | Tiền tệ | Tra cứu từ GRT |
+    | **K** | Tỷ giá | Tra cứu từ GRT |
+  </Tab>
+  <Tab title="Giá trị giao dịch">
+    Hệ thống tra cứu `_CONFIG` để tự xác định:
+
+    | Cột | Tên | Nguồn |
+    |:----|:----|:------|
+    | **L** | Nhóm SK | FINANCIAL / CONTRACT (từ _CONFIG) |
+    | **N** | Trường thay đổi | outstanding_amount / expiry_date / fee_rate / status (từ _CONFIG) |
+    | **O** | Giá trị cũ | Dư nợ / Ngày HH trước khi thay đổi |
+    | **R** | Dư nợ sau GD N.Tệ | `= prev_balance + signed_amount` |
+    | **S** | Dư nợ sau GD (VNĐ) | `= R × K` |
+  </Tab>
+  <Tab title="Helper (ẩn)">
+    | Cột | Tên | Logic |
+    |:----|:----|:------|
+    | **W** | Dư nợ trước GD | `FILTER(R; B=lid; A<eid)` → last value |
+    | **X** | signed_amount | _CONFIG LET: +Q / -Q / -prev / 0 |
+  </Tab>
+</Tabs>
+
+---
+
+## Ví dụ
+
+<AccordionGroup>
+  <Accordion title="Phát hành BL 5 tỷ">
+    Phát hành thư bảo lãnh mới trị giá **5 tỷ**.
+
+    | B | I | M | Q |
+    |:--|:--|:--|:--|
+    | BL-00001 | 01/04/2026 | Phát hành | 5.000.000.000 |
+
+    → Dư nợ = **5 tỷ**
+  </Accordion>
+
+  <Accordion title="Tăng giá trị 2 tỷ">
+    BL hiện tại **5 tỷ**, tăng thêm **2 tỷ**.
+
+    | B | I | M | Q |
+    |:--|:--|:--|:--|
+    | BL-00001 | 15/04/2026 | Tăng giá trị | 2.000.000.000 |
+
+    → Dư nợ = **7 tỷ** (5 + 2)
+  </Accordion>
+
+  <Accordion title="Giải tỏa 1 phần 3 tỷ">
+    | B | I | M | Q |
+    |:--|:--|:--|:--|
+    | BL-00001 | 30/04/2026 | Giải tỏa 1 phần | 3.000.000.000 |
+
+    → Dư nợ = **4 tỷ** (7 − 3)
+  </Accordion>
+
+  <Accordion title="Giải tỏa toàn bộ">
+    Giải tỏa hết. **Không cần nhập số tiền.**
+
+    | B | I | M |
+    |:--|:--|:--|
+    | BL-00001 | 15/05/2026 | Giải tỏa toàn bộ |
+
+    → Dư nợ = **0**, GRT: ~~Gạch ngang toàn dòng~~ ⚫ *Đã giải tỏa*
+  </Accordion>
+
+  <Accordion title="Gia hạn BL">
+    Hạn 30/06 → gia hạn đến 31/12. Nhập **ngày mới** vào cột P.
+
+    | B | I | M | P |
+    |:--|:--|:--|:--|
+    | BL-00002 | 20/06/2026 | Gia hạn | 31/12/2026 |
+
+    → GRT: **Ngày hết hạn** = 31/12/2026
+  </Accordion>
+
+  <Accordion title="Thay đổi phí">
+    Phí BL 0.5% → 0.8%. Nhập **phí mới** vào cột P.
+
+    | B | I | M | P |
+    |:--|:--|:--|:--|
+    | BL-00002 | 01/07/2026 | Thay đổi phí | 0.8 |
+
+    → GRT: **Phí BL** = 0.8%
+  </Accordion>
+</AccordionGroup>
+
+<Note>
+  Tất cả formulas sử dụng **_CONFIG LET pattern** với 11 biến từ `_CONFIG!$CY$4:$CY$14`, đảm bảo khi thêm/sửa loại sự kiện chỉ cần cập nhật CONFIG.
+</Note>

@@ -1,21 +1,27 @@
 ---
 title: Thư tín dụng
-sidebarTitle: Thư tín dụng
-description: Nhập chi tiết từng LC — số tiền, ngày mở, ngày hết hạn, bên thụ hưởng.
+sidebarTitle: Thư tín dụng (LC)
+description: Quản lý thư tín dụng — số LC, chiều NK/XK, loại LC, ký quỹ, trạng thái tự động.
 icon: file-contract
 ---
 
 <Info>
-  **LC** quản lý thư tín dụng. Mỗi dòng = một LC thuộc một Hạn mức con (SUBLIMIT).
+  **LC** quản lý thư tín dụng. Mỗi dòng = một LC thuộc một Hạn mức con (SUBLIMIT). Trạng thái, dư nợ được tính tự động từ LC_EVENT.
 </Info>
 
 ## Khi nào cần nhập?
 
 Thêm **1 dòng mới** mỗi khi ngân hàng mở LC mới cho công ty.
 
+<Tip>
+  Tăng/giảm trị giá, tất toán, gia hạn? **Không sửa ở đây** — hãy nhập vào tab [Biến động LC](/nhap-lieu/lc-event), LC sẽ tự cập nhật.
+</Tip>
+
 ---
 
 ## Cột nhập liệu
+
+Bạn chỉ tương tác **16 cột** — 15 cột còn lại tự tính.
 
 <Steps>
   <Step title="Liên kết hạn mức">
@@ -26,38 +32,79 @@ Thêm **1 dòng mới** mỗi khi ngân hàng mở LC mới cho công ty.
   <Step title="Thông tin LC">
     | Cột | Tên | Cách nhập |
     |:----|:----|:----------|
-    | **G** | Số LC | ✏️ Gõ tay |
-    | **H** | Số lô hàng | ✏️ Gõ tay |
-    | **I** | Chiều LC | ▼ Dropdown |
-    | **J** | Phương thức thanh toán | ▼ Dropdown |
-    | **K** | Lãi suất UPAS | ✏️ Nhập số |
-    | **L** | Bên thụ hưởng | ✏️ Gõ tay |
+    | **G** | Số LC | ✏️ Gõ tay — số do NH cấp |
+    | **H** | Lô hàng / Ref | ✏️ Gõ tay |
+    | **I** | Mã dự án | ✏️ Gõ tay |
+    | **J** | Chiều LC | ▼ Dropdown — Nhập khẩu / Xuất khẩu |
+    | **K** | Loại LC | ▼ Dropdown — UPAS, Trả chậm, Trả ngay, L/C 0%, L/C MOF |
+    | **L** | Tính chất LC | ▼ Dropdown — Thương mại / Tài chính |
+    | **M** | Chuyển nhượng | ☑️ TRUE/FALSE |
+    | **N** | Xác nhận | ☑️ TRUE/FALSE |
+    | **O** | Lãi suất UPAS | ✏️ Nhập % (nếu UPAS) |
+    | **P** | Người thụ hưởng | ✏️ Gõ tay |
   </Step>
-  <Step title="Ngày tháng & giá trị">
+  <Step title="Ngày tháng & tiền tệ">
     | Cột | Tên | Cách nhập |
     |:----|:----|:----------|
-    | **M** | Ngày TT NCC | 📅 Chọn ngày |
-    | **N** | Tiền tệ | ▼ Dropdown |
-    | **O** | Ngày mở LC | 📅 Chọn ngày |
-    | **P** | Ngày hết hạn | 📅 Chọn ngày |
-    | **Q** | Ngày đáo hạn | 📅 Chọn ngày |
-    | **S** | Trị giá LC | ✏️ Nhập số |
-    | **T** | Kỳ hạn | ✏️ Gõ tay |
+    | **Q** | Ngày TT NCC | 📅 Chọn ngày |
+    | **R** | Tiền tệ | ▼ Dropdown — VND, USD… |
+    | **S** | Ngày phát hành | 📅 Chọn ngày |
+    | **T** | Kỳ hạn (ngày) | ✏️ Nhập số |
+    | **U** | Ký quỹ LC | ✏️ Nhập số |
+    | **W** | Ngày đáo hạn TT | 📅 Chọn ngày (cho UPAS) |
   </Step>
-  <Step title="Trạng thái & ghi chú">
+  <Step title="Quản lý">
     | Cột | Tên | Cách nhập |
     |:----|:----|:----------|
-    | **U** | Dư nợ hiện tại | ✏️ Nhập số |
-    | **V** | Số tiền ký quỹ | ✏️ Nhập số |
-    | **W** | Trạng thái | ▼ Dropdown |
-    | **X** | Ghi chú | ✏️ Gõ tay |
+    | **AB** | Người phụ trách | ▼ Dropdown — *dùng chung LIMIT* |
+    | **AC** | Ghi chú | ✏️ Gõ tay |
   </Step>
 </Steps>
 
-<Note>
-  Cột A (Mã LC) và C-F (thông tin từ SUBLIMIT) tự điền — không cần nhập.
-</Note>
-
 <Warning>
-  Số tiền nhập đầy đủ số 0. Ví dụ: 100 tỷ = `100000000000`.
+  **Thứ tự nhập:** Chọn **B** (Mã HM con) **trước** → C-F tự điền → rồi nhập phần còn lại.
 </Warning>
+
+---
+
+## Cột tự động
+
+<Tabs>
+  <Tab title="Kế thừa từ SUBLIMIT">
+    | Cột | Tên | Nguồn |
+    |:----|:----|:------|
+    | **A** | Mã LC | Tự sinh `LC-00001`… |
+    | **C** | Mã hạn mức | SUBLIMIT → limit_id |
+    | **D** | Mã công ty | SUBLIMIT → entity_code |
+    | **E** | Mã ngân hàng | SUBLIMIT → bank_code |
+    | **F** | Sản phẩm | SUBLIMIT → product |
+  </Tab>
+  <Tab title="Giá trị & thời hạn">
+    | Cột | Tên | Nguồn |
+    |:----|:----|:------|
+    | **V** | Ngày hết hạn | `S + T` (issue_date + tenor) |
+    | **X** | Trị giá LC | Tổng phát hành từ LC_EVENT |
+    | **Y** | Dư nợ | Balance cuối cùng (Last Match) |
+    | **Z** | Số ngày hết hạn | `V − Hôm nay` |
+    | **AA** | Trạng thái | Tự tính từ _CONFIG (bảng bên dưới) |
+  </Tab>
+</Tabs>
+
+---
+
+## Hệ thống trạng thái
+
+Cột **AA** tự phân loại, tham chiếu `_CONFIG`:
+
+| # | Trạng thái | Khi nào? | Format |
+|:--|:-----------|:---------|:-------|
+| 1 | ⚫ **Đã tất toán** | Dư nợ = 0 + event Tất toán | ~~Gạch ngang toàn dòng~~ |
+| 2 | ⚫ **Đã hủy** | Event Hủy | Nền xám đậm |
+| 3 | 🔴 **Quá hạn** | Vượt ngày hết hạn | Nền đỏ đậm |
+| 4 | 🔴 **Đến hạn** | Ngày hết hạn = Hôm nay | Nền hồng |
+| 5 | 🟡 **Sắp hết hạn** | Còn ≤ 30 ngày | Nền vàng |
+| 6 | 🟡 **Sắp đáo hạn** | Gần ngày đáo hạn TT | Nền amber |
+| 7 | 🟢 **Đang hiệu lực** | Mặc định | Chữ xanh |
+| 8 | 🟣 **Chờ phát hành** | Chưa có phát hành | Nền teal |
+| 9 | 🟣 **Tạm dừng** | Tạm ngưng | Nền tím |
+| 10 | 🔴 **Hết hạn** | Đã hết hạn hiệu lực | Nền hồng |

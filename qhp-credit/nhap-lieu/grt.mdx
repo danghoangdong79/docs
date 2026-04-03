@@ -1,0 +1,141 @@
+---
+title: Bảo lãnh
+sidebarTitle: Bảo lãnh (GRT)
+description: Quản lý danh mục bảo lãnh ngân hàng — theo dõi giá trị, ký quỹ, dư nợ ròng, trạng thái hiệu lực.
+icon: shield-halved
+---
+
+<Info>
+  **GRT** là sổ đăng ký bảo lãnh. Mỗi dòng = một thư bảo lãnh, dư nợ tự cập nhật từ tab [Biến động BL](/nhap-lieu/grt-event).
+</Info>
+
+## Khi nào cần nhập?
+
+Thêm **1 dòng mới** mỗi khi ngân hàng phát hành thư bảo lãnh mới.
+
+<Tip>
+  Tăng/giảm giá trị, gia hạn, giải tỏa hay bồi thường? **Không sửa ở đây** — hãy nhập vào tab [Biến động BL](/nhap-lieu/grt-event), GRT sẽ tự cập nhật.
+</Tip>
+
+---
+
+## Cột nhập liệu
+
+Bạn chỉ tương tác **13 cột** — 14 cột còn lại tự tính.
+
+<Steps>
+  <Step title="Liên kết hạn mức">
+    | Cột | Tên | Cách nhập |
+    |:----|:----|:----------|
+    | **B** | Mã HM con | ▼ Dropdown — *chọn xong → C,D,E tự điền* |
+  </Step>
+  <Step title="Thông tin bảo lãnh">
+    | Cột | Tên | Cách nhập |
+    |:----|:----|:----------|
+    | **F** | Mã dự án | ✏️ Gõ tay (nếu có) |
+    | **G** | Số thư BL | ✏️ Gõ tay — số do NH cấp |
+    | **H** | Loại bảo lãnh | ▼ Dropdown — Bảo hành, THHĐ, Tạm ứng, Dự thầu, Thanh toán |
+    | **I** | Người thụ hưởng | ✏️ Gõ tay |
+  </Step>
+  <Step title="Tiền tệ & giá trị">
+    | Cột | Tên | Cách nhập |
+    |:----|:----|:----------|
+    | **J** | Tiền tệ | ▼ Dropdown — VND, USD, CAD... |
+    | **K** | Tỷ giá | ✏️ Nhập số — để trống = 1 |
+    | **O** | Giá trị BL | ✏️ Nhập số — trị giá nguyên tệ |
+    | **P** | Ký quỹ | ✏️ Nhập số — tiền ký quỹ tại NH |
+  </Step>
+  <Step title="Thời hạn & phí">
+    | Cột | Tên | Cách nhập |
+    |:----|:----|:----------|
+    | **L** | Ngày phát hành | 📅 Chọn ngày |
+    | **M** | Kỳ hạn (tháng) | ✏️ Nhập số — VD: `3`, `6`, `12` |
+    | **X** | Phí BL (%/năm) | ✏️ Nhập số |
+  </Step>
+  <Step title="Quản lý">
+    | Cột | Tên | Cách nhập |
+    |:----|:----|:----------|
+    | **AA** | Ghi chú | ✏️ Gõ tay |
+  </Step>
+</Steps>
+
+<Warning>
+  **Thứ tự nhập:** Chọn **B** (Mã HM con) **trước** → C,D,E tự điền → rồi nhập phần còn lại.
+</Warning>
+
+---
+
+## Cột tự động
+
+<Tabs>
+  <Tab title="Kế thừa từ SUBLIMIT">
+    Chọn Mã HM con ở cột B → tự điền:
+
+    | Cột | Tên | Nguồn |
+    |:----|:----|:------|
+    | **A** | Mã bảo lãnh | Tự sinh `BL-00001`… |
+    | **C** | Mã HM | SUBLIMIT → limit_id |
+    | **D** | Mã công ty | SUBLIMIT → entity_code |
+    | **E** | Mã ngân hàng | SUBLIMIT → bank_code |
+  </Tab>
+  <Tab title="Giá trị & ký quỹ">
+    | Cột | Tên | Logic |
+    |:----|:----|:------|
+    | **N** | Ngày hết hạn | `= L + M (tháng)` |
+    | **Q** | Tỷ lệ ký quỹ | `= P / O` |
+    | **R** | Giá trị BL (VNĐ) | `= O × K` |
+  </Tab>
+  <Tab title="Dư nợ & rủi ro">
+    | Cột | Tên | Logic |
+    |:----|:----|:------|
+    | **S** | Dư nợ BL N.Tệ | Face value từ GRT_EVENT |
+    | **T** | Dư nợ BL (VNĐ) | `= S × K` |
+    | **U** | Dư nợ ròng N.Tệ | `= S − P` (rủi ro tín dụng thực) |
+    | **V** | Dư nợ ròng (VNĐ) | `= U × K` (tính vào HMTD) |
+    | **W** | Cập nhật lúc | Ngày event gần nhất |
+  </Tab>
+  <Tab title="Trạng thái">
+    | Cột | Tên | Logic |
+    |:----|:----|:------|
+    | **Y** | Trạng thái | Tự tính từ _CONFIG (bảng bên dưới) |
+    | **Z** | Số ngày còn HH | `= N − TODAY()` |
+  </Tab>
+</Tabs>
+
+---
+
+## Mô hình dư nợ & ký quỹ
+
+```
+Giá trị BL (O)  →  Face value
+Ký quỹ (P)      →  Cash collateral
+Tỷ lệ KQ (Q)    =  P / O
+
+Dư nợ BL (S)     →  Outstanding từ events  
+Dư nợ ròng (U)   =  S − P  →  Rủi ro TD thực
+```
+
+<Tip>
+  **Dư nợ ròng** là giá trị tính vào hạn mức tín dụng. Nếu ký quỹ 100%, dư nợ ròng = 0.
+</Tip>
+
+---
+
+## Hệ thống trạng thái
+
+Cột **Y** tự phân loại, ưu tiên từ trên xuống:
+
+| # | Trạng thái | Khi nào? | Format |
+|:--|:-----------|:---------|:-------|
+| 1 | ⚫ **Đã giải tỏa** | Có event "Giải tỏa toàn bộ" | ~~Gạch ngang toàn dòng~~ + nền xám |
+| 2 | ⚫ **Đã tất toán** | Dư nợ = 0 | ~~Gạch ngang toàn dòng~~ + nền xám |
+| 3 | ⚫ **Đã hủy** | Có event "Hủy" | ~~Gạch ngang toàn dòng~~ + nền xám |
+| 4 | ⚫ **Hết hạn** | Đã vượt ngày hết hạn | ~~Gạch ngang toàn dòng~~ + nền xám |
+| 5 | 🔴 **Quá hạn** | Đã vượt ngày hết hạn + dư nợ > 0 | Nền đỏ |
+| 6 | 🟠 **Đến hạn** | Ngày hết hạn = Hôm nay | Nền cam đậm |
+| 7 | 🟡 **Sắp hết hạn** | Còn ≤ 30 ngày | Nền vàng |
+| 8 | 🟢 **Đang hiệu lực** | Mặc định | Chữ xanh |
+
+<Note>
+  Trạng thái tham chiếu `_CONFIG` — khi đổi tên status, toàn bộ hệ thống tự cập nhật.
+</Note>

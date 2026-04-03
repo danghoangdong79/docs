@@ -42,7 +42,8 @@
             "group": "Sản phẩm tín dụng",
             "pages": [
               "qhp-credit/nhap-lieu/loan",
-              "qhp-credit/nhap-lieu/lc"
+              "qhp-credit/nhap-lieu/lc",
+              "qhp-credit/nhap-lieu/grt"
             ]
           },
           {
@@ -50,7 +51,8 @@
             "pages": [
               "qhp-credit/nhap-lieu/lm-event",
               "qhp-credit/nhap-lieu/loan-event",
-              "qhp-credit/nhap-lieu/lc-event"
+              "qhp-credit/nhap-lieu/lc-event",
+              "qhp-credit/nhap-lieu/grt-event"
             ]
           },
           {

@@ -14,14 +14,14 @@ icon: money-bill-transfer
 Thêm **1 dòng mới** mỗi khi công ty giải ngân khoản vay mới.
 
 <Tip>
-  Giải ngân bổ sung, trả gốc, tất toán hay thay đổi lãi suất? **Không sửa ở đây** — hãy nhập vào tab [Biến động khoản vay](/qhp-credit/nhap-lieu/loan-event), LOAN sẽ tự cập nhật.
+  Giải ngân bổ sung, trả gốc, tất toán hay thay đổi lãi suất? **Không sửa ở đây** — hãy nhập vào tab [Biến động khoản vay](/nhap-lieu/loan-event), LOAN sẽ tự cập nhật.
 </Tip>
 
 ---
 
 ## Cột nhập liệu
 
-Bạn chỉ tương tác **9 cột** — 17 cột còn lại tự tính.
+Bạn chỉ tương tác **10 cột** — 18 cột còn lại tự tính.
 
 <Steps>
   <Step title="Liên kết hạn mức">
@@ -38,12 +38,17 @@ Bạn chỉ tương tác **9 cột** — 17 cột còn lại tự tính.
     | **J** | Lãi suất (%/năm) | ✏️ Nhập số — VD: `7.5` |
     | **L** | Loại lãi suất | ▼ Dropdown — Cố định / Thả nổi |
   </Step>
-  <Step title="Thời hạn & ghi chú">
+  <Step title="Thời hạn">
     | Cột | Tên | Cách nhập |
     |:----|:----|:----------|
     | **M** | Ngày nhận nợ | 📅 Chọn ngày |
     | **N** | Kỳ hạn (ngày) | ✏️ Nhập số — VD: `90`, `120`, `365` |
-    | **U** | Ghi chú | ✏️ Gõ tay |
+  </Step>
+  <Step title="Quản lý">
+    | Cột | Tên | Cách nhập |
+    |:----|:----|:----------|
+    | **U** | Người phụ trách | ▼ Dropdown — *dùng chung LIMIT* |
+    | **V** | Ghi chú | ✏️ Gõ tay |
   </Step>
 </Steps>
 
@@ -74,13 +79,13 @@ Bạn chỉ tương tác **9 cột** — 17 cột còn lại tự tính.
     | **O** | Ngày đáo hạn | `M + N` hoặc ngày mới từ event "Gia hạn" |
     | **T** | Ngày còn HH | `O − Hôm nay` — ẩn khi đã tất toán |
   </Tab>
-  <Tab title="Số dư">
+  <Tab title="Số dư & trạng thái">
     | Cột | Tên | Nguồn |
     |:----|:----|:------|
     | **P** | Số tiền giải ngân | Tổng giải ngân từ LOAN_EVENT |
     | **Q** | Dư nợ hiện tại | Balance cuối cùng (0 nếu tất toán) |
     | **R** | Ngày CN dư nợ | Ngày event gần nhất |
-    | **S** | Trạng thái | 5 cấp tự động (bảng bên dưới) |
+    | **S** | Trạng thái | Tự tính từ _CONFIG (bảng bên dưới) |
   </Tab>
 </Tabs>
 
@@ -90,14 +95,14 @@ Bạn chỉ tương tác **9 cột** — 17 cột còn lại tự tính.
 
 Cột **S** tự phân loại, ưu tiên từ trên xuống:
 
-| # | Trạng thái | Khi nào? |
-|:--|:-----------|:---------|
-| 1 | ⚫ **Tất toán** | Có event "Tất toán" trong LOAN_EVENT |
-| 2 | 🔴 **Quá hạn** | Đã vượt ngày đáo hạn |
-| 3 | 🔴 **Đến hạn** | Ngày đáo hạn = Hôm nay |
-| 4 | 🟡 **Sắp hết hạn** | Còn ≤ 30 ngày |
-| 5 | 🟢 **Đang hoạt động** | Mặc định |
+| # | Trạng thái | Khi nào? | Format |
+|:--|:-----------|:---------|:-------|
+| 1 | ⚫ **Tất toán** | Có event "Tất toán" + dư nợ = 0 | ~~Gạch ngang toàn dòng~~ |
+| 2 | 🔴 **Quá hạn** | Đã vượt ngày đáo hạn | Nền đỏ đậm |
+| 3 | 🔴 **Đến hạn** | Ngày đáo hạn = Hôm nay | Nền hồng |
+| 4 | 🟡 **Sắp hết hạn** | Còn ≤ 30 ngày | Nền vàng |
+| 5 | 🟢 **Đang hoạt động** | Mặc định | Chữ xanh |
 
 <Note>
-  Ưu tiên từ trên xuống — nếu khoản vay "Tất toán" thì **luôn** hiển thị Tất toán, bất kể ngày đáo hạn.
+  Trạng thái tham chiếu `_CONFIG` — khi đổi tên status, toàn bộ hệ thống tự cập nhật.
 </Note>
